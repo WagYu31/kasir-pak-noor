@@ -1,5 +1,5 @@
-# DOKUMEN PROPOSAL TEKNIS & RENCANA ANGGARAN BIAYA (RAB) v2.0
-## Sistem Point of Sale (POS), Manajemen Inventori Multi-Gudang, Kontrol Piutang & Keuangan Retail Terpadu
+# PROPOSAL TEKNIS & RENCANA ANGGARAN BIAYA (RAB) v2.0
+## Sistem Informasi Point of Sale (POS), Manajemen Multi-Gudang, Kontrol Piutang & Keuangan Retail Terpadu
 
 ---
 
@@ -11,8 +11,8 @@ Banjarmasin, Indonesia
 **Dari:**  
 **Wahyu Utomo, S.Kom & Tim Rekayasa Perangkat Lunak**  
 *Lead Full-Stack Software Engineer & Retail Systems Architect*  
-GitHub Repository: [https://github.com/WagYu31/kasir-pak-noor](https://github.com/WagYu31/kasir-pak-noor)  
-Aplikasi Siap Uji (Live Demo): [https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)  
+- Portofolio Repositori: [https://github.com/WagYu31/kasir-pak-noor](https://github.com/WagYu31/kasir-pak-noor)  
+- Aplikasi Siap Uji (Live Demo): [https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)  
 
 **Nomor Dokumen:** 029/PROP-POS-PN/X/2026  
 **Tanggal Penerbitan:** 16 Oktober 2026  
@@ -23,232 +23,170 @@ Aplikasi Siap Uji (Live Demo): [https://kasir-pak-noor.vercel.app](https://kasir
 ### DAFTAR ISI DOKUMEN
 1. **Ringkasan Eksekutif & Pernyataan Kesiapan Tim**
 2. **Arsitektur Sistem & Spesifikasi Perangkat Keras**
-3. **Rincian Menyeluruh Seluruh Fitur Sistem (Feature Breakdown)**
-   - *Modul 1: Mesin Kasir Cepat (Point of Sale / POS Engine 5 Terminal)*
-   - *Modul 2: Pelanggan, Piutang (Tempo) & Kontrol Limit Kredit (Credit Limit)*
-   - *Modul 3: Kas Kecil Kasir (Petty Cash & Biaya Operasional Toko)*
-   - *Modul 4: Inventori Multi-Gudang (Toko & DC), Rak & Stock Opname*
-   - *Modul 5: Logistik, Surat Jalan & Mode Packing List Koli/Kardus*
-   - *Modul 6: Master Data Produk, Satuan Berjenjang & Multi-Harga*
-   - *Modul 7: Ekspor & Impor Excel Massal Native (.xlsx)*
-   - *Modul 8: Laporan Keuangan, Audit Kasir Detail & Komisi Sales*
-   - *Modul 9: Keamanan, Hak Akses Berjenjang (RBAC) & Kelola Terminal*
+3. **Rincian Seluruh Fitur Sistem (Feature Breakdown)**
+   - *3.1 Modul Kasir Cepat (Point of Sale / POS Engine 5 Terminal)*
+   - *3.2 Modul Pelanggan & Pengawasan Risiko Piutang (Credit Limit)*
+   - *3.3 Modul Kas Kecil Kasir (Petty Cash & Biaya Operasional)*
+   - *3.4 Modul Inventori Multi-Gudang (Toko & DC), Rak & Stock Opname*
+   - *3.5 Modul Logistik Pengiriman, Surat Jalan & Mode Koli/Kardus*
+   - *3.6 Modul Master Data Produk, Satuan Berjenjang & Multi-Harga*
+   - *3.7 Modul Integrasi Spreadsheet: Impor & Ekspor Excel Native (.xlsx)*
+   - *3.8 Modul Laporan Finansial, Audit Kasir Detail & Komisi Sales*
+   - *3.9 Modul Keamanan, Hak Akses Berjenjang (RBAC) & Kelola Terminal*
 4. **Matriks Kesesuaian Kebutuhan Bpk. Noor (100% Compliant)**
 5. **Rencana Anggaran Biaya (RAB) & Investasi Transparan**
-6. **Skema Termin Pembayaran & Milestone Pengerjaan**
-7. **Jadwal Penerapan & Garansi Bebas Bug 60 Hari**
+6. **Skema Termin Pembayaran & Milestone Pekerjaan**
+7. **Jadwal Pelaksanaan (Timeline 4 Minggu) & Garansi Bebas Bug**
 8. **Lembar Pengesahan & Persetujuan Kerjasama**
 
 ---
 
 ### 1. RINGKASAN EKSEKUTIF & PERNYATAAN KESIAPAN TIM
 
-Berdasarkan lembar spesifikasi kebutuhan teknis yang diajukan oleh **Bpk. Noor**, tim rekayasa perangkat lunak kami telah menganalisis seluruh tantangan operasional toko ritel grosir dan eceran milik Bpk. Noor. Kami menyatakan bahwa **seluruh kebutuhan sistem tersebut telah 100% SESUAI dan SIAP DIJALANKAN oleh kapabilitas teknologi tim kami**.
+Berdasarkan dokumen spesifikasi kebutuhan teknis yang disampaikan oleh **Bpk. Noor**, tim rekayasa perangkat lunak kami telah menganalisis seluruh tantangan operasional toko ritel grosir dan eceran milik Bpk. Noor. Kami menyatakan bahwa **seluruh kebutuhan sistem tersebut telah 100% SESUAI dan SIAP DIJALANKAN oleh kapabilitas teknologi tim kami**.
 
-Bahkan, untuk membuktikan keseriusan dan kapabilitas nyata tanpa sekadar janji di atas kertas, tim kami telah membangun dan menerbitkan **Aplikasi Prototipe Operasional Penuh (Fully Functional System)** yang saat ini sudah aktif dan dapat langsung diuji coba oleh Bpk. Noor di:  
+Sebagai wujud profesionalisme dan pembuktian langsung atas kesiapan teknologi kami, tim pengembang telah membangun **Aplikasi Operasional Penuh (Fully Functional Live Application)** yang saat ini sudah aktif dan dapat langsung diuji coba oleh Bpk. Noor melalui tautan resmi:  
 👉 **[https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)**
 
-Sistem ini dibangun dengan fondasi teknologi industri modern yang menjamin kecepatan transaksi kasir dalam hitungan detik, pencegahan selisih stok (*zero stock discrepancy*) melalui *ACID Database Locking*, penguncian otomatis pelanggan yang menunggak kredit, hingga pencatatan transaksi audit mendalam per jam dan per barang guna mempermudah stok opname berkala.
+Sistem ini dirancang khusus untuk memecahkan 5 kendala utama toko retail:
+1. **Kecepatan Layanan Kasir**: Mencegah antrean panjang di jam sibuk dengan transaksi cepat berbasis keyboard & pemindai barcode.
+2. **Mencegah Selisih Stok Antar-Kasir**: Menggunakan isolasi database *ACID Concurrency Locking* saat 5 kasir menjual barang yang sama serentak.
+3. **Pencegahan Piutang Macet**: Penguncian otomatis sistem jika hutang pelanggan melampaui limit kredit atau melewati jatuh tempo.
+4. **Transparansi Pengeluaran Kas Toko**: Pencatatan kas kecil langsung di laci kasir untuk bensin armada, parkir, kuli, dan ongkir ekspedisi.
+5. **Kemudahan Audit & Stok Opname**: Catatan transaksi mendalam per kasir, per jam-menit transaksi, per nama barang, dan nominal faktur.
 
 ---
 
 ### 2. ARSITEKTUR SISTEM & SPESIFIKASI PERANGKAT KERAS
 
 #### A. Arsitektur Perangkat Lunak (Software Stack)
-- **Front-End & POS Engine**: React 18 + Vite (Ultracepat, waktu respons di bawah 50ms untuk kasir sibuk).
-- **Desain Antarmuka**: Clean Professional Indonesian Retail Theme (Emerald-Slate, ramah mata kasir, non-jenuh, tipografi Plus Jakarta Sans & JetBrains Mono untuk angka nominal).
-- **Backend & Database Concurrency**: PostgreSQL / High-Concurrency REST Engine dengan isolasi transaksi ACID (*Atomic, Consistent, Isolated, Durable*) yang mencegah balapan data (*race condition*) ketika 5 terminal kasir menjual barang yang sama secara bersamaan.
-- **Offline-Resilient Architecture**: Tetap dapat memproses transaksi kasir dan mencetak struk secara lokal meskipun koneksi internet pusat sedang berfluktuasi sementara.
+- **Front-End & POS Engine**: React 18 + Vite (Waktu respon antarmuka < 50ms, instan dan ringan).
+- **Desain Antarmuka**: *Clean Professional Indonesian Retail Theme* (Warna Emerald-Slate, ramah mata kasir, kontras jelas).
+- **Backend & Database Concurrency**: PostgreSQL / High-Concurrency REST Engine dengan penguncian transaksi atomik (*ACID Compliant*) untuk mencegah *race condition*.
+- **Offline Resilience**: Kasir tetap dapat melayani transaksi dan mencetak struk secara lokal saat jaringan internet berfluktuasi.
 
-#### B. Kompatibilitas Perangkat Keras (Hardware Compatibility)
-1. **Komputer Kasir**: Mendukung PC Desktop (Windows/Linux/macOS), Mini PC POS, Laptop, maupun Tablet Layar Sentuh (*Touchscreen iPad/Android*).
-2. **Barcode Scanner**: Mendukung mode USB HID (Plug and Play), Wireless 2.4GHz Dongle, Bluetooth Scanner, serta pemindaian visual via Kamera HP/Tablet (HTML5 QR/Barcode Scanner).
-3. **Printer Thermal Struk**: Mendukung format standar industri **58mm** dan **80mm** (koneksi USB, LAN RJ45, Bluetooth, maupun Serial ESC/POS).
-4. **Laci Uang Kasir (Cash Drawer)**: Otomatis membuka (*kick-out trigger*) via port RJ11 printer thermal saat transaksi tunai selesai.
-5. **Customer Display Screen**: Mendukung monitor kedua yang menghadap pelanggan (*Dual-Screen Customer Display*) dengan pintasan tombol **[F8]**.
-
----
-
-### 3. RINCIAN MENYELURUH SELURUH FITUR SISTEM (FEATURE BREAKDOWN)
-
-Berikut adalah daftar detail dan lengkap dari seluruh modul dan fitur yang terdapat di dalam sistem POS Pak Noor v2.0:
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                           ARSITEKTUR UTAMA SISTEM POS PAK NOOR v2.0                            │
-├─────────────────┬──────────────────┬─────────────────┬─────────────────┬────────────────────────┤
-│ 1. KASIR (POS)  │ 2. PELANGGAN     │ 3. MULTI-GUDANG │ 4. MASTER DATA  │ 5. LAPORAN & AUDIT     │
-│ • Keyboard Fast │ • Credit Limit   │ • Toko vs DC    │ • Multi-Satuan  │ • Audit Transaksi Jam  │
-│ • Touchscreen   │ • Tempo 7/14/30  │ • Planogram Rak │ • Multi-Harga   │ • Kartu Stok & HPP     │
-│ • 5 Kasir ACID  │ • DP + Sisa      │ • Surat Jalan   │ • Impor Excel   │ • Komisi Sales 1.5%    │
-│ • Kas Kecil     │ • Auto-Blokir    │ • Packing Koli  │ • Ekspor Excel  │ • Buku Piutang         │
-│ • Picking List  │ • Buku Piutang   │ • Stock Opname  │ • Barcode Pcs/Dus│ • Rekap Kas Kecil      │
-└─────────────────┴──────────────────┴─────────────────┴─────────────────┴────────────────────────┘
-```
+#### B. Kompatibilitas Perangkat Keras Kasir (Hardware Compatibility)
+1. **Perangkat Komputer**: PC Desktop (Windows/Linux), Mini PC POS, Laptop, maupun Tablet Layar Sentuh (*iPad / Android Tablet*).
+2. **Barcode Scanner**: Scanner USB HID kabel, Wireless 2.4GHz Dongle, Bluetooth Scanner, serta scan via Kamera HP/Tablet terintegrasi.
+3. **Printer Thermal Struk**: Printer Thermal format **58mm** dan **80mm** (Koneksi USB, LAN RJ45, Bluetooth, maupun Serial ESC/POS).
+4. **Laci Uang Kasir (Cash Drawer)**: Otomatis membuka (*kick-out trigger*) via port RJ11 printer thermal saat kasir menekan bayar tunai.
+5. **Customer Display Screen**: Mendukung layar kedua menghadap pelanggan (*Dual-Screen*) melalui pintasan tombol **[F8]**.
 
 ---
 
-#### MODUL 1: MESIN KASIR CEPAT (POINT OF SALE / POS ENGINE 5 TERMINAL)
-Dirancang untuk kecepatan pelayanan tinggi saat antrean toko padat tanpa jeda (kecepatan input kasir rata-rata 1–2 detik per barang).
-1. **Multi-Terminal Aktif (5 Mesin Kasir)**: Sistem mendukung 5 kasir aktif serentak (Kasir 1 s/d Kasir 5) dengan isolasi transaksi individual sehingga laporan setoran kasir terpisah secara akurat.
-2. **Navigasi Keyboard Penuh (Keyboard-First POS)**: Kasir dapat bertransaksi 100% tanpa menyentuh mouse:
-   - `[Space]` / `[Enter]`: Fokus kolom pencarian barcode / nama barang.
-   - `[F12]`: Langsung buka dialog Pembayaran (Checkout).
-   - `[F8]`: Buka Layar Customer Display untuk pelanggan.
-   - `[F6]`: Simpan Sementara (Hold Bill / Tahan Antrean).
-   - `[F7]`: Panggil Kembali Antrean Belanja yang ditahan.
-   - `[F5]`: Buka/Tutup Shift Kasir.
-   - `[Del]`: Hapus baris barang dari keranjang belanja.
-   - `[Esc]`: Batal / Tutup jendela modal.
-   - Format Pengali Cepat: Mengetik `5*899...` di scanner langsung mengisi kuantitas 5 unit tanpa klik manual.
-3. **Mode Sentuh (Touchscreen Tablet View)**: Pilihan tampilan tombol kotak bergambar produk (*tile layout*) lengkap dengan tab kategori dan kontrol penambahan barang ramah sentuhan jari untuk tablet kasir.
-4. **Efek Suara Audio Scanner**: Suara *beep* pemindai minimarket otentik frekuensi 2.4 kHz via Web Audio API serta nada lonceng lonceng kasir saat transaksi sukses sebagai konfirmasi audio bagi kasir.
-5. **Pemindai Kamera Barcode (Camera Barcode Scanner)**: Fitur scan barcode fisik menggunakan kamera internal HP/tablet kasir tanpa memerlukan alat scanner USB tambahan.
-6. **Multi-Antrean (Hold & Recall Bill)**: Kasir dapat menahan transaksi berjalan (Antrean 1, Antrean 2, Antrean 3) ketika pelanggan lupa membawa dompet atau masih mengambil barang lain, lalu melayani pelanggan berikutnya tanpa menghilangkan daftar belanjaan sebelumnya.
-7. **Pemisahan Tagihan (Split Bill Modal)**: Memungkinkan pemisahan satu keranjang belanja besar menjadi 2 faktur terpisah (misal: belanjaan pribadi dan belanjaan kantor dipisah fakturnya).
-8. **Diskon Bertingkat & Fleksibel**: Diskon nominal (Rp) maupun persentase (%) per baris item, serta diskon faktur global. Dilengkapi kontrol pembatasan wewenang diskon kasir.
-9. **Cetak Struk Thermal (ESC/POS)**:
-   - Pilihan cetak format struk **58mm** (mini portabel) dan **80mm** (standar supermarket).
-   - Rincian struk: Logo/Nama Toko, Kasir, Terminal, Nomor Faktur, Tanggal & Jam, rincian barang, satuan, harga, diskon, subtotal, PPN, metode bayar, jumlah bayar, kembalian, QR Barcode faktur, dan ucapan terima kasih.
-   - Tombol **Cetak Ulang Faktur Terakhir (Reprint)** jika kertas struk macet atau habis di tengah jalan.
-10. **Layar Pelanggan (Customer Display [F8])**: Jendela layar terpisah yang menghadap pembeli secara real-time menampilkan barang yang di-scan kasir, harga, total belanja, dan ucapan selamat datang.
-11. **Manajemen Shift & Laci Kasir (Cashier Shift Modal)**:
-    - Input modal awal kasir (*Starting Cash Drawer*).
-    - Pencatatan uang masuk/keluar operasional.
-    - Hitung fisik uang tunai saat tutup shift (*Cash Count*).
-    - Perhitungan otomatis selisih kas (*Overage / Shortage*).
-    - Cetak Laporan Tutup Shift Kasir (X-Report harian & Z-Report final).
+### 3. RINCIAN MENYELURUH SELURUH FITUR SISTEM
 
 ---
 
-#### MODUL 2: PELANGGAN, PIUTANG (TEMPO) & KONTROL LIMIT KREDIT (CREDIT LIMIT)
-Mencegah terjadinya piutang macet yang merugikan arus kas toko dengan sistem pengawasan kredit otomatis (*automated credit control*).
-1. **Master Database Pelanggan & Member**: Pencatatan nama pelanggan, nomor telepon/WhatsApp, alamat pengiriman, tipe pelanggan (Eceran, Grosir, Kontraktor/Warung).
-2. **Plafon Kredit Maksimal (Credit Limit Enforcement)**: Penetapan batas maksimal piutang per pelanggan (contoh: Toko Berkah Mandiri limit Rp 10.000.000).
-3. **Peringatan & Penguncian Otomatis (Automatic Overdue Lock)**:
-   - Jika total transaksi baru menyebabkan hutang melebihi sisa limit kredit, tombol bayar piutang otomatis terkunci merah dan transaksi ditolak.
-   - Jika pelanggan memiliki faktur yang telah melewati tanggal jatuh tempo (*Overdue*), sistem secara otomatis memblokir pemberian kredit baru hingga piutang lama dilunasi.
-4. **Metode Pembayaran Piutang (Tempo)**:
-   - Pilihan tenor pembayaran fleksibel: **7 Hari**, **14 Hari**, atau **30 Hari**.
-   - Otomatis menghitung tanggal jatuh tempo pada kalender dan menerbitkan Surat Perjanjian Piutang pada struk belanja.
-5. **Metode Pembayaran DP (Uang Muka + Sisa Piutang)**:
-   - Pelanggan membayar uang muka (DP) tunai/transfer, dan sisa pembayaran otomatis masuk ke buku piutang tempo dengan tanggal jatuh tempo tercatat.
-6. **Buku Pembantu Piutang Pelanggan**: Kartu piutang individual untuk memantau sisa saldo hutang, riwayat pembayaran angsuran, serta tombol aksi pencatatan pelunasan hutang oleh Owner.
+#### 3.1 MODUL KASIR CEPAT (POINT OF SALE / POS ENGINE 5 TERMINAL)
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Dukungan 5 Kasir Simultan** | Menjalankan 5 terminal kasir (Kasir 1 s/d Kasir 5) aktif bersamaan dengan isolasi pembukuan kasir terpisah. | Menghilangkan antrean pelanggan di jam sibuk tanpa risiko data transaksi tercampur antar-kasir. |
+| **Navigasi Keyboard Penuh (Keyboard-First)** | Transaksi 100% tanpa mouse: `[Space]` Search, `[F12]` Bayar, `[F6]` Hold, `[F7]` Recall, `[Del]` Hapus Item, `[Esc]` Batal. | Mempercepat proses input kasir hingga 3x lipat dibanding sistem kasir berbasis klik mouse biasa. |
+| **Format Input Pengali Cepat** | Kasir cukup mengetik `5*899...` di kolom scanner untuk otomatis memasukkan 5 unit barang. | Kasir tidak perlu memindai barang yang sama berulang-ulang sebanyak 5 kali. |
+| **Mode Sentuh (Touchscreen Tablet)** | Pilihan tata letak kotak tombol bergambar produk (*tile layout*) dengan navigasi tab kategori produk. | Sangat fleksibel jika kasir menggunakan perangkat tablet kasir atau monitor layar sentuh. |
+| **Audio Feedback Scanner** | Nada *beep* 2.4 kHz otentik minimarket saat scan sukses dan nada lonceng (*cash chime*) saat bayar. | Kasir langsung mengetahui barang berhasil masuk keranjang tanpa harus menatap layar terus-menerus. |
+| **Kamera Barcode Terintegrasi** | Scan barcode fisik langsung menggunakan kamera internal HP/tablet tanpa alat scanner eksternal. | Solusi cadangan instan jika alat scanner kabel USB mengalami gangguan atau saat melayani di luar meja. |
+| **Antrean Belanja (Hold & Recall Bill)** | Kasir dapat menahan keranjang belanja pelanggan (Antrean 1, 2, 3) dan melayani pembeli berikutnya. | Antrean kasir tidak terhenti saat ada pembeli yang lupa dompet atau masih mengambil barang tambahan. |
+| **Cetak Draf Nota Gudang (Picking List)** | Mencetak struk thermal antrean hold bill berformat daftar ambil barang lengkap nomor rak dan paraf gudang. | Petugas gudang dapat langsung menyiapkan barang grosir dari rak sebelum pembayaran diselesaikan. |
+| **Pemisahan Tagihan (Split Bill)** | Memisahkan satu keranjang belanja besar menjadi dua faktur struk pembayaran terpisah. | Memudahkan pelanggan rombongan atau langganan yang ingin memisahkan nota belanja pribadi dan kantor. |
+| **Diskon Item & Diskon Faktur** | Potongan harga fleksibel dalam nominal rupiah (Rp) maupun persentase (%) per barang atau total faktur. | Mendukung program promosi toko dan diskon khusus langganan dengan verifikasi wewenang kasir. |
+| **Cetak Struk Thermal (ESC/POS)** | Cetak struk ukuran 58mm & 80mm lengkap rincian barang, PPN, metode bayar, kembalian, dan QR faktur. | Bukti belanja resmi pelanggan yang rapi, profesional, dan dapat dicetak ulang (*Reprint*) jika kertas habis. |
+| **Layar Pelanggan (Customer Display [F8])** | Tampilan monitor kedua menghadap pembeli menampilkan nama barang scan, harga, dan total belanja real-time. | Meningkatkan kepercayaan pelanggan terhadap transparansi harga dan meminimalisir komplain salah harga. |
+| **Manajemen Shift & Setoran Laci Kasir** | Input modal awal, log kas masuk/keluar, hitung fisik uang kasir (*cash count*), dan kalkulasi selisih kas otomatis. | Mencegah selisih uang setoran kasir dan memudahkan audit harian melalui Laporan Tutup Shift (X/Z Report). |
 
 ---
 
-#### MODUL 3: KAS KECIL KASIR (PETTY CASH & BIAYA OPERASIONAL TOKO)
-Menghilangkan celah kebocoran uang kas kasir untuk keperluan operasional harian toko tanpa pencatatan.
-1. **Input Kas Kecil Langsung di POS**: Kasir dapat mencatat pengeluaran operasional toko langsung dari layar kasir tanpa membuka menu akuntansi yang rumit.
-2. **Kategori Biaya Operasional Lengkap**:
-   - Bensin & Operasional Armada Pengiriman.
-   - Retribusi Pasar, Kebersihan & Parkir Kendaraan.
-   - Ongkos Kirim & Ekspedisi Barang Dagangan.
-   - Upah Kuli Angkut / Bongkar Muat Barang Gudang.
-   - Konsumsi Toko & Galon Air Minum Karyawan.
-   - Perlengkapan Kasir (Kertas Struk Thermal, Lakban, Solasi, Plastik).
-   - Pengeluaran Operasional Lain-Lain Toko.
-3. **Otomatis Memotong Saldo Fisik Laci Kasir**: Setiap pengeluaran kas kecil langsung mengurangi nilai uang tunai fisik yang wajib disetorkan kasir pada akhir shift, sehingga saat tutup kasir uang fisik dan sistem seimbang sempurna (*balance*).
-4. **Cetak Bukti Pengeluaran Kas Kecil**: Cetak struk thermal voucher kas keluar bertanda tangan penerima dana dan kasir sebagai bukti fisik audit.
-5. **Rekapitulasi Audit Kas Kecil**: Terintegrasi ke laporan keuangan untuk diekspor ke format Excel per periode.
+#### 3.2 MODUL PELANGGAN & PENGAWASAN RISIKO PIUTANG (CREDIT LIMIT)
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Master Data Pelanggan & Member** | Database pelanggan memuat Nama, Kontak WhatsApp, Alamat Kirim, dan Klasifikasi (Eceran, Grosir, Kontraktor). | Membangun loyalitas langganan dan mempermudah pengiriman barang grosir ke alamat pemesan. |
+| **Plafon Limit Kredit (Credit Limit)** | Pengaturan batas maksimal saldo hutang yang diizinkan untuk setiap pelanggan (misal: Limit Rp 10.000.000). | Mengendalikan risiko toko agar pelanggan tidak mengambil barang melebihi kemampuan bayarnya. |
+| **Penguncian Otomatis (Auto Overdue Lock)** | Sistem otomatis mengunci tombol bayar piutang jika hutang melebihi limit atau ada faktur yang lewat jatuh tempo. | **Mencegah terjadinya piutang macet** secara otomatis tanpa bergantung pada ingatan kasir. |
+| **Metode Pembayaran Piutang (Tempo)** | Pilihan jatuh tempo pembayaran: **7 Hari**, **14 Hari**, atau **30 Hari**, tercatat otomatis pada struk dan tanggal kalender. | Mengakomodasi langganan grosir/warung yang terbiasa mengambil barang dengan sistem pembayaran tempo. |
+| **Metode Pembayaran Uang Muka (DP)** | Pembayaran sebagian nilai belanja (DP tunai/transfer), dan sisa tagihan otomatis masuk ke saldo piutang tempo. | Mengamankan uang muka transaksi partai besar sebelum seluruh pesanan dikirimkan ke pelanggan. |
+| **Buku Pembantu Piutang Pelanggan** | Kartu piutang individual mencatat riwayat faktur hutang, tanggal jatuh tempo, sisa saldo, dan aksi pelunasan hutang. | Pemilik toko (Pak Noor) memiliki visibilitas 100% atas seluruh uang toko yang masih beredar di luar. |
 
 ---
 
-#### MODUL 4: INVENTORI MULTI-GUDANG (TOKO & DC), RAK & STOCK OPNAME
-Menjamin ketersediaan barang dan akurasi posisi stok di setiap sudut toko fisik dan gudang pusat.
-1. **Pemisahan Stok 2 Gudang Real-Time**:
-   - Gudang 1: **Toko Depan (WH-01)** — area penjualan langsung kasir.
-   - Gudang 2: **Pusat Logistik / DC (WH-02)** — area buffer stok grosir dan penerimaan kontainer supplier.
-2. **Peringatan Stok Menipis (Low Stock Alert)**: Indikator visual otomatis warna merah/kuning ketika stok produk berada di bawah batas minimum (*safety stock*).
-3. **Mutasi Transfer Antar-Gudang**:
-   - Pembuatan dokumen mutasi pemindahan barang (Toko -> DC atau DC -> Toko).
-   - Alur status: DRAFT -> SENT (Dalam Perjalanan) -> RECEIVED (Diterima & Diverifikasi).
-   - Stok gudang asal berkurang dan stok gudang tujuan bertambah secara atomik.
-4. **Planogram & Manajemen Lokasi Rak (Rack Management)**:
-   - Pemetaan fisik lorong dan rak gudang (Rak A1, A2, B1, B2, C1, C2, dst).
-   - Pelabelan lokasi rak pada setiap produk sehingga kasir dan staf gudang langsung mengetahui letak persis suatu barang di toko fisik.
-   - Indikator kapasitas rak (% keterisian barang).
-5. **Stock Opname Digital (Stock Adjustment Audit)**:
-   - Perhitungan fisik barang berkala tanpa perlu menutup toko.
-   - Input hasil hitung fisik (*physical count*), kalkulasi otomatis selisih unit (*discrepancy*), serta pemilihan alasan selisih (rusak, bocor, kadaluarsa/expired, hilang, selisih hitung).
-   - Riwayat penyesuaian stok tersimpan permanen sebagai rekaman audit.
-6. **Penerimaan Barang Masuk (Inbound PO Supplier)**:
-   - Pencatatan faktur barang masuk dari distributor/pemasok.
-   - Verifikasi kuantitas fisik dan pembaharuan otomatis nilai HPP barang.
-7. **Modul Retur Barang (Supplier & Customer)**:
-   - Retur barang rusak ke distributor dengan bukti nota retur.
-   - Retur barang dari pelanggan dengan validasi scan barcode pada struk pembelian asli.
-8. **Cetak Label Rak & Barcode Harga (Shelf Tags Printing)**:
-   - Cetak label harga rak minimarket lengkap dengan Nama Barang, Barcode EAN-13, Harga Eceran, Harga Grosir, dan Kode Rak.
+#### 3.3 MODUL KAS KECIL KASIR (PETTY CASH & BIAYA OPERASIONAL TOKO)
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Form Input Kas Kecil Cepat di POS** | Kasir dapat mencatat pengeluaran biaya harian langsung dari tombol kasir tanpa membuka menu akuntansi rumit. | Memastikan setiap uang rupiah yang keluar dari laci kasir tercatat secara resmi dan akurat. |
+| **7 Kategori Biaya Operasional Toko** | Kategorisasi lengkap: Bensin Armada, Retribusi Pasar & Parkir, Ongkir Ekspedisi, Kuli Bongkar, Konsumsi, Perlengkapan Kasir, dll. | Memudahkan pengelompokan biaya operasional toko saat pembuatan laporan laba rugi bulanan. |
+| **Pemotongan Otomatis Saldo Laci Kas** | Nominal kas kecil otomatis memotong nilai uang fisik laci kasir pada shift aktif kasir yang bersangkutan. | **Menghilangkan selisih setoran kasir** saat tutup toko; uang fisik dan pembukuan sistem klop sempurna. |
+| **Cetak Bukti Pengeluaran Kasir** | Mencetak struk voucher kas keluar thermal bertanda tangan penerima dana dan kasir bertugas. | Menjadi bukti fisik sah saat pemeriksaan pertanggungjawaban pengeluaran uang kas toko. |
 
 ---
 
-#### MODUL 5: LOGISTIK, SURAT JALAN & PACKING LIST KOLI/KARDUS
-Mengakomodasi pengiriman grosir dan ekspedisi luar kota dengan dokumen legal yang rapi.
-1. **Penerbitan Surat Jalan Pengiriman Resmi**: Lengkap dengan nomor seri surat jalan, data toko pengirim, identitas pelanggan penerima, tanggal kirim, nomor polisi armada truk/pickup, dan nama sopir.
-2. **Fitur Khusus: Toggle Mode Packing List Koli / Kardus**:
-   - **Mode Rincian SKU**: Menampilkan daftar seluruh produk satuan detail.
-   - **Mode Packing List Koli (Kardus Ringkas)**: Merangkum seluruh muatan ke dalam ringkasan kemasan logistik (contoh: *2 Koli Kardus Standar - Berat Estimasi 30.5 Kg*) sehingga memudahkan sopir ekspedisi dan pihak ekspedisi menghitung jumlah koli barang di bak mobil tanpa harus memeriksa ratusan sachet kecil.
-3. **Kolom Tanda Tangan Tiga Pihak**: Pengirim gudang toko, sopir ekspedisi, dan penerima barang.
+#### 3.4 MODUL INVENTORI MULTI-GUDANG (TOKO & DC), RAK & STOCK OPNAME
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Pencatatan Stok 2 Gudang Real-Time** | Pemisahan jumlah stok fisik antara **Toko Depan (WH-01)** dan **Gudang Pusat / DC (WH-02)**. | Menghindari kekosongan barang di toko depan meskipun stok cadangan di gudang pusat masih banyak. |
+| **Peringatan Stok Menipis (Low Stock Alert)** | Notifikasi visual warna merah/kuning saat persediaan barang berada di bawah batas minimum (*safety stock*). | Toko dapat segera melakukan pemesanan ulang (*re-order*) ke distributor sebelum barang habis total. |
+| **Mutasi Transfer Antar-Gudang** | Pemindahan stok Toko &harr; DC dengan alur status bertahap: Draft &rarr; Sent (Dalam Perjalanan) &rarr; Received (Diterima). | Stok berpindah secara atomik tanpa ada barang hilang di jalan dan tercatat siapa petugas pengirimnya. |
+| **Planogram & Manajemen Lokasi Rak** | Pemetaan lorong dan nomor rak fisik (Rak A1, B2, C1, dst) terhubung langsung ke master barang. | Mempercepat staf toko dan gudang menemukan lokasi barang fisik saat menyiapkan pesanan pelanggan. |
+| **Stock Opname Digital (Penyesuaian Stok)** | Input hasil hitung fisik (*physical count*), kalkulasi otomatis selisih unit, dan pencatatan alasan (rusak, hilang, expired). | **Mempermudah kegiatan stok opname berkala** tanpa perlu menutup toko seharian. |
+| **Inbound PO Supplier & Retur Barang** | Pencatatan barang masuk dari distributor, verifikasi kuantitas fisik, update HPP otomatis, dan nota retur barang rusak. | Menjaga akurasi penerimaan barang dari pemasok dan mempermudah klaim retur barang cacat pabrik. |
+| **Cetak Label Rak & Barcode (Shelf Tags)** | Cetak label rak minimarket memuat Nama Barang, Barcode EAN-13, Harga Eceran, Harga Grosir, dan Lokasi Rak. | Tampilan display rak toko fisik menjadi rapi, profesional, dan memudahkan pembeli melihat harga. |
 
 ---
 
-#### MODUL 6: MASTER DATA PRODUK, SATUAN BERJENJANG & MULTI-HARGA
-Fondasi data barang dagangan yang fleksibel untuk ritel grosir dan eceran.
-1. **Konversi Satuan Berjenjang Otomatis**: Relasi multi-satuan fleksibel (1 Dus = 12 Box = 144 Pcs).
-2. **Barcode Unik Tiap Satuan**:
-   - Scan barcode Pcs -> terjual 1 Pcs harga eceran.
-   - Scan barcode Dus -> terjual 1 Dus (stok gudang otomatis terpotong 144 Pcs satuan dasar dan harga otomatis menggunakan harga grosir per dus).
-3. **Multi-Tingkatan Harga Jual (Price Tiers)**:
-   - Harga Eceran (konsumen umum).
-   - Harga Grosir 1 (pembelian kartonan / warung kecil).
-   - Harga Grosir 2 (pembelian partai besar / agen).
-   - Harga Member (khusus langganan terdaftar).
-4. **Kalkulasi HPP Otomatis (Average Costing Method)**: Menghitung Harga Pokok Penjualan secara rata-rata bergerak setiap kali ada barang masuk dengan harga beli baru, menjamin margin keuntungan riil tercatat akurat.
-5. **Pengelompokan Komprehensif**: Kategori barang, brand/merek, pemasok utama (supplier), dan status pajak PPN (0% atau 11%).
+#### 3.5 MODUL LOGISTIK PENGIRIMAN, SURAT JALAN & PACKING LIST KOLI
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Penerbitan Surat Jalan Pengiriman Resmi** | Mencetak dokumen surat jalan pengiriman lengkap dengan nomor seri, data pengirim, armada, sopir, dan penerima. | Dokumen legal pengiriman yang sah dan melindungi barang toko selama perjalanan di jalan raya. |
+| **Toggle Mode Packing List Koli / Kardus** | Opsi beralih antara rincian seluruh SKU satuan detail dan ringkasan kemasan logistik kardus (*Packing List Koli Ringkas*). | **Sopir dan pihak ekspedisi dapat langsung menghitung jumlah koli kardus** di bak mobil secara cepat dan akurat. |
+| **Format Tanda Tangan Tiga Pihak** | Kolom tanda tangan resmi untuk Petugas Gudang Pengirim, Sopir Pengantar, dan Pelanggan Penerima Barang. | Bukti serah terima barang yang kuat untuk mencegah klaim sepihak barang tidak sampai dari pembeli. |
 
 ---
 
-#### MODUL 7: EKSPOR & IMPOR EXCEL MASSAL NATIVE (.XLSX)
-Membebaskan toko dari ketergantungan input manual satu per satu yang memakan waktu berhari-hari.
-1. **Fitur Impor Excel Massal Master Produk (ImportProductsExcelModal)**:
-   - Tombol unduh resmi **`Template_Import_Master_Produk_Pak_Noor.xlsx`**.
-   - Input ribuan produk sekaligus melalui spreadsheet (Nama, Barcode, Kategori, Satuan, Multi-Harga, HPP, Stok Awal Toko, Stok Awal DC).
-   - Area drag & drop file spreadsheet dengan pratinjau tabel validasi sebelum disimpan ke database toko.
-2. **Fitur Ekspor Native Spreadsheet (.xlsx)**:
-   - Dibuat menggunakan library resmi SheetJS (`xlsx`) dengan format cell angka dan teks rapi.
-   - Ekspor Laporan Transaksi Audit Kasir ke Excel.
-   - Ekspor Kartu Stok & Valuasi HPP Gudang ke Excel.
-   - Ekspor Buku Pembantu Piutang Pelanggan ke Excel.
-   - Ekspor Rekapitulasi Beban Kas Kecil Kasir ke Excel.
+#### 3.6 MODUL MASTER DATA PRODUK, SATUAN BERJENJANG & MULTI-HARGA
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Multi-Satuan Berjenjang Otomatis** | Relasi satuan berjenjang fleksibel (contoh: 1 Dus = 12 Box = 144 Pcs) terhubung ke 1 master produk. | Kasir dapat menjual dalam satuan eceran maupun kartonan tanpa perlu membuat master barang ganda. |
+| **Dukungan Barcode Unik Tiap Satuan** | Scan barcode Pcs memotong 1 Pcs; scan barcode Dus otomatis memotong 144 Pcs dari stok gudang. | Kasir terhindar dari salah pilih barang atau salah hitung perkalian jumlah satuan saat melayani grosir. |
+| **Tingkatan Harga Jual (Price Tiers)** | 4 Level harga fleksibel: **Harga Eceran**, **Grosir 1** (warung), **Grosir 2** (agen partai), dan **Member** langganan. | Toko dapat melayani berbagai segmen pelanggan (konsumen langsung vs pedagang grosir) secara otomatis. |
+| **Kalkulasi HPP Average Costing** | Perhitungan modal HPP rata-rata bergerak (*moving average*) setiap ada barang masuk dengan harga beli baru. | Laba kotor toko tercatat riil sesuai fluktuasi harga modal beli barang dari distributor. |
 
 ---
 
-#### MODUL 8: LAPORAN KEUANGAN, AUDIT KASIR DETAIL & KOMISI SALES
-Memberikan transparansi finansial menyeluruh bagi Bpk. Noor selaku pemilik bisnis.
-1. **Audit Transaksi Kasir Mendalam (Khusus Akses Owner)**:
-   - Menjawab permintaan khusus Pak Noor untuk kemudahan audit: menampilkan riwayat transaksi lengkap dengan **Nama Kasir, Nomor Faktur, Jam-Menit-Detik Transaksi, Rincian Nama Barang yang Dibeli, Terminal Kasir, Metode Bayar, dan Nominal Transaksi**.
-   - Sangat efektif melacak riwayat penjualan saat terjadi selisih stok opname di rak barang tertentu.
-2. **Dashboard Finansial & Margin Laba Kotor**: Menghitung omzet kotor, total HPP modal, laba kotor (*Gross Margin*), dan margin keuntungan dalam persentase secara real-time.
-3. **Grafik Visual Interaktif (Recharts)**: Visualisasi tren pendapatan harian/mingguan, diagram lingkaran proporsi kategori terlaris (*Pie Chart*), dan perbandingan metode bayar.
-4. **Sistem Perhitungan Komisi Sales & Pegawai**:
-   - Menghitung otomatis hak komisi 1.5% dari total omzet kasir/sales yang bersangkutan.
-   - Bonus unit tambahan untuk pencapaian target penjualan barang tertentu.
-   - Kartu rincian komisi per karyawan dilengkapi status pencairan dana (*Sudah Dicairkan / Belum Dicairkan*).
-5. **Laporan Kartu Stok & Valuasi Aset HPP**: Riwayat mutasi keluar-masuk per produk dan total nilai uang yang tertanam dalam persediaan gudang.
+#### 3.7 MODUL INTEGRASI SPREADSHEET: IMPOR & EKSPOR EXCEL NATIVE (.XLSX)
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Impor Excel Massal Master Produk** | Fitur unggah katalog ribuan barang via spreadsheet (.xlsx/.csv) lengkap dengan tombol unduh template resmi. | Memangkas waktu input data awal toko dari yang semula memakan waktu berhari-hari menjadi hitungan menit. |
+| **Pratinjau & Validasi Data Impor** | Sistem memvalidasi barcode ganda, format harga, dan satuan sebelum disimpan permanen ke database. | Mencegah kesalahan data (*human error*) atau data korup masuk ke sistem operasional toko. |
+| **Ekspor Native Spreadsheet (.xlsx)** | Unduh laporan Penjualan, Kartu Stok HPP, Buku Piutang, dan Kas Kecil ke file Excel asli dengan format sel rapi. | Memudahkan Bpk. Noor mengolah data laporan keuangan untuk keperluan pembukuan akuntansi dan perpajakan. |
 
 ---
 
-#### MODUL 9: KEAMANAN, HAK AKSES BERJENJANG (RBAC) & KELOLA TERMINAL
-Melindungi data sensitif keuangan toko dari penyalahgunaan staf.
-1. **Halaman Login Ritel Terproteksi (LoginPage)**: Login dengan PIN/Password aman, pemilihan terminal kasir, gudang aktif, dan input modal kas awal.
-2. **Pembagian Hak Akses 4 Peran (Role-Based Access Control / RBAC)**:
-   - **Owner (Bpk. Noor)**: Akses mutlak 100% ke seluruh menu, laporan audit kasir detail, laporan laba rugi, manajemen akun pengguna, dan pengaturan terminal.
-   - **Kepala Toko / Supervisor**: Akses operasional kasir, inventori gudang, persetujuan diskon/void, dan pengawasan shift kasir.
-   - **Kasir Toko**: Hanya dapat membuka menu Kasir (POS) dan Kas Kecil. Tidak dapat melihat HPP modal, laba toko, maupun merubah master data.
-   - **Petugas Gudang / DC**: Hanya dapat mengakses mutasi transfer stok, penerimaan barang, stok opname, dan manajemen rak. Terkunci dari menu kasir dan laporan keuangan.
-3. **Manajemen Akun Pengguna oleh Owner**: Menambah akun kasir baru, mereset PIN, dan mengatur hak akses secara terpusat.
-4. **Manajemen Mesin Kasir & Diagnostik Hardware**: Memantau status online/offline 5 terminal kasir, tes koneksi printer, scanner, dan laci uang.
+#### 3.8 MODUL LAPORAN FINANSIAL, AUDIT KASIR DETAIL & KOMISI SALES
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Audit Transaksi Kasir Mendalam (Khusus Owner)** | Log transaksi memuat: **Nama Kasir, Nomor Faktur, Jam-Menit-Detik Transaksi, Rincian Barang yang Dibeli, Terminal, dan Nominal Faktur**. | **Sangat efektif melacak riwayat transaksi saat ada selisih stok opname** pada barang tertentu di rak. |
+| **Dashboard Finansial & Margin Laba Kotor** | Ringkasan total omzet kotor, total HPP modal, laba kotor (*Gross Margin*), dan margin laba (%) real-time. | Pemilik toko dapat memantau kesehatan keuangan toko secara langsung kapan pun dan di mana pun. |
+| **Grafik Visual Interaktif (Recharts)** | Grafik tren omzet harian/mingguan, diagram lingkaran (*Pie Chart*) kategori terlaris, dan metode bayar terpopuler. | Mempermudah pengambilan keputusan bisnis strategis (produk apa yang harus ditambah stoknya). |
+| **Sistem Perhitungan Komisi Sales/Pegawai** | Menghitung otomatis hak komisi 1.5% dari omzet penjualan kasir + bonus unit target pencapaian toko. | Meningkatkan motivasi kerja karyawan toko dengan sistem insentif yang transparan dan otomatis. |
+| **Kartu Stok & Valuasi HPP Gudang** | Riwayat mutasi keluar-masuk per produk dan total nilai uang rupiah yang tertanam dalam aset persediaan barang. | Memberikan kepastian total nilai aset barang dagangan milik Toko Pak Noor secara akurat. |
+
+---
+
+#### 3.9 MODUL KEAMANAN, HAK AKSES BERJENJANG (RBAC) & KELOLA TERMINAL
+
+| Fitur Utama | Deskripsi Operasional | Manfaat bagi Toko Pak Noor |
+|:---|:---|:---|
+| **Halaman Login Ritel Terproteksi** | Akses masuk menggunakan PIN/Password unik karyawan, pilihan terminal kasir, gudang aktif, dan modal awal kas. | Mencegah orang luar atau staf yang tidak berwenang mengoperasikan komputer kasir toko. |
+| **Hak Akses 4 Tingkat Peran (RBAC)** | • **Owner (Pak Noor)**: Akses mutlak 100%, audit kasir detail, laporan laba rugi, kelola akun.<br>• **Kepala Toko / SPV**: Akses operasional kasir, gudang, persetujuan diskon/void.<br>• **Kasir Toko**: Hanya menu POS & Kas Kecil. Terkunci dari HPP modal dan laba toko.<br>• **Petugas Gudang DC**: Hanya mutasi transfer stok, penerimaan barang, dan rak. | **Melindungi rahasia data finansial toko (HPP dan laba)** dari staf biasa serta mencegah manipulasi data. |
+| **Manajemen Akun Pengguna oleh Owner** | Fitur khusus Owner untuk menambah kasir baru, mereset PIN staf, dan menonaktifkan karyawan yang sudah keluar. | Kontrol penuh pengelolaan staf toko berada 100% di tangan Bpk. Noor secara mandiri. |
+| **Manajemen Mesin Kasir & Diagnostik** | Memantau status online/offline 5 terminal kasir, tes koneksi printer thermal, scanner barcode, dan laci uang. | Memastikan seluruh perangkat keras kasir siap digunakan sebelum toko dibuka setiap pagi. |
 
 ---
 
@@ -256,37 +194,37 @@ Melindungi data sensitif keuangan toko dari penyalahgunaan staf.
 
 | No | Spesifikasi Kebutuhan Toko Pak Noor | Implementasi Fitur Solusi Tim Mas Wahyu | Status Kesiapan |
 |:--:|:---|:---|:---:|
-| **1** | **5 Terminal Kasir Serentak** | Arsitektur POS 5 terminal dengan isolasi transaksi ACID database locking. | **Tersedia (100%)** |
-| **2** | **Navigasi Cepat Kasir** | Navigasi keyboard penuh (F1-F12), input pengali cepat, audio feedback scanner. | **Tersedia (100%)** |
-| **3** | **Mode Layar Sentuh Tablet** | Tampilan antarmuka Touch POS dengan layout produk kotak untuk tablet/iPad. | **Tersedia (100%)** |
-| **4** | **Hardware Barcode & Printer** | Integrasi scanner USB/Bluetooth, thermal print 58/80mm, cash drawer RJ11. | **Tersedia (100%)** |
-| **5** | **Pelanggan & Limit Piutang** | Pendaftaran member, plafon kredit limit, dan blokir otomatis saat jatuh tempo. | **Tersedia (100%)** |
-| **6** | **Metode Bayar Piutang & DP** | Bayar Tempo 7/14/30 hari dan pembayaran DP (Uang Muka + Sisa Hutang Tempo). | **Tersedia (100%)** |
-| **7** | **Kas Kecil Kasir (Petty Cash)** | Form input biaya operasional kasir, auto-potong laci kas, cetak voucher kas. | **Tersedia (100%)** |
-| **8** | **Cetak Draf Picking List** | Struk thermal nota hold bill berformat daftar ambil barang gudang + nomor rak. | **Tersedia (100%)** |
-| **9** | **Stok 2 Lokasi (Toko & DC)** | Pemisahan stok fisik WH-01 dan WH-02, mutasi transfer, dan alert stok menipis. | **Tersedia (100%)** |
-| **10**| **Manajemen Rak Gudang** | Planogram penataan rak (A1, B2) tertera pada struk picking list dan master barang. | **Tersedia (100%)** |
-| **11**| **Surat Jalan Mode Koli Kardus** | Dokumen surat jalan resmi dengan toggle ringkasan koli kardus logistik ekspedisi. | **Tersedia (100%)** |
-| **12**| **Multi-Satuan & Multi-Harga** | Konversi bertingkat (Pcs/Dus), barcode per satuan, harga Eceran/Grosir 1-2/Member. | **Tersedia (100%)** |
+| **1** | **5 Terminal Kasir Aktif & Cepat** | Arsitektur POS 5 terminal simultan dengan isolasi transaksi ACID database locking. | **Tersedia (100%)** |
+| **2** | **Navigasi Cepat Kasir (Keyboard-First)** | Pintasan F1–F12, input pengali cepat `5*899...`, suara beep scanner otentik minimarket. | **Tersedia (100%)** |
+| **3** | **Mode Layar Sentuh Tablet (Touch POS)** | Antarmuka kotak foto produk bergambar dengan tab kategori untuk tablet/iPad kasir. | **Tersedia (100%)** |
+| **4** | **Integrasi Scanner, Printer & Cash Drawer** | Scanner USB/Bluetooth, Printer Thermal 58/80mm ESC/POS, laci uang RJ11, Customer Display F8. | **Tersedia (100%)** |
+| **5** | **Pelanggan & Limit Piutang (Credit Limit)** | Master pelanggan, plafon limit kredit, kunci blokir otomatis saat piutang jatuh tempo. | **Tersedia (100%)** |
+| **6** | **Metode Bayar Piutang (Tempo) & Uang Muka (DP)** | Bayar Tempo 7/14/30 hari dan pembayaran DP (Uang Muka + Sisa Hutang Tempo) tercatat di struk. | **Tersedia (100%)** |
+| **7** | **Kas Kecil Kasir (Petty Cash)** | Input biaya kasir instan, 7 kategori biaya operasional toko, auto-potong laci kasir per shift. | **Tersedia (100%)** |
+| **8** | **Cetak Draf Picking List Gudang** | Struk thermal nota antrean sementara khusus staf gudang dengan lokasi rak barang (A1, B2). | **Tersedia (100%)** |
+| **9** | **Pencatatan Stok 2 Gudang (Toko & DC)** | Pemisahan stok fisik WH-01 dan WH-02, mutasi transfer stok, dan notifikasi stok menipis. | **Tersedia (100%)** |
+| **10**| **Manajemen Planogram Rak Gudang** | Pemetaan lorong dan nomor rak (A1, B2) tertera pada struk picking list dan master barang. | **Tersedia (100%)** |
+| **11**| **Surat Jalan Mode Packing List Koli** | Dokumen surat jalan resmi dengan toggle ringkasan koli kardus logistik ekspedisi. | **Tersedia (100%)** |
+| **12**| **Multi-Satuan Berjenjang & Multi-Barcode** | Konversi bertingkat (Pcs/Dus), barcode per satuan, harga Eceran/Grosir 1-2/Member. | **Tersedia (100%)** |
 | **13**| **HPP Otomatis Average Costing** | Perhitungan modal HPP rata-rata bergerak setiap penerimaan barang baru masuk. | **Tersedia (100%)** |
-| **14**| **Ekspor Excel (.xlsx) Lengkap** | Ekspor native file Excel pada penjualan, kartu stok, piutang, dan kas kecil. | **Tersedia (100%)** |
-| **15**| **Impor Excel Massal Master Produk**| Upload katalog barang ribuan SKU via Excel dengan template unduhan resmi. | **Tersedia (100%)** |
-| **16**| **Audit Kasir Detail per Jam & Item**| Log audit transaksi kasir: Jam Transaksi, Nama Kasir, Nama Barang, Nominal. | **Tersedia (100%)** |
-| **17**| **Sistem Komisi Sales 1.5%** | Kalkulasi otomatis komisi 1.5% dari omzet kasir + bonus target unit barang. | **Tersedia (100%)** |
-| **18**| **Hak Akses Berjenjang (RBAC)** | Pembagian peran 4 level (Owner, Supervisor, Kasir, Gudang DC) login ber-PIN. | **Tersedia (100%)** |
+| **14**| **Ekspor Excel (.xlsx) Lengkap** | Ekspor native file Excel pada penjualan, kartu stok HPP, piutang, dan kas kecil. | **Tersedia (100%)** |
+| **15**| **Impor Excel Massal Master Produk** | Upload katalog barang ribuan SKU via Excel dengan template unduhan resmi. | **Tersedia (100%)** |
+| **16**| **Audit Kasir Detail per Jam & Item** | Log audit transaksi kasir: Jam Transaksi, Nama Kasir, Nama Barang, Nominal Faktur. | **Tersedia (100%)** |
+| **17**| **Sistem Komisi Sales & Pegawai** | Perhitungan otomatis komisi 1.5% dari omzet kasir + bonus target unit barang. | **Tersedia (100%)** |
+| **18**| **Hak Akses Berjenjang (RBAC 4 Level)** | Pembagian peran 4 tingkatan (Owner, Supervisor, Kasir, Gudang DC) login ber-PIN aman. | **Tersedia (100%)** |
 
 ---
 
 ### 5. RENCANA ANGGARAN BIAYA (RAB) & INVESTASI TRANSPARAN
 
-Kami menyajikan paket investasi yang rasional, transparan, dan kompetitif dengan skema **Lisensi Penuh (Full Ownership / Sekali Bayar)** tanpa biaya langganan bulanan per kasir yang memberatkan:
+Kami menyajikan paket investasi yang transparan, rasional, dan menyeluruh dengan skema **Hak Milik Penuh (Full Ownership / Sekali Bayar)** tanpa biaya langganan bulanan per kasir yang memberatkan:
 
 #### A. Rincian Biaya Pengembangan Sistem Perangkat Lunak (Software Development - Sekali Bayar)
 
 | No | Modul / Komponen Pekerjaan | Lingkup Deliverables & Fitur | Biaya (IDR) |
 |:--:|:---|:---|:---:|
 | **1** | **Core POS Engine & Multi-Terminal** | Arsitektur 5 kasir simultan, transaksi keyboard & touch, ACID concurrency locking, hold bill, split bill, cetak thermal 58/80mm, cash drawer, customer display F8. | Rp 4.500.000 |
-| **2** | **Modul Pelanggan & Limit Piutang** | Database pelanggan, plafon limit kredit (credit limit), peringatan & kunci otomatis jatuh tempo, metode bayar Piutang & DP, buku piutang pelanggan. | Rp 2.500.000 |
+| **2** | **Modul Pelanggan & Limit Piutang** | Database pelanggan, plafon limit kredit (credit limit), peringatan & kunci otomatis jatuh tempo, metode bayar Piutang & DP, kartu piutang pelanggan. | Rp 2.500.000 |
 | **3** | **Modul Inventori, Multi-Gudang & Rak** | Manajemen stok 2 gudang (Toko & DC), transfer mutasi stok, stok opname digital, planogram manajemen rak barang, cetak surat jalan standar & mode packing list koli. | Rp 3.000.000 |
 | **4** | **Modul Kas Kecil (Petty Cash) Kasir** | Form input biaya kasir instan, 7 kategori biaya operasional toko, auto-potong laci kasir, cetak bukti kas keluar, rekapitulasi audit per shift kasir. | Rp 1.500.000 |
 | **5** | **Master Data Produk & Impor/Ekspor Excel**| Satuan bertingkat (Pcs/Dus), multi-tier harga, HPP average costing, modul impor produk massal (.xlsx) dengan template, dan ekspor native .xlsx di seluruh laporan. | Rp 2.000.000 |
@@ -339,7 +277,7 @@ Pembayaran investasi dilakukan secara bertahap dalam 3 termin berbasis pencapaia
 
 ---
 
-### 7. JADWAL PENERAPAN & GARANSI BEBAS BUG 60 HARI
+### 7. JADWAL PENERAPAN (TIMELINE: 3 - 4 MINGGU) & GARANSI BEBAS BUG
 
 Karena pondasi prototipe operasional telah berhasil kami bangun dan diuji coba, waktu penerapan di lokasi toko Pak Noor dapat diselesaikan dalam **3 s/d 4 minggu**:
 

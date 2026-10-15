@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Proposal Penawaran & RAB v2.0 - POS & Inventori Retail Pak Noor</title>
+  <title>Proposal Teknis & Rencana Anggaran Biaya (RAB) v2.0 - Toko Retail Pak Noor</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
 
@@ -21,22 +21,24 @@
 
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 8.8px;
-      line-height: 1.4;
+      font-size: 8.5px;
+      line-height: 1.45;
       color: #1e293b;
       background-color: #ffffff;
     }
 
     .page {
       width: 100%;
-      min-height: 277mm;
+      height: 277mm;
+      max-height: 277mm;
+      overflow: hidden;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       page-break-after: always;
       break-after: page;
-      padding: 2px 0 12px 0;
+      padding: 2px 0 10px 0;
     }
 
     .page:last-child {
@@ -55,7 +57,7 @@
     }
 
     .brand-title {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 800;
       color: #064e3b;
       letter-spacing: -0.3px;
@@ -80,11 +82,11 @@
       text-align: right;
     }
 
-    /* Proposal Title */
+    /* Proposal Banner */
     .proposal-title-block {
       background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
       color: white;
-      padding: 10px 14px;
+      padding: 9px 12px;
       border-radius: 6px;
       margin-bottom: 8px;
     }
@@ -99,20 +101,20 @@
     }
 
     .proposal-main-title {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 800;
       line-height: 1.25;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .proposal-meta-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 6px;
-      margin-top: 6px;
-      padding-top: 6px;
+      margin-top: 5px;
+      padding-top: 5px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
-      font-size: 8px;
+      font-size: 7.8px;
     }
 
     .meta-item strong {
@@ -126,8 +128,8 @@
     .live-demo-banner {
       background: #f0fdf4;
       border: 1px dashed #059669;
-      border-radius: 6px;
-      padding: 6px 10px;
+      border-radius: 5px;
+      padding: 5px 8px;
       margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
@@ -135,18 +137,18 @@
     }
 
     .live-demo-text {
-      font-size: 8.5px;
+      font-size: 8px;
       color: #065f46;
       font-weight: 600;
     }
 
     .live-demo-link {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 8.5px;
+      font-size: 8px;
       font-weight: 700;
       color: #047857;
       background: #ffffff;
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 4px;
       border: 1px solid #a7f3d0;
       text-decoration: none;
@@ -154,65 +156,85 @@
 
     /* Section Styles */
     .section-title {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 800;
       color: #0f172a;
-      border-left: 3.5px solid #059669;
+      border-left: 3px solid #059669;
       padding-left: 6px;
       margin: 8px 0 5px 0;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
+    .sub-section-title {
+      font-size: 8.8px;
+      font-weight: 800;
+      color: #065f46;
+      margin: 6px 0 3px 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     p {
       margin-bottom: 5px;
       text-align: justify;
       color: #334155;
-      font-size: 8.5px;
-    }
-
-    .module-card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 5px;
-      padding: 6px 8px;
-      margin-bottom: 6px;
-    }
-
-    .module-header {
-      font-size: 9px;
-      font-weight: 800;
-      color: #065f46;
-      margin-bottom: 2px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .module-desc {
       font-size: 8.2px;
-      color: #475569;
-      line-height: 1.35;
+      line-height: 1.4;
     }
 
-    .module-desc ul {
-      margin-left: 14px;
-      margin-top: 2px;
-    }
-
-    .module-desc li {
-      margin-bottom: 1.5px;
-    }
-
-    /* Tables */
-    .custom-table {
+    /* Feature Tables */
+    .feature-table {
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 6px;
-      font-size: 8.2px;
+      font-size: 7.8px;
     }
 
-    .custom-table th {
+    .feature-table th {
+      background-color: #064e3b;
+      color: #ffffff;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 7.2px;
+      letter-spacing: 0.4px;
+      padding: 3.5px 5px;
+      text-align: left;
+      border: 1px solid #064e3b;
+    }
+
+    .feature-table td {
+      padding: 3.5px 5px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+      line-height: 1.35;
+    }
+
+    .feature-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .feature-name {
+      font-weight: 800;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .feature-benefit {
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    /* Financial Tables */
+    .finance-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+      font-size: 8px;
+    }
+
+    .finance-table th {
       background-color: #064e3b;
       color: #ffffff;
       font-weight: 700;
@@ -224,13 +246,13 @@
       border: 1px solid #064e3b;
     }
 
-    .custom-table td {
+    .finance-table td {
       padding: 4px 6px;
       border: 1px solid #e2e8f0;
-      vertical-align: top;
+      vertical-align: middle;
     }
 
-    .custom-table tr:nth-child(even) {
+    .finance-table tr:nth-child(even) {
       background-color: #f8fafc;
     }
 
@@ -249,20 +271,21 @@
       background: #dcfce7;
       color: #15803d;
       padding: 1.5px 5px;
-      border-radius: 4px;
+      border-radius: 3px;
       font-weight: 800;
-      font-size: 7px;
+      font-size: 6.8px;
       display: inline-block;
     }
 
-    /* Box Info */
+    /* Info Box */
     .info-box {
       background-color: #f8fafc;
       border: 1px solid #e2e8f0;
-      border-radius: 5px;
-      padding: 6px 8px;
+      border-radius: 4px;
+      padding: 5px 8px;
       margin-bottom: 6px;
-      font-size: 8px;
+      font-size: 7.8px;
+      line-height: 1.4;
     }
 
     /* Signatures */
@@ -270,18 +293,18 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .signature-box {
       border: 1px solid #cbd5e1;
       border-radius: 5px;
-      padding: 8px 12px;
+      padding: 7px 10px;
       background-color: #f8fafc;
     }
 
     .signature-title {
-      font-size: 7.5px;
+      font-size: 7px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -290,14 +313,14 @@
     }
 
     .signature-company {
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 800;
       color: #0f172a;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .signature-name {
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 800;
       color: #0f172a;
       border-top: 1px dashed #94a3b8;
@@ -305,15 +328,15 @@
     }
 
     .signature-role {
-      font-size: 7.5px;
+      font-size: 7px;
       color: #64748b;
     }
 
     .footer-note {
-      font-size: 7.5px;
+      font-size: 7.2px;
       color: #94a3b8;
       border-top: 1px solid #e2e8f0;
-      padding-top: 4px;
+      padding-top: 3px;
       display: flex;
       justify-content: space-between;
       margin-top: auto;
@@ -322,13 +345,13 @@
 </head>
 <body>
 
-  <!-- ==================== HALAMAN 1: EKSEKUTIF & DETAIL FITUR POS, PIUTANG, KAS KECIL ==================== -->
+  <!-- ==================== HALAMAN 1: EKSEKUTIF, ARSITEKTUR & MODUL POS KASIR ==================== -->
   <div class="page">
     <div>
       <div class="header-container">
         <div>
           <div class="brand-title">POS PAK NOOR & MULTI-GUDANG RETAIL</div>
-          <div class="brand-subtitle">PROPOSAL TEKNIS & RENCANA ANGGARAN BIAYA (RAB) v2.0 - LENGKAP</div>
+          <div class="brand-subtitle">PROPOSAL TEKNIS & RENCANA ANGGARAN BIAYA (RAB) v2.0 - RESMI</div>
         </div>
         <div class="doc-badge">
           No: 029/PROP-POS-PN/X/2026<br>
@@ -337,12 +360,12 @@
       </div>
 
       <div class="proposal-title-block">
-        <div class="proposal-label">PENAWARAN PENGEMBANGAN SISTEM POS & INFRASTRUKTUR CLOUD RETAIL</div>
-        <div class="proposal-main-title">Aplikasi Point of Sale 5 Terminal, Kontrol Limit Piutang, Kas Kecil, Multi-Gudang & Audit Kasir Terpadu</div>
+        <div class="proposal-label">PENAWARAN PENGEMBANGAN SISTEM POINT OF SALE & MANAJEMEN INVENTORI RETAIL</div>
+        <div class="proposal-main-title">Aplikasi Kasir 5 Terminal, Kontrol Limit Piutang, Kas Kecil, Multi-Gudang & Audit Terpadu</div>
         <div class="proposal-meta-grid">
           <div class="meta-item">
             <strong>Klien / Pemilik:</strong>
-            Bpk. Noor (Toko Retail Pak Noor)
+            Bpk. Noor (Toko Pak Noor)
           </div>
           <div class="meta-item">
             <strong>Penyedia Solusi:</strong>
@@ -354,150 +377,359 @@
           </div>
           <div class="meta-item">
             <strong>Versi Dokumen:</strong>
-            Revisi Final v2.0 (Ultra-Detail)
+            Revisi Final v2.0
           </div>
         </div>
       </div>
 
       <div class="live-demo-banner">
         <div class="live-demo-text">
-          🚀 <strong>Aplikasi Telah Selesai Dibangun & Siap Diuji Coba Langsung:</strong> Seluruh alur transaksi kasir, kas kecil, piutang, dan picking list dapat dicoba di:
+          🚀 <strong>Aplikasi Telah Selesai Dibangun & Siap Diuji Coba Langsung:</strong> Bpk. Noor dapat mencoba seluruh alur transaksi, kas kecil, piutang, dan picking list di:
         </div>
         <a href="https://kasir-pak-noor.vercel.app" class="live-demo-link" target="_blank">https://kasir-pak-noor.vercel.app</a>
       </div>
 
-      <div class="section-title">1. Pernyataan Kesiapan Tim & Ringkasan Solusi</div>
+      <div class="section-title">1. Ringkasan Eksekutif & Pernyataan Kesiapan Tim</div>
       <p>
-        Menindaklanjuti lembar kebutuhan teknis dari <strong>Bpk. Noor</strong>, kami mengonfirmasi bahwa <strong>seluruh fitur operasional yang diajukan telah sesuai 100% dengan kapabilitas teknologi tim kami</strong>. Sistem ini dikembangkan dengan arsitektur web modern berkinerja tinggi (*React + Vite + ACID Transaction Locking*) untuk menjamin kecepatan transaksi di 5 meja kasir serentak tanpa risiko bentrok stok maupun selisih pembukuan.
+        Menindaklanjuti draf lembar kebutuhan sistem retail dari <strong>Bpk. Noor</strong>, kami mengonfirmasi bahwa <strong>seluruh kebutuhan operasional toko telah SESUAI 100% dengan kapabilitas teknologi tim kami</strong>. Sistem dibangun dengan arsitektur web modern berkinerja tinggi (*React 18 + Vite + ACID Concurrency Locking*) yang dirancang khusus untuk menjamin kecepatan pelayanan di 5 meja kasir serentak tanpa risiko bentrok stok, pengawasan ketat plafon piutang, dan pencatatan kas kecil harian yang rapi.
       </p>
 
-      <div class="section-title">2. Rincian Seluruh Fitur Sistem (Bagian I: Transaksi, Keuangan Kasir & Piutang)</div>
+      <div class="section-title">2. Spesifikasi Perangkat Keras & Kompatibilitas Hardware</div>
+      <p>
+        Sistem kompatibel penuh dengan berbagai perangkat keras kasir standar retail: <strong>Komputer PC / Laptop / Tablet Layar Sentuh</strong>, <strong>Barcode Scanner USB / Bluetooth / Kamera</strong>, <strong>Printer Thermal 58mm & 80mm ESC/POS</strong>, <strong>Laci Uang Kasir (Cash Drawer RJ11)</strong> otomatis terbuka saat bayar tunai, dan <strong>Layar Pelanggan (Customer Display [F8])</strong> untuk transparansi belanja.
+      </p>
 
-      <!-- Modul 1 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 1: MESIN KASIR CEPAT (POINT OF SALE / POS ENGINE 5 TERMINAL)</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Dukungan 5 Kasir Simultan:</strong> Penguncian database tingkat ACID mencegah selisih stok (race condition) saat kasir menjual barang sama bersamaan.</li>
-            <li><strong>Navigasi Keyboard Penuh (Keyboard-First POS):</strong> Pintasan F1–F12, Space/Enter (Search), F12 (Bayar), F6 (Hold Bill), F7 (Recall), format pengali cepat `5*899...`.</li>
-            <li><strong>Mode Sentuh (Touchscreen Tablet View):</strong> Tampilan kotak foto produk dengan tab kategori untuk tablet/iPad kasir.</li>
-            <li><strong>Hardware Barcode & Printer Thermal:</strong> Scanner USB HID/Bluetooth, Printer Thermal 58mm/80mm (ESC/POS), dan Cash Drawer RJ11 otomatis terbuka.</li>
-            <li><strong>Layar Pelanggan (Customer Display [F8]):</strong> Jendela layar kedua menghadap pelanggan menampilkan item scan, harga, dan total belanja real-time.</li>
-            <li><strong>Hold & Recall Antrean:</strong> Menahan sementara belanjaan pelanggan dan mencetak <em>Draft Picking List Gudang</em> 80mm lengkap dengan nomor rak.</li>
-            <li><strong>Split Bill & Diskon Fleksibel:</strong> Pemisahan 1 transaksi menjadi 2 faktur terpisah, diskon per item (Rp/%), diskon global faktur, dan cetak ulang struk (Reprint).</li>
-            <li><strong>Manajemen Shift Kasir:</strong> Input modal awal kasir, log kas masuk/keluar, hitung fisik uang (cash count), kalkulasi selisih kas, cetak Laporan X/Z.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Modul 2 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 2: PELANGGAN, PIUTANG (TEMPO) & KONTROL LIMIT KREDIT (CREDIT LIMIT)</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Plafon Kredit Maksimal (Credit Limit):</strong> Penetapan batas maksimal piutang per pelanggan (contoh: Toko Mandiri limit Rp 10.000.000).</li>
-            <li><strong>Penguncian Otomatis (Auto Overdue Lock):</strong> Tombol bayar piutang otomatis terkunci merah jika melebihi limit atau ada tagihan jatuh tempo yang belum lunas.</li>
-            <li><strong>Metode Bayar Piutang & DP:</strong> Tenor tempo fleksibel (7, 14, 30 hari) serta opsi Uang Muka (DP) dengan sisa masuk piutang tempo tercatat di struk.</li>
-            <li><strong>Buku Pembantu Piutang Pelanggan:</strong> Kartu piutang individual, riwayat angsuran, dan aksi pencatatan pelunasan hutang langsung memotong saldo piutang.</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Modul 3 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 3: KAS KECIL KASIR (PETTY CASH & BIAYA OPERASIONAL TOKO)</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Input Biaya Kasir Instan di POS:</strong> Kasir mencatat biaya operasional harian langsung di meja kasir tanpa menu akuntansi yang rumit.</li>
-            <li><strong>Kategori Biaya Operasional:</strong> Bensin armada, retribusi parkir pasar, ongkir ekspedisi, upah kuli bongkar, konsumsi toko, perlengkapan kasir.</li>
-            <li><strong>Auto-Potong Saldo Laci Kasir:</strong> Nilai kas kecil otomatis mengurangi fisik uang kasir pada shift aktif sehingga setoran tutup kasir seimbang sempurna.</li>
-            <li><strong>Cetak Bukti Pengeluaran Kasir:</strong> Struk thermal voucher kas keluar bertanda tangan penerima dana sebagai bukti fisik audit kasir.</li>
-          </ul>
-        </div>
-      </div>
+      <div class="section-title">3. Rincian Fitur: Modul 1 - Mesin Kasir Cepat (POS Engine 5 Terminal)</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">5 Kasir Simultan (ACID)</td>
+            <td>5 terminal kasir aktif serentak dengan penguncian database atomik saat menjual barang yang sama.</td>
+            <td class="feature-benefit">Menghilangkan antrean jam sibuk tanpa risiko selisih stok antar-kasir.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Keyboard-First (F1-F12)</td>
+            <td>Transaksi 100% tanpa mouse: [Space] Search, [F12] Bayar, [F6] Hold, [F7] Recall, [Del] Hapus.</td>
+            <td class="feature-benefit">Proses input kasir 3x lebih cepat dibanding kasir berbasis klik mouse biasa.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Input Pengali Cepat</td>
+            <td>Cukup ketik `5*899...` di scanner untuk memasukkan 5 unit barang sekaligus tanpa scan berulang.</td>
+            <td class="feature-benefit">Sangat menghemat waktu kasir saat melayani pembeli grosir kartonan.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Mode Sentuh (Touch POS)</td>
+            <td>Tata letak kotak foto produk bergambar dengan tab kategori untuk tablet/iPad kasir.</td>
+            <td class="feature-benefit">Fleksibel digunakan pada perangkat tablet kasir layar sentuh.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Audio Feedback Scanner</td>
+            <td>Nada beep 2.4 kHz minimarket saat scan sukses dan lonceng kasir saat transaksi berhasil.</td>
+            <td class="feature-benefit">Kasir tidak perlu menatap layar terus-menerus untuk memastikan barang ter-scan.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Antrean Belanja (Hold/Recall)</td>
+            <td>Menahan sementara transaksi (Antrean 1, 2, 3) saat pembeli lupa dompet / ambil barang tambahan.</td>
+            <td class="feature-benefit">Antrean kasir tidak macet dan pembeli berikutnya dapat langsung dilayani.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Cetak Draf (Picking List)</td>
+            <td>Cetak struk thermal antrean sementara berisi lokasi rak barang (A1, B2) dan kolom paraf.</td>
+            <td class="feature-benefit">Staf gudang langsung menyiapkan barang pesanan selagi kasir menghitung.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Split Bill & Diskon Fleksibel</td>
+            <td>Pemisahan 1 transaksi menjadi 2 faktur terpisah, diskon nominal (Rp) atau persentase (%).</td>
+            <td class="feature-benefit">Mengakomodasi rombongan belanja dan program promosi toko secara rapi.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Struk Thermal 58/80mm</td>
+            <td>Struk thermal lengkap rincian barang, PPN, QR faktur, dan opsi cetak ulang (Reprint).</td>
+            <td class="feature-benefit">Bukti belanja sah yang rapi dan dapat dicetak ulang saat kertas habis.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Customer Display Screen [F8]</td>
+            <td>Monitor kedua menghadap pembeli menampilkan item scan, harga, dan total belanja real-time.</td>
+            <td class="feature-benefit">Meningkatkan kepercayaan pembeli dan meminimalisir salah input harga.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Manajemen Shift & Laci Kas</td>
+            <td>Input modal awal, log kas masuk/keluar, hitung fisik uang (cash count), Laporan X/Z.</td>
+            <td class="feature-benefit">Mencegah selisih setoran kasir dan memudahkan audit uang tunai harian.</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
 
     <div class="footer-note">
-      <span>Halaman 1 dari 3 • Dokumen Resmi Penawaran & Spesifikasi Fitur POS Pak Noor</span>
+      <span>Halaman 1 dari 4 • Dokumen Proposal Teknis & Spesifikasi Sistem POS Pak Noor</span>
       <span>Live Demo: https://kasir-pak-noor.vercel.app</span>
     </div>
   </div>
 
-  <!-- ==================== HALAMAN 2: DETAIL FITUR GUDANG, MASTER DATA, EXCEL & AUDIT ==================== -->
+  <!-- ==================== HALAMAN 2: PIUTANG, KAS KECIL, GUDANG & LOGISTIK ==================== -->
   <div class="page">
     <div>
       <div class="header-container">
         <div>
-          <div class="brand-title">RINCIAN SELURUH FITUR SISTEM (BAGIAN II)</div>
-          <div class="brand-subtitle">INVENTORI MULTI-GUDANG, RAK, MASTER DATA, EXCEL, AUDIT & KEAMANAN</div>
+          <div class="brand-title">KONTROL PIUTANG, KAS KECIL, MULTI-GUDANG & LOGISTIK</div>
+          <div class="brand-subtitle">RINCIAN FITUR MODUL 2, MODUL 3, MODUL 4 & MODUL 5</div>
         </div>
         <div class="doc-badge">
           Fase: Full Retail Suite v2.0
         </div>
       </div>
 
-      <!-- Modul 4 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 4: INVENTORI MULTI-GUDANG (TOKO & DC), RAK & STOCK OPNAME</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Pencatatan Stok 2 Gudang:</strong> Pemisahan kuantitas fisik Toko Depan (WH-01) dan DC Logistik (WH-02) secara independen dan real-time.</li>
-            <li><strong>Peringatan Stok Menipis (Low Stock Alert):</strong> Notifikasi visual otomatis ketika stok produk berada di bawah batas safety stock minimum.</li>
-            <li><strong>Mutasi Transfer Antar-Gudang:</strong> Dokumen transfer pemindahan stok Toko &harr; DC dengan alur status Draft &rarr; Sent &rarr; Received.</li>
-            <li><strong>Planogram & Manajemen Lokasi Rak:</strong> Pemetaan lorong dan rak fisik (A1, B2) tertera pada struk picking list dan master barang.</li>
-            <li><strong>Stock Opname Digital:</strong> Input hitung fisik (physical count), hitung otomatis selisih unit, dan pencatatan alasan selisih (rusak/hilang/expired).</li>
-            <li><strong>Inbound PO, Retur & Shelf Tags:</strong> Penerimaan barang supplier, retur barang rusak, serta cetak label harga barcode rak toko (Shelf Tags).</li>
-          </ul>
+      <div class="sub-section-title">MODUL 2: PELANGGAN, PIUTANG (TEMPO) & KONTROL LIMIT KREDIT (CREDIT LIMIT)</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Plafon Kredit (Credit Limit)</td>
+            <td>Penetapan batas maksimal saldo hutang per pelanggan (contoh: Toko Mandiri Rp 10.000.000).</td>
+            <td class="feature-benefit">Mengendalikan risiko piutang agar tidak melampaui kemampuan bayar pembeli.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Kunci Otomatis (Overdue Lock)</td>
+            <td>Tombol bayar piutang terkunci merah jika melebihi limit atau ada tagihan jatuh tempo belum lunas.</td>
+            <td class="feature-benefit"><strong>Mencegah piutang macet</strong> secara otomatis tanpa bergantung ingatan kasir.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Bayar Piutang (Tempo 7/14/30)</td>
+            <td>Pilihan jatuh tempo 7, 14, atau 30 hari; otomatis tercatat di struk dan kalender jatuh tempo.</td>
+            <td class="feature-benefit">Memfasilitasi langganan grosir/warung yang terbiasa bayar sistem tempo.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Bayar Uang Muka (DP)</td>
+            <td>Pembayaran sebagian nilai belanja (DP tunai/transfer), sisa tagihan masuk piutang tempo.</td>
+            <td class="feature-benefit">Mengamankan uang muka transaksi partai besar sebelum pesanan dikirim.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Buku Pembantu Piutang</td>
+            <td>Kartu piutang individual mencatat faktur hutang, sisa saldo, dan aksi pelunasan hutang oleh Owner.</td>
+            <td class="feature-benefit">Pak Noor memiliki visibilitas 100% atas seluruh piutang toko yang beredar.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sub-section-title">MODUL 3: KAS KECIL KASIR (PETTY CASH & BIAYA OPERASIONAL TOKO)</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Input Kas Kecil Cepat di POS</td>
+            <td>Kasir mencatat biaya harian langsung dari tombol kasir tanpa menu akuntansi yang rumit.</td>
+            <td class="feature-benefit">Memastikan setiap rupiah uang kas yang keluar tercatat resmi dan akurat.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">7 Kategori Biaya Operasional</td>
+            <td>Bensin Armada, Retribusi Pasar & Parkir, Ongkir Ekspedisi, Kuli Bongkar, Konsumsi, Perlengkapan.</td>
+            <td class="feature-benefit">Memudahkan pengelompokan biaya operasional saat audit laba rugi bulanan.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Auto-Potong Fisik Laci Kasir</td>
+            <td>Biaya kas kecil otomatis mengurangi fisik uang kasir pada shift aktif yang bersangkutan.</td>
+            <td class="feature-benefit"><strong>Menghilangkan selisih kasir</strong>; uang fisik laci dan catatan sistem klop.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Cetak Bukti Kasir (Voucher)</td>
+            <td>Cetak struk thermal bukti pengeluaran bertanda tangan penerima dana dan kasir bertugas.</td>
+            <td class="feature-benefit">Bukti fisik sah saat pemeriksaan pertanggungjawaban uang kas toko.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sub-section-title">MODUL 4: INVENTORI MULTI-GUDANG (TOKO & DC), RAK & STOCK OPNAME</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Pencatatan Stok 2 Gudang</td>
+            <td>Pemisahan stok fisik Toko Depan (WH-01) dan Gudang Pusat Logistik / DC (WH-02) real-time.</td>
+            <td class="feature-benefit">Menghindari stok kosong di toko depan saat barang cadangan di DC masih ada.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Peringatan Stok Menipis</td>
+            <td>Notifikasi visual otomatis warna merah/kuning saat stok berada di bawah batas safety stock.</td>
+            <td class="feature-benefit">Toko dapat segera order ulang ke distributor sebelum barang habis total.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Mutasi Transfer Antar-Gudang</td>
+            <td>Pemindahan stok Toko &harr; DC dengan status berjenjang: Draft &rarr; Sent &rarr; Received.</td>
+            <td class="feature-benefit">Stok berpindah atomik tanpa barang hilang dan tercatat siapa petugas pengirim.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Planogram & Manajemen Rak</td>
+            <td>Pemetaan fisik lorong dan nomor rak (Rak A1, B2) terhubung ke struk picking list dan master barang.</td>
+            <td class="feature-benefit">Staf gudang cepat menemukan posisi barang saat menyiapkan pesanan pembeli.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Stock Opname Digital</td>
+            <td>Input hasil hitung fisik (physical count), hitung otomatis selisih unit, dan alasan selisih.</td>
+            <td class="feature-benefit"><strong>Stok opname berkala mudah dilakukan</strong> tanpa harus menutup toko seharian.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Inbound PO, Retur & Shelf Tags</td>
+            <td>Penerimaan barang distributor, update HPP, retur barang cacat, cetak label barcode rak.</td>
+            <td class="feature-benefit">Display rak toko fisik rapi dan akurasi penerimaan barang supplier terjamin.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="sub-section-title">MODUL 5: LOGISTIK PENGIRIMAN, SURAT JALAN & PACKING LIST KOLI</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Surat Jalan Pengiriman Resmi</td>
+            <td>Dokumen legal pengiriman lengkap nomor seri, toko pengirim, armada truk/pickup, sopir, penerima.</td>
+            <td class="feature-benefit">Dokumen legalitas sah yang melindungi barang toko selama perjalanan di jalan.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Toggle Mode Packing List Koli</td>
+            <td>Opsi beralih antara rincian SKU detail dan ringkasan kemasan kardus logistik ekspedisi.</td>
+            <td class="feature-benefit"><strong>Sopir & ekspedisi langsung menghitung jumlah koli kardus</strong> di bak mobil.</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="footer-note">
+      <span>Halaman 2 dari 4 • Dokumen Proposal Teknis & Spesifikasi Sistem POS Pak Noor</span>
+      <span>Live Demo: https://kasir-pak-noor.vercel.app</span>
+    </div>
+  </div>
+
+  <!-- ==================== HALAMAN 3: MASTER DATA, EXCEL, AUDIT & MATRIKS ==================== -->
+  <div class="page">
+    <div>
+      <div class="header-container">
+        <div>
+          <div class="brand-title">MASTER DATA, INTEGRASI EXCEL, AUDIT & MATRIKS KESESUAIAN</div>
+          <div class="brand-subtitle">RINCIAN FITUR MODUL 6, 7, 8, 9 & MATRIKS KEBUTUHAN BPK. NOOR</div>
+        </div>
+        <div class="doc-badge">
+          Kepatuhan: 100% Compliant
         </div>
       </div>
 
-      <!-- Modul 5 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 5: LOGISTIK, SURAT JALAN & PACKING LIST KOLI/KARDUS</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Surat Jalan Pengiriman Resmi:</strong> Dokumen legal pengiriman barang lengkap dengan data toko, armada truk/pickup, nama sopir, dan penerima.</li>
-            <li><strong>Toggle Mode Packing List Koli:</strong> Opsi beralih antara rincian seluruh SKU satuan detail dan ringkasan kardus logistik ekspedisi (misal: <em>2 Koli Kardus Standar - Berat Estimasi 30.5 Kg</em>) untuk mempermudah pengecekan sopir ekspedisi di bak mobil.</li>
-          </ul>
-        </div>
-      </div>
+      <div class="sub-section-title">MODUL 6 & 7: MASTER PRODUK MULTI-SATUAN, MULTI-HARGA & INTEGRASI EXCEL NATIVE</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Multi-Satuan Berjenjang</td>
+            <td>Konversi bertingkat (1 Dus = 12 Box = 144 Pcs) terhubung ke 1 master barang dengan barcode unik.</td>
+            <td class="feature-benefit">Kasir dapat jual eceran maupun kartonan tanpa perlu membuat master SKU ganda.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Tingkatan Harga (Price Tiers)</td>
+            <td>4 Level harga: Eceran (umum), Grosir 1 (warung), Grosir 2 (agen partai besar), dan Member.</td>
+            <td class="feature-benefit">Toko dapat melayani berbagai segmen pembeli dengan penetapan harga otomatis.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">HPP Average Costing Otomatis</td>
+            <td>Perhitungan modal HPP rata-rata bergerak setiap ada barang masuk dengan harga beli baru.</td>
+            <td class="feature-benefit">Laba kotor toko tercatat riil sesuai fluktuasi harga modal beli distributor.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Impor Excel Massal Master Produk</td>
+            <td>Upload ribuan SKU sekaligus via file Excel dengan tombol unduh template resmi dan validasi data.</td>
+            <td class="feature-benefit">Input data awal toko selesai dalam hitungan menit tanpa repot ketik satu per satu.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Ekspor Excel Native (.xlsx)</td>
+            <td>Unduh laporan Penjualan, Kartu Stok HPP, Buku Piutang, dan Kas Kecil ke file Excel asli.</td>
+            <td class="feature-benefit">Memudahkan Bpk. Noor mengolah data keuangan untuk pembukuan dan perpajakan.</td>
+          </tr>
+        </tbody>
+      </table>
 
-      <!-- Modul 6 & 7 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 6 & 7: MASTER DATA MULTI-SATUAN, MULTI-HARGA & INTEGRASI EXCEL NATIVE (.XLSX)</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Multi-Satuan Berjenjang & Multi-Barcode:</strong> Konversi bertingkat (1 Dus = 12 Box = 144 Pcs), scan barcode Pcs terjual eceran, scan barcode Dus otomatis potong 144 Pcs stok gudang.</li>
-            <li><strong>Multi-Level Harga Jual (Price Tiers):</strong> Harga Eceran, Grosir 1 (warung), Grosir 2 (agen partai), dan Member langganan.</li>
-            <li><strong>Kalkulasi HPP Otomatis:</strong> Menggunakan Average Costing Method (harga beli rata-rata bergerak) untuk kepastian margin keuntungan riil.</li>
-            <li><strong>Fitur Impor Excel Massal:</strong> Unggah katalog barang ribuan SKU via file spreadsheet (.xlsx/.csv) lengkap dengan tombol download template resmi dan validasi sebelum disimpan.</li>
-            <li><strong>Fitur Ekspor Native Spreadsheet (.xlsx):</strong> Menggunakan SheetJS (.xlsx) untuk unduh Laporan Penjualan, Kartu Stok HPP, Piutang, dan Kas Kecil.</li>
-          </ul>
-        </div>
-      </div>
+      <div class="sub-section-title">MODUL 8 & 9: AUDIT KASIR DETAIL, KOMISI SALES & HAK AKSES BERJENJANG (RBAC)</div>
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Fitur / Fungsi</th>
+            <th style="width: 45%;">Deskripsi Operasional Sistem</th>
+            <th style="width: 30%;">Manfaat bagi Toko Pak Noor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="feature-name">Audit Kasir Detail (Owner)</td>
+            <td>Log transaksi: <strong>Nama Kasir, Nomor Faktur, Jam Transaksi, Nama Barang, dan Nominal Faktur</strong>.</td>
+            <td class="feature-benefit"><strong>Sangat efektif melacak selisih stok opname</strong> pada barang tertentu di rak.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Dashboard Laba & Analitik Visual</td>
+            <td>Ringkasan omzet kotor, modal HPP, laba kotor (Gross Margin), grafik tren, dan pie chart kategori.</td>
+            <td class="feature-benefit">Pemilik toko memantau kesehatan finansial dan produk terlaris secara real-time.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Komisi Sales & Pegawai 1.5%</td>
+            <td>Kalkulasi otomatis komisi 1.5% dari omzet kasir + bonus target penjualan unit barang.</td>
+            <td class="feature-benefit">Meningkatkan motivasi kerja karyawan toko dengan sistem insentif transparan.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Hak Akses 4 Level (RBAC)</td>
+            <td>Owner (Penuh), Kepala Toko (Operasional), Kasir (POS & Kas Kecil), Gudang DC (Mutasi & Rak).</td>
+            <td class="feature-benefit"><strong>Melindungi data modal HPP dan laba</strong> dari staf serta mencegah kecurangan.</td>
+          </tr>
+          <tr>
+            <td class="feature-name">Kelola Mesin Kasir & Hardware</td>
+            <td>Status online 5 terminal kasir serta diagnostik koneksi printer thermal, scanner, dan laci kasir.</td>
+            <td class="feature-benefit">Memastikan perangkat kasir siap melayani pembeli sebelum toko dibuka setiap hari.</td>
+          </tr>
+        </tbody>
+      </table>
 
-      <!-- Modul 8 & 9 -->
-      <div class="module-card">
-        <div class="module-header">MODUL 8 & 9: AUDIT TRANSAKSI KASIR DETAIL, KOMISI SALES & HAK AKSES BERJENJANG (RBAC)</div>
-        <div class="module-desc">
-          <ul>
-            <li><strong>Audit Transaksi Kasir Mendalam (Khusus Owner):</strong> Log transaksi detail memuat <strong>Nama Kasir, Nomor Faktur, Jam-Menit-Detik Transaksi, Rincian Barang yang Dibeli, Terminal Kasir, Metode Bayar, dan Nominal Transaksi</strong> guna mempermudah investigasi selisih barang saat stok opname.</li>
-            <li><strong>Perhitungan Komisi Sales/Pegawai:</strong> Otomatis menghitung hak komisi 1.5% dari omzet kasir + bonus target penjualan unit barang.</li>
-            <li><strong>Hak Akses Multi-Level (RBAC):</strong> Pembagian wewenang 4 peran: <strong>Owner</strong> (Akses Penuh + Kelola Akun & Terminal), <strong>Kepala Toko / SPV</strong> (Operasional & Diskon), <strong>Kasir Toko</strong> (Hanya POS & Kas Kecil), dan <strong>Petugas Gudang DC</strong> (Hanya Stok, Rak & Opname).</li>
-            <li><strong>Manajemen Mesin Kasir & Diagnostik:</strong> Pemantauan status online 5 terminal kasir serta diagnostik koneksi printer, scanner, dan laci kasir.</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="section-title">3. Matriks Kesesuaian Kebutuhan Bpk. Noor (100% Compliant)</div>
-      <table class="custom-table">
+      <div class="section-title">4. Matriks Kesesuaian Kebutuhan Bpk. Noor (100% Compliant)</div>
+      <table class="feature-table" style="font-size: 7.5px;">
         <thead>
           <tr>
             <th style="width: 5%;">No</th>
-            <th style="width: 32%;">Spesifikasi Kebutuhan Toko Pak Noor</th>
-            <th style="width: 48%;">Implementasi Fitur & Solusi Teknis Tim Mas Wahyu</th>
-            <th style="width: 15%;" class="text-center">Status</th>
+            <th style="width: 33%;">Kebutuhan Spesifik Toko Pak Noor</th>
+            <th style="width: 47%;">Implementasi Solusi Teknis Tim Mas Wahyu</th>
+            <th style="width: 15%;" class="text-center">Kesiapan</th>
           </tr>
         </thead>
         <tbody>
@@ -561,12 +793,12 @@
     </div>
 
     <div class="footer-note">
-      <span>Halaman 2 dari 3 • Dokumen Resmi Penawaran & Spesifikasi Fitur POS Pak Noor</span>
+      <span>Halaman 3 dari 4 • Dokumen Proposal Teknis & Spesifikasi Sistem POS Pak Noor</span>
       <span>Live Demo: https://kasir-pak-noor.vercel.app</span>
     </div>
   </div>
 
-  <!-- ==================== HALAMAN 3: RENCANA ANGGARAN BIAYA (RAB) & PENGESAHAN ==================== -->
+  <!-- ==================== HALAMAN 4: RENCANA ANGGARAN BIAYA (RAB) & PENGESAHAN ==================== -->
   <div class="page">
     <div>
       <div class="header-container">
@@ -575,13 +807,13 @@
           <div class="brand-subtitle">RINCIAN INVESTASI SISTEM, SKEMA TERMIN, TIMELINE & LEMBAR PENGESAHAN</div>
         </div>
         <div class="doc-badge">
-          Garansi: 60 Hari Kalender<br>
-          Lisensi: Full Ownership
+          Lisensi: Hak Milik Penuh<br>
+          Garansi: 60 Hari Kalender
         </div>
       </div>
 
-      <div class="section-title">4. Rincian Rencana Anggaran Biaya (RAB) Investasi</div>
-      <table class="custom-table">
+      <div class="section-title">5. Rincian Rencana Anggaran Biaya (RAB) Investasi</div>
+      <table class="finance-table">
         <thead>
           <tr>
             <th style="width: 5%;">No</th>
@@ -651,11 +883,11 @@
       </table>
 
       <div class="info-box">
-        <strong>Keunggulan Investasi Toko Pak Noor (Tanpa Biaya Bulanan):</strong> Untuk tahun ke-2 dan seterusnya, Pak Noor hanya membayar perpanjangan Cloud VPS, Domain, dan Auto-Backup sebesar <strong>Rp 2.000.000 / tahun</strong>. <u>Tidak ada biaya bulanan per kasir</u> (Hemat belasan juta rupiah dibanding aplikasi SaaS langganan).
+        <strong>Keunggulan Investasi Toko Pak Noor (Tanpa Biaya Bulanan):</strong> Untuk tahun ke-2 dan seterusnya, Pak Noor hanya membayar perpanjangan Cloud VPS, Domain, dan Auto-Backup sebesar <strong>Rp 2.000.000 / tahun</strong>. <u>Tidak ada biaya bulanan per kasir</u> (Hemat belasan juta rupiah dibanding aplikasi SaaS komersial langganan bulanan).
       </div>
 
-      <div class="section-title">5. Skema Termin Pembayaran (Term of Payment)</div>
-      <table class="custom-table" style="margin-bottom: 5px;">
+      <div class="section-title">6. Skema Termin Pembayaran (Term of Payment)</div>
+      <table class="finance-table" style="margin-bottom: 5px;">
         <thead>
           <tr>
             <th style="width: 18%;">Termin</th>
@@ -686,13 +918,13 @@
         </tbody>
       </table>
 
-      <div class="section-title">6. Jadwal Penerapan (3-4 Minggu) & Garansi Pendukung</div>
-      <p style="font-size: 8px; color: #475569; margin-bottom: 6px;">
+      <div class="section-title">7. Jadwal Penerapan (3-4 Minggu) & Garansi Pendukung</div>
+      <p style="font-size: 7.8px; color: #475569; margin-bottom: 5px;">
         • <strong>Minggu 1:</strong> Setup Cloud VPS & Domain &bull; <strong>Minggu 2:</strong> Impor Master Produk & Konfigurasi Piutang &bull; <strong>Minggu 3:</strong> Integrasi Hardware & Uji 5 Kasir &bull; <strong>Minggu 4:</strong> Pelatihan Staf & Go-Live.<br>
         • <strong>Garansi Bebas Bug 60 Hari Kalender</strong> &bull; <strong>Buku Panduan Operasional SOP Kasir & Gudang</strong> &bull; <strong>Template Excel Siap Pakai</strong> &bull; <strong>Dukungan Bantuan Teknis Prioritas via WhatsApp</strong>.
       </p>
 
-      <div class="section-title">7. Lembar Pengesahan & Persetujuan Kerjasama</div>
+      <div class="section-title">8. Lembar Pengesahan & Persetujuan Kerjasama</div>
       <div class="signature-grid">
         <div class="signature-box">
           <div class="signature-title">Disetujui Oleh (Pihak Klien)</div>
@@ -711,7 +943,7 @@
     </div>
 
     <div class="footer-note">
-      <span>Halaman 3 dari 3 • Dokumen Sah & Mengikat • 16 Oktober 2026</span>
+      <span>Halaman 4 dari 4 • Dokumen Sah & Mengikat • 16 Oktober 2026</span>
       <span>Aplikasi Live Demo: https://kasir-pak-noor.vercel.app</span>
     </div>
   </div>
