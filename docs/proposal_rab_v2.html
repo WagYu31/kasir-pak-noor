@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Proposal Penawaran & RAB v2.0 - POS & Inventori Retail Pak Noor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 10mm 12mm 10mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 9.5px;
+      line-height: 1.45;
+      color: #1e293b;
+      background-color: #ffffff;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 277mm;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      break-after: page;
+      padding: 4px 0 16px 0;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+
+    /* Header */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #059669;
+      margin-bottom: 10px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #064e3b;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-subtitle {
+      font-size: 9px;
+      font-weight: 700;
+      color: #059669;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .doc-badge {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    /* Proposal Title */
+    .proposal-title-block {
+      background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .proposal-label {
+      font-size: 8.5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6ee7b7;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .proposal-main-title {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .proposal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 8.5px;
+    }
+
+    .meta-item strong {
+      color: #a7f3d0;
+      display: block;
+      font-size: 7.5px;
+      text-transform: uppercase;
+    }
+
+    /* Live Demo Banner */
+    .live-demo-banner {
+      background: #f0fdf4;
+      border: 1px dashed #059669;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .live-demo-text {
+      font-size: 9px;
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .live-demo-link {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #047857;
+      background: #ffffff;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #a7f3d0;
+      text-decoration: none;
+    }
+
+    /* Section Styles */
+    .section-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #0f172a;
+      border-left: 3.5px solid #059669;
+      padding-left: 7px;
+      margin: 10px 0 6px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    p {
+      margin-bottom: 6px;
+      text-align: justify;
+      color: #334155;
+    }
+
+    /* Tables */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      font-size: 8.8px;
+    }
+
+    .custom-table th {
+      background-color: #064e3b;
+      color: #ffffff;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 8px;
+      letter-spacing: 0.4px;
+      padding: 5px 8px;
+      text-align: left;
+      border: 1px solid #064e3b;
+    }
+
+    .custom-table td {
+      padding: 5px 8px;
+      border: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    .custom-table tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    .custom-table tr:hover {
+      background-color: #f0fdf4;
+    }
+
+    .total-row {
+      background-color: #ecfdf5 !important;
+      font-weight: 800;
+      color: #065f46;
+      border-top: 2px solid #059669;
+    }
+
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .price-col { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #065f46; }
+
+    .badge-check {
+      background: #dcfce7;
+      color: #15803d;
+      padding: 1.5px 5px;
+      border-radius: 4px;
+      font-weight: 800;
+      font-size: 7.5px;
+      display: inline-block;
+    }
+
+    /* Box Info */
+    .info-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      font-size: 8.8px;
+    }
+
+    .info-box strong {
+      color: #0f172a;
+    }
+
+    /* Signatures */
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 14px;
+    }
+
+    .signature-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 14px;
+      background-color: #f8fafc;
+    }
+
+    .signature-title {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+
+    .signature-company {
+      font-size: 10px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 40px;
+    }
+
+    .signature-name {
+      font-size: 10px;
+      font-weight: 800;
+      color: #0f172a;
+      border-top: 1px dashed #94a3b8;
+      padding-top: 4px;
+    }
+
+    .signature-role {
+      font-size: 8px;
+      color: #64748b;
+    }
+
+    .footer-note {
+      font-size: 7.8px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 5px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HALAMAN 1: RINGKASAN & MATRIKS KESESUAIAN TEKNIS ==================== -->
+  <div class="page">
+    <div>
+      <div class="header-container">
+        <div>
+          <div class="brand-title">POS PAK NOOR & MULTI-GUDANG RETAIL</div>
+          <div class="brand-subtitle">DOKUMEN RESMI PROPOSAL TEKNIS & RENCANA ANGGARAN BIAYA (RAB) v2.0</div>
+        </div>
+        <div class="doc-badge">
+          No: 028/PROP-POS-PN/X/2026<br>
+          Tanggal: 16 Oktober 2026
+        </div>
+      </div>
+
+      <div class="proposal-title-block">
+        <div class="proposal-label">PENAWARAN PENGEMBANGAN SISTEM & INFRASTRUKTUR CLOUD</div>
+        <div class="proposal-main-title">Aplikasi Point of Sale (POS), Kontrol Limit Piutang, Multi-Gudang & Manajemen Kas Kecil Terpadu</div>
+        <div class="proposal-meta-grid">
+          <div class="meta-item">
+            <strong>Klien / Pemilik:</strong>
+            Bpk. Noor (Toko Retail Pak Noor)
+          </div>
+          <div class="meta-item">
+            <strong>Penyedia Solusi:</strong>
+            Wahyu Utomo, S.Kom & Tim
+          </div>
+          <div class="meta-item">
+            <strong>Status Kesiapan:</strong>
+            100% Sesuai Kebutuhan Klien
+          </div>
+          <div class="meta-item">
+            <strong>Versi Dokumen:</strong>
+            Revisi Final v2.0 (Lengkap)
+          </div>
+        </div>
+      </div>
+
+      <div class="live-demo-banner">
+        <div class="live-demo-text">
+          🚀 <strong>Aplikasi Telah Selesai Dibangun & Siap Diuji Coba Langsung:</strong> Bpk. Noor dapat mencoba seluruh alur transaksi, kas kecil, piutang, dan cetak thermal di:
+        </div>
+        <a href="https://kasir-pak-noor.vercel.app" class="live-demo-link" target="_blank">https://kasir-pak-noor.vercel.app</a>
+      </div>
+
+      <div class="section-title">1. Pernyataan Kesiapan Tim & Ringkasan Solusi</div>
+      <p>
+        Menanggapi dokumen lembar kebutuhan spesifikasi teknis dari <strong>Bpk. Noor</strong>, kami mengonfirmasi bahwa <strong>seluruh fitur operasional yang diajukan telah sesuai 100% dengan kapabilitas teknologi tim kami</strong>. Sistem ini dikembangkan dengan arsitektur web modern berkinerja tinggi (*React + Vite + TailwindCSS + ACID Transaction Locking*) untuk menjamin kecepatan pelayanan di 5 meja kasir serentak tanpa risiko bentrok stok maupun selisih pembukuan.
+      </p>
+
+      <div class="section-title">2. Matriks Kesesuaian Kebutuhan Bpk. Noor (100% Compliant)</div>
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th style="width: 5%;">No</th>
+            <th style="width: 28%;">Kebutuhan Spesifik Bpk. Noor</th>
+            <th style="width: 53%;">Implementasi Fitur & Solusi Teknis Tim Mas Wahyu</th>
+            <th style="width: 14%;" class="text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">1</td>
+            <td><strong>5 Terminal Kasir Aktif & Cepat</strong></td>
+            <td>Dukungan navigasi keyboard penuh (F1-F12), barcode scanner cepat, struk thermal 58/80mm, cash drawer, dan customer display F8 dengan isolasi transaksi ACID.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">2</td>
+            <td><strong>Pelanggan & Limit Piutang</strong></td>
+            <td>Registrasi member di kasir, penetapan plafon piutang (Credit Limit), jatuh tempo tempo otomatis, serta kunci blokir transaksi jika piutang menunggak (overdue).</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">3</td>
+            <td><strong>Pembayaran Piutang & DP</strong></td>
+            <td>5 Metode bayar lengkap: Tunai, QRIS Dinamis, Transfer Bank, Piutang (Tempo 7/14/30 hari), dan Uang Muka (DP + Sisa Tempo) dengan validasi limit kredit.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">4</td>
+            <td><strong>Input Kas Kecil (Petty Cash)</strong></td>
+            <td>Pencatatan instan biaya kasir (bensin armada, retribusi parkir pasar, ongkir ekspedisi, upah kuli angkut, konsumsi toko). Otomatis memotong uang fisik kasir shift aktif.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">5</td>
+            <td><strong>Cetak Struk Draf (Picking List)</strong></td>
+            <td>Cetak struk thermal nota antrean sementara khusus staf gudang dengan lokasi rak barang (A1, B2), kotak centang `[ ]`, dan kolom paraf pengambilan barang.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">6</td>
+            <td><strong>Multi-Gudang & Manajemen Rak</strong></td>
+            <td>Pemisahan stok Toko Depan (WH-01) & DC Pusat (WH-02), mutasi transfer antar-gudang, stok opname digital, serta visualisasi planogram penataan rak barang.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">7</td>
+            <td><strong>Surat Jalan Mode Packing Koli</strong></td>
+            <td>Dokumen Surat Jalan resmi dengan tombol toggle beralih antara rincian SKU detail dan ringkasan kardus logistik (*Packing List Koli Ringkas*) untuk ekspedisi.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">8</td>
+            <td><strong>Ekspor & Impor Excel (.xlsx)</strong></td>
+            <td>Ekspor native spreadsheet di seluruh modul laporan serta fitur impor massal master produk lengkap dengan template unduhan resmi dan pratinjau validasi.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">9</td>
+            <td><strong>Audit Kasir Detail per Jam & Item</strong></td>
+            <td>Log transaksi per kasir: Nama Kasir, Jam Menit Detik, Nama Barang, dan Nominal per Transaksi untuk mempermudah identifikasi selisih saat stok opname.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">10</td>
+            <td><strong>Perhitungan Komisi Sales/Kasir</strong></td>
+            <td>Perhitungan otomatis komisi 1.5% dari omzet kasir + bonus unit target penjualan, lengkap dengan kartu rincian dan status pencairan gaji/bonus pegawai.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+          <tr>
+            <td class="text-center">11</td>
+            <td><strong>Hak Akses Multi-Level (RBAC)</strong></td>
+            <td>Pemisahan peran 4 tingkatan: Owner (Akses Penuh + Kelola Akun & Mesin Kasir), Kepala Toko, Kasir Toko, dan Petugas Gudang DC dengan login terproteksi.</td>
+            <td class="text-center"><span class="badge-check">TERSEDIA (100%)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer-note">
+      <span>Halaman 1 dari 2 • Proposal Penawaran Sistem POS & Inventori Pak Noor</span>
+      <span>Dokumen Resmi & Rahasia • www.kasir-pak-noor.vercel.app</span>
+    </div>
+  </div>
+
+  <!-- ==================== HALAMAN 2: RENCANA ANGGARAN BIAYA & PENGESAHAN ==================== -->
+  <div class="page">
+    <div>
+      <div class="header-container">
+        <div>
+          <div class="brand-title">RENCANA ANGGARAN BIAYA (RAB) & INVESTASI</div>
+          <div class="brand-subtitle">RINCIAN INVESTASI SISTEM, SKEMA TERMIN, & PENGESAHAN KERJASAMA</div>
+        </div>
+        <div class="doc-badge">
+          Paket: Full Retail Suite v2.0<br>
+          Garansi: 60 Hari Kalender
+        </div>
+      </div>
+
+      <div class="section-title">3. Rincian Rencana Anggaran Biaya (RAB)</div>
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th style="width: 5%;">No</th>
+            <th style="width: 38%;">Komponen Pekerjaan & Modul Sistem</th>
+            <th style="width: 39%;">Cakupan Fungsional & Deliverables</th>
+            <th style="width: 18%;" class="text-right">Biaya (IDR)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">1</td>
+            <td><strong>Core Engine POS 5 Terminal</strong></td>
+            <td>Keyboard-first POS, Touch POS, Multi-Kasir ACID locking, Hold Bill, Split Bill, ESC/POS Thermal Print 58/80mm, Cash Drawer, Customer Display F8.</td>
+            <td class="text-right price-col">Rp 4.500.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">2</td>
+            <td><strong>Modul Pelanggan & Limit Piutang</strong></td>
+            <td>Database pelanggan, plafon limit kredit, kunci blokir otomatis saat jatuh tempo, metode bayar Piutang & DP, kartu piutang pelanggan.</td>
+            <td class="text-right price-col">Rp 2.500.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">3</td>
+            <td><strong>Multi-Gudang, Rak & Surat Jalan Koli</strong></td>
+            <td>Manajemen stok 2 gudang (Toko & DC), mutasi stok, stok opname, planogram rak barang, cetak surat jalan standar & mode packing list koli kardus.</td>
+            <td class="text-right price-col">Rp 3.000.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">4</td>
+            <td><strong>Modul Kas Kecil (Petty Cash) Kasir</strong></td>
+            <td>Form input biaya kasir, kategori biaya operasional toko, auto-potong laci kasir, cetak bukti kas keluar, rekap per shift kasir.</td>
+            <td class="text-right price-col">Rp 1.500.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">5</td>
+            <td><strong>Master Data & Impor/Ekspor Excel</strong></td>
+            <td>Multi-satuan berjenjang (Pcs/Dus), multi-tier harga, HPP average costing, modul impor produk massal (.xlsx) dengan template, ekspor native .xlsx.</td>
+            <td class="text-right price-col">Rp 2.000.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">6</td>
+            <td><strong>Laporan, Audit Kasir & Komisi Sales</strong></td>
+            <td>Audit kasir detail (Nama Kasir, Jam, Barang, Nominal), laba kotor, kartu stok, sistem komisi sales 1.5% + bonus target, chart analitik.</td>
+            <td class="text-right price-col">Rp 2.000.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">7</td>
+            <td><strong>Keamanan Login, RBAC & Terminal POS</strong></td>
+            <td>Halaman login terproteksi, manajemen akun staf (Owner, SPV, Kasir, DC), kontrol menu per peran, dan konfigurasi terminal kasir.</td>
+            <td class="text-right price-col">Rp 1.500.000</td>
+          </tr>
+          <tr style="background-color: #f1f5f9; font-weight: 700;">
+            <td colspan="3" class="text-right">SUBTOTAL PENGEMBANGAN SISTEM (FULL OWNERSHIP - SEKALI BAYAR)</td>
+            <td class="text-right price-col">Rp 17.000.000</td>
+          </tr>
+          <tr>
+            <td class="text-center">8</td>
+            <td><strong>Paket Cloud VPS, Domain & Backup (Tahun ke-1)</strong></td>
+            <td>Cloud VPS High-Performance 24/7, Domain Kustom Toko (.com/.id), SSL 256-bit HTTPS, Auto-Backup Database Harian, Monitoring Uptime.</td>
+            <td class="text-right price-col">Rp 2.000.000</td>
+          </tr>
+          <tr class="total-row">
+            <td colspan="3" class="text-right" style="font-size: 10px;">TOTAL INVESTASI AWAL (TAHUN PERTAMA)</td>
+            <td class="text-right price-col" style="font-size: 11px;">Rp 19.000.000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <strong>Ketentuan Biaya Tahun Kedua & Seterusnya:</strong> Toko Pak Noor hanya membayar perpanjangan Cloud VPS, Domain, dan Auto-Backup sebesar <strong>Rp 2.000.000 / tahun</strong>. <u>Tidak ada biaya bulanan</u> per kasir maupun per transaksi (Hemat jutaan rupiah dibanding POS SaaS langganan).
+      </div>
+
+      <div class="section-title">4. Skema Termin Pembayaran (Term of Payment)</div>
+      <table class="custom-table" style="margin-bottom: 6px;">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Termin</th>
+            <th style="width: 50%;">Keterangan & Milestone Capaian</th>
+            <th style="width: 15%;" class="text-center">Persentase</th>
+            <th style="width: 15%;" class="text-right">Nominal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Termin 1 (DP)</strong></td>
+            <td>Penandatanganan proposal + Konfigurasi Cloud VPS & Domain Resmi</td>
+            <td class="text-center">40% + Cloud</td>
+            <td class="text-right price-col">Rp 8.800.000</td>
+          </tr>
+          <tr>
+            <td><strong>Termin 2</strong></td>
+            <td>Penyelesaian migrasi master data, multi-gudang, limit piutang, kas kecil</td>
+            <td class="text-center">30%</td>
+            <td class="text-right price-col">Rp 5.100.000</td>
+          </tr>
+          <tr>
+            <td><strong>Termin 3</strong></td>
+            <td>UAT pengujian 5 kasir bersamaan, integrasi hardware printer/scanner, Go-Live</td>
+            <td class="text-center">30%</td>
+            <td class="text-right price-col">Rp 5.100.000</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">5. Garansi & Fasilitas Pendukung (Free of Charge)</div>
+      <p style="font-size: 8.5px; color: #475569; margin-bottom: 8px;">
+        • <strong>Garansi Bebas Bug 60 Hari Kalender</strong> pasca Go-Live &bull; <strong>Buku Panduan Operasional SOP Kasir & Gudang</strong> &bull; <strong>Template Excel Siap Pakai</strong> &bull; <strong>Dukungan Bantuan Teknis Prioritas via WhatsApp</strong> pada jam operasional toko.
+      </p>
+
+      <div class="section-title">6. Lembar Pengesahan & Persetujuan Kerjasama</div>
+      <p style="font-size: 8.5px; color: #64748b; margin-bottom: 6px;">
+        Dengan menandatangani dokumen ini, kedua belah pihak menyetujui seluruh ruang lingkup pekerjaan, rincian biaya investasi, serta ketentuan kerjasama di atas.
+      </p>
+
+      <div class="signature-grid">
+        <div class="signature-box">
+          <div class="signature-title">Disetujui Oleh (Pihak Klien)</div>
+          <div class="signature-company">TOKO RETAIL PAK NOOR</div>
+          <div class="signature-name">Bpk. Noor</div>
+          <div class="signature-role">Owner / Pemilik Bisnis</div>
+        </div>
+
+        <div class="signature-box">
+          <div class="signature-title">Diajukan Oleh (Pihak Pengembang)</div>
+          <div class="signature-company">TIM PENGEMBANG PERANGKAT LUNAK</div>
+          <div class="signature-name">Wahyu Utomo, S.Kom</div>
+          <div class="signature-role">Lead Full-Stack Engineer & Retail Software Specialist</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <span>Halaman 2 dari 2 • Proposal Penawaran & RAB Resmi POS Pak Noor v2.0</span>
+      <span>Dokumen Sah & Mengikat • 16 Oktober 2026</span>
+    </div>
+  </div>
+
+</body>
+</html>
