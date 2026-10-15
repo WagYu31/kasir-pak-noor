@@ -903,4 +903,185 @@ export const INITIAL_RACKS = [
   { id: 'SEC-01', code: 'Brankas DC (SEC-01)', zone: 'Brankas DC Khusus', warehouse: 'WH-02', category: 'Rokok & Tembakau', capacity: 85, cctv: true, note: 'Kartonan Rokok & Nilai Tinggi (Kunci PIN)' }
 ];
 
+export const INITIAL_CUSTOMERS = [
+  {
+    id: 'CUST-001',
+    name: 'Pelanggan Umum (Walk-in)',
+    phone: '-',
+    address: 'Toko Depan',
+    tier: 'eceran',
+    creditLimit: 0,
+    currentDebt: 0,
+    dueDate: null,
+    status: 'ACTIVE',
+    notes: 'Pembayaran tunai / instan langsung di kasir'
+  },
+  {
+    id: 'CUST-002',
+    name: 'Warung Bu Siti (Langganan)',
+    phone: '0812-3456-7890',
+    address: 'Jl. Merdeka No. 12, RT 03/05',
+    tier: 'grosir',
+    creditLimit: 5000000,
+    currentDebt: 1250000,
+    dueDate: '2026-10-25',
+    status: 'ACTIVE',
+    notes: 'Jatuh tempo 14 hari, pembayaran lancar'
+  },
+  {
+    id: 'CUST-003',
+    name: 'CV Berkah Konstruksi (Pak Joko)',
+    phone: '0857-1122-3344',
+    address: 'Kawasan Industri Cikande Blok D-02',
+    tier: 'kontraktor',
+    creditLimit: 15000000,
+    currentDebt: 14200000,
+    dueDate: '2026-10-10', // OVERDUE
+    status: 'OVERDUE',
+    notes: 'Ada tagihan macet Rp 14.200.000 jatuh tempo 10 Okt 2026 (Kunci kredit otomatis)'
+  },
+  {
+    id: 'CUST-004',
+    name: 'Toko Kelontong Berkat Mandiri',
+    phone: '0878-9900-1122',
+    address: 'Pasar Baru Blok B-04',
+    tier: 'grosir',
+    creditLimit: 8000000,
+    currentDebt: 0,
+    dueDate: null,
+    status: 'ACTIVE',
+    notes: 'Limit kredit Rp 8.000.000 bersih tanpa tunggakan'
+  },
+  {
+    id: 'CUST-005',
+    name: 'Kantin Sekolah Harapan Bangsa',
+    phone: '0821-4455-6677',
+    address: 'Jl. Pemuda No. 88',
+    tier: 'grosir',
+    creditLimit: 3000000,
+    currentDebt: 2850000,
+    dueDate: '2026-10-22',
+    status: 'ACTIVE',
+    notes: 'Sisa limit tinggal Rp 150.000'
+  }
+];
+
+export const INITIAL_EXPENSES = [
+  {
+    id: 'EXP-202610-001',
+    date: '2026-10-15',
+    time: '08:45:10 WIB',
+    category: 'Bensin & Operasional Armada',
+    description: 'Bensin Motor Kurir Pengiriman Sembako ke Bu Siti',
+    amount: 35000,
+    cashierName: 'Siti Aminah',
+    terminal: 'Kasir 1',
+    paymentSource: 'Laci Kasir (Cash Drawer)',
+    recipient: 'Joko W. (Kurir)'
+  },
+  {
+    id: 'EXP-202610-002',
+    date: '2026-10-15',
+    time: '11:20:45 WIB',
+    category: 'Retribusi & Parkir Pasar',
+    description: 'Retribusi Kebersihan & Parkir Mobil Box Suplai',
+    amount: 15000,
+    cashierName: 'Siti Aminah',
+    terminal: 'Kasir 1',
+    paymentSource: 'Laci Kasir (Cash Drawer)',
+    recipient: 'Petugas Parkir Pasar'
+  },
+  {
+    id: 'EXP-202610-003',
+    date: '2026-10-14',
+    time: '14:15:30 WIB',
+    category: 'Ongkir & Ekspedisi Barang',
+    description: 'Bayar Ongkos Kirim J&T Cargo Suplai Sabun Unilever',
+    amount: 75000,
+    cashierName: 'Budi Santoso',
+    terminal: 'Kasir 2',
+    paymentSource: 'Laci Kasir (Cash Drawer)',
+    recipient: 'Kurir Ekspedisi'
+  },
+  {
+    id: 'EXP-202610-004',
+    date: '2026-10-14',
+    time: '16:50:12 WIB',
+    category: 'Upah Kuli Bongkar Muat',
+    description: 'Bongkar Muat 50 Karung Beras Ramos dari Truk DC',
+    amount: 50000,
+    cashierName: 'Siti Aminah',
+    terminal: 'Kasir 1',
+    paymentSource: 'Laci Kasir (Cash Drawer)',
+    recipient: 'Kuli Angkut Mandiri'
+  }
+];
+
+export const INITIAL_COMMISSIONS = [
+  {
+    cashierId: 'USR-002',
+    cashierName: 'Siti Aminah',
+    role: 'Kasir 1',
+    baseRate: 0.015, // 1.5%
+    bonusPerItem: 2500, // Rp 2.500 per target SKU
+    totalSales: 18450000,
+    targetItemCount: 18,
+    commissionAmount: 321750,
+    status: 'SIAP_CAIR',
+    period: 'Oktober 2026'
+  },
+  {
+    cashierId: 'USR-003',
+    cashierName: 'Budi Santoso',
+    role: 'Kasir 2',
+    baseRate: 0.015,
+    bonusPerItem: 2500,
+    totalSales: 14120000,
+    targetItemCount: 12,
+    commissionAmount: 241800,
+    status: 'SIAP_CAIR',
+    period: 'Oktober 2026'
+  },
+  {
+    cashierId: 'USR-004',
+    cashierName: 'Rina Marlina',
+    role: 'Kasir 3',
+    baseRate: 0.015,
+    bonusPerItem: 2500,
+    totalSales: 8850000,
+    targetItemCount: 8,
+    commissionAmount: 152750,
+    status: 'SIAP_CAIR',
+    period: 'Oktober 2026'
+  }
+];
+
+export const INITIAL_PURCHASE_ORDERS = [
+  {
+    id: 'PO-202610-001',
+    date: '2026-10-12',
+    supplier: 'PT Berkah Pangan Mandiri',
+    targetWarehouse: 'WH-02 (DC Pusat)',
+    status: 'DIKIRIM',
+    totalAmount: 9600000,
+    items: [
+      { sku: 'PRD-001', name: 'Minyak Goreng Sania 2L', qty: 50, unit: 'Dus', price: 192000 }
+    ],
+    notes: 'Pengiriman armada via truk engkel Fuso'
+  },
+  {
+    id: 'PO-202610-002',
+    date: '2026-10-10',
+    supplier: 'PT Indomarco Adi Prima',
+    targetWarehouse: 'WH-02 (DC Pusat)',
+    status: 'DITERIMA',
+    totalAmount: 10800000,
+    items: [
+      { sku: 'PRD-002', name: 'Indomie Goreng Spesial 85g', qty: 100, unit: 'Karton', price: 108000 }
+    ],
+    notes: 'Diterima oleh Agus P. (LPB No. LPB-2026-081)'
+  }
+];
+
+
 

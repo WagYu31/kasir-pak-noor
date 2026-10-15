@@ -25,12 +25,18 @@ import {
   LayoutGrid,
   Keyboard,
   Split,
-  Store
+  Store,
+  DollarSign,
+  Users,
+  FileText
 } from 'lucide-react';
 import { soundFX } from '../utils/audio';
 import CameraBarcodeScannerModal from './CameraBarcodeScannerModal';
 import TouchscreenPOSView from './TouchscreenPOSView';
 import SplitBillModal from './SplitBillModal';
+import CustomerModal from './CustomerModal';
+import PettyCashModal from './PettyCashModal';
+import DraftPickingListModal from './DraftPickingListModal';
 
 export default function POSTerminal({ 
   products, 
@@ -43,7 +49,16 @@ export default function POSTerminal({
   onReprintLast,
   onOpenCustomerDisplay,
   lastScannedItem,
-  setLastScannedItem
+  setLastScannedItem,
+  currentRole,
+  activeTerminal = 'Kasir 1',
+  shiftData = { cashier: 'Kasir 1' },
+  customers = [],
+  selectedCustomer,
+  onSelectCustomer,
+  onAddCustomer,
+  expenses = [],
+  onAddExpense
 }) {
   // Barcode / Scanner state
   const [barcodeInput, setBarcodeInput] = useState('');
@@ -77,6 +92,9 @@ export default function POSTerminal({
   // Dual POS View Mode: 'retail' (Barcode & Keyboard) vs 'touchscreen' (Visual Grid gaya video)
   const [posViewMode, setPosViewMode] = useState('retail');
   const [isSplitBillOpen, setIsSplitBillOpen] = useState(false);
+  const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
+  const [isPettyCashModalOpen, setIsPettyCashModalOpen] = useState(false);
+  const [isDraftPickingListOpen, setIsDraftPickingListOpen] = useState(false);
 
   const barcodeInputRef = useRef(null);
   const cart = cartQueue[activeQueue] || [];
@@ -528,6 +546,10 @@ export default function POSTerminal({
           totalTax={totalTax}
           onOpenScanner={() => setIsCameraScannerOpen(true)}
           onOpenSearchModal={() => setIsSearchModalOpen(true)}
+          onOpenCustomerModal={() => setIsCustomerModalOpen(true)}
+          selectedCustomer={selectedCustomer}
+          onOpenPettyCash={() => setIsPettyCashModalOpen(true)}
+          onOpenPickingList={() => setIsDraftPickingListOpen(true)}
         />
       ) : (
         <>
@@ -642,6 +664,47 @@ export default function POSTerminal({
 
       </div>
 
+      {/* CUSTOMER SELECTOR & PETTY CASH SHORTCUT BAR */}
+      <div className="flex flex-wrap items-center justify-between gap-2.5 bg-slate-50/80 border border-slate-200 p-2.5 rounded-xl shadow-2xs">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsCustomerModalOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-slate-100 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 shadow-2xs transition cursor-pointer"
+            title="Kelola & Pilih Pelanggan (Limit Piutang & Jatuh Tempo)"
+          >
+            <div className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+              <Users className="w-3.5 h-3.5" />
+            </div>
+            <span>Pelanggan: <strong className="text-emerald-800">{selectedCustomer?.name || 'Pelanggan Umum'}</strong></span>
+            {selectedCustomer?.creditLimit > 0 ? (
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                (selectedCustomer.status === 'OVERDUE' || (selectedCustomer.dueDate && new Date(selectedCustomer.dueDate) < new Date()))
+                  ? 'bg-rose-100 text-rose-700'
+                  : 'bg-purple-100 text-purple-800'
+              }`}>
+                {selectedCustomer.status === 'OVERDUE' ? '⚠️ Overdue (Kredit Terkunci)' : `Plafon: Rp ${selectedCustomer.creditLimit.toLocaleString('id-ID')}`}
+              </span>
+            ) : (
+              <span className="text-[10px] text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">Tunai</span>
+            )}
+            <span className="text-[10px] text-emerald-700 underline font-bold ml-1">+ Ganti / Daftar</span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsPettyCashModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-xl text-xs font-bold text-amber-900 shadow-2xs transition cursor-pointer"
+            title="Input Kas Kecil (Bensin armada, parkir, ongkir ekspedisi langsung dari kasir)"
+          >
+            <DollarSign className="w-3.5 h-3.5 text-amber-600" />
+            <span>💸 Kas Kecil (Bensin/Parkir)</span>
+          </button>
+        </div>
+      </div>
+
       {/* MEMBER & TEBUS MURAH RETAIL PROMO STRIP */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
         
@@ -746,8 +809,21 @@ export default function POSTerminal({
               })}
             </div>
 
-            <div className="flex items-center gap-2 text-[11px] text-slate-400">
-              <span>Gunakan tombol <kbd className="kbd-badge">↑</kbd> <kbd className="kbd-badge">↓</kbd> untuk memilih baris</span>
+            <div className="flex items-center gap-2">
+              {cart.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setIsDraftPickingListOpen(true)}
+                  className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 rounded-lg text-xs font-bold flex items-center gap-1.5 transition shadow-2xs cursor-pointer"
+                  title="Cetak Struk Draf / Lembar Instruksi Picking Gudang untuk staf penyiapan barang"
+                >
+                  <Printer className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Cetak Draf (Picking List)</span>
+                </button>
+              )}
+              <div className="hidden sm:flex items-center gap-2 text-[11px] text-slate-400">
+                <span>Gunakan <kbd className="kbd-badge">↑</kbd> <kbd className="kbd-badge">↓</kbd></span>
+              </div>
             </div>
           </div>
 
@@ -1081,6 +1157,42 @@ export default function POSTerminal({
         cart={cart}
         totalAmount={totalAmount}
         onProceedSplitBill={handleProceedSplitBill}
+      />
+
+      {/* CUSTOMER MANAGEMENT & CREDIT LIMIT MODAL */}
+      <CustomerModal
+        isOpen={isCustomerModalOpen}
+        onClose={() => setIsCustomerModalOpen(false)}
+        customers={customers}
+        selectedCustomer={selectedCustomer}
+        onSelectCustomer={onSelectCustomer}
+        onAddCustomer={onAddCustomer}
+      />
+
+      {/* PETTY CASH / BIAYA KASIR MODAL */}
+      <PettyCashModal
+        isOpen={isPettyCashModalOpen}
+        onClose={() => setIsPettyCashModalOpen(false)}
+        activeCashier={shiftData?.cashier || 'Kasir 1'}
+        activeTerminal={activeTerminal}
+        onAddExpense={onAddExpense}
+        recentExpenses={expenses}
+      />
+
+      {/* DRAFT PICKING LIST MODAL (HOLD BILL) */}
+      <DraftPickingListModal
+        isOpen={isDraftPickingListOpen}
+        onClose={() => setIsDraftPickingListOpen(false)}
+        draftData={{
+          draftId: `DRF-${activeQueue.replace(/\s+/g, '')}-${Date.now().toString().slice(-4)}`,
+          customer: selectedCustomer || 'Pelanggan Umum',
+          items: cart,
+          total: totalAmount,
+          time: new Date().toLocaleTimeString('id-ID') + ' WIB',
+          cashier: shiftData?.cashier || 'Kasir 1'
+        }}
+        activeTerminal={activeTerminal}
+        activeCashier={shiftData?.cashier || 'Kasir 1'}
       />
 
     </div>

@@ -9,21 +9,26 @@ import {
   Trash2, 
   Edit3, 
   Check, 
-  ChevronRight,
-  ShieldAlert,
-  Building,
-  Zap,
-  CheckCircle2,
-  X,
-  Camera,
-  Lock
+  ChevronRight, 
+  ShieldAlert, 
+  Building, 
+  Zap, 
+  CheckCircle2, 
+  X, 
+  Camera, 
+  Lock,
+  FileSpreadsheet,
+  Download
 } from 'lucide-react';
 import CameraBarcodeScannerModal from './CameraBarcodeScannerModal';
+import ImportProductsExcelModal from './ImportProductsExcelModal';
+import { exportStockToExcel } from '../utils/exportExcel';
 
 export default function MasterProducts({ products, setProducts, currentRole = 'OWNER' }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
   const [cameraScanTarget, setCameraScanTarget] = useState(null); // 'pcs' | 'dus' | null
 
   // Form for New Product
@@ -152,13 +157,36 @@ export default function MasterProducts({ products, setProducts, currentRole = 'O
           </p>
         </div>
 
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Tambah Produk Baru</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => exportStockToExcel(products, 'Katalog_Master_Produk_Pak_Noor.xlsx')}
+            className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+            title="Download katalog price list produk ke format Excel (.xlsx)"
+          >
+            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+            <span>Ekspor Excel</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsImportModalOpen(true)}
+            className="px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+            title="Unggah master produk massal dari file Excel (.xlsx / .csv)"
+          >
+            <Download className="w-4 h-4 text-emerald-700" />
+            <span>Impor Excel Massal</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsAddModalOpen(true)}
+            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Tambah Produk Baru</span>
+          </button>
+        </div>
       </div>
 
       {/* Search & Categories */}
@@ -578,6 +606,15 @@ export default function MasterProducts({ products, setProducts, currentRole = 'O
             setForm(prev => ({ ...prev, barcodePcs: decodedText }));
           }
           setCameraScanTarget(null);
+        }}
+      />
+
+      {/* Modal Import Excel Massal */}
+      <ImportProductsExcelModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImportSuccess={(newProds) => {
+          setProducts(prev => [...newProds, ...prev]);
         }}
       />
 

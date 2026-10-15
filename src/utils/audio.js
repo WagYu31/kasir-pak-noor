@@ -95,3 +95,6 @@ class SoundFX {
 }
 
 export const soundFX = new SoundFX();
+export const playSuccessSound = () => soundFX.playCashRegister();
+export const playBeep = () => soundFX.playBeep();
+export const playErrorSound = () => soundFX.playError();

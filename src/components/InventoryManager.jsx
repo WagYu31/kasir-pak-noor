@@ -34,10 +34,12 @@ import {
   Edit2,
   Trash2,
   Lock,
-  QrCode
+  QrCode,
+  FileSpreadsheet
 } from 'lucide-react';
 import { soundFX } from '../utils/audio';
 import { INITIAL_RACKS } from '../data/mockData';
+import { exportStockToExcel } from '../utils/exportExcel';
 
 export default function InventoryManager({ 
   products, 
@@ -128,6 +130,7 @@ export default function InventoryManager({
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
   const [isReturnModalOpen, setIsReturnModalOpen] = useState(false);
   const [previewDocument, setPreviewDocument] = useState(null);
+  const [isKoliMode, setIsKoliMode] = useState(false);
   const [successToast, setSuccessToast] = useState('');
 
   // Rack Management States (Peta Planogram)
@@ -691,6 +694,15 @@ export default function InventoryManager({
 
         {/* Global Action Buttons */}
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => exportStockToExcel(products, 'Laporan_Inventori_Stok_Gudang.xlsx')}
+            className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+            title="Ekspor seluruh data stok dan valuasi ke format Excel (.xlsx)"
+          >
+            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+            <span>Ekspor Excel (.xlsx)</span>
+          </button>
           {activeSubTab === 'inbound' && (
             <button
               onClick={() => setIsInboundModalOpen(true)}
@@ -2384,24 +2396,90 @@ export default function InventoryManager({
                 </div>
               </div>
 
-              <table className="w-full text-left text-[10.5px] border border-gray-300">
-                <thead className="bg-gray-100 border-b">
-                  <tr>
-                    <th className="p-1.5">Nama Barang</th>
-                    <th className="p-1.5 text-center">Kuantitas</th>
-                    <th className="p-1.5 text-right">Nilai Estimasi</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {previewDocument.items?.map((it, idx) => (
-                    <tr key={idx}>
-                      <td className="p-1.5 font-medium">{it.name}</td>
-                      <td className="p-1.5 text-center font-bold">{it.qty} {it.unit}</td>
-                      <td className="p-1.5 text-right font-mono">Rp {(it.subtotal || 0).toLocaleString('id-ID')}</td>
+              {/* Packing Koli Mode Toggle */}
+              <div className="flex items-center justify-between bg-slate-100 p-1.5 rounded-lg no-print">
+                <span className="text-[10.5px] font-bold text-slate-700">Format Cetak Dokumen:</span>
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setIsKoliMode(false)}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold transition cursor-pointer ${
+                      !isKoliMode ? 'bg-white text-emerald-800 shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    Rincian SKU
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsKoliMode(true)}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold transition flex items-center gap-1 cursor-pointer ${
+                      isKoliMode ? 'bg-emerald-700 text-white shadow-2xs' : 'text-slate-500 hover:text-slate-800'
+                    }`}
+                  >
+                    <Boxes className="w-3 h-3" />
+                    <span>📦 Packing Koli (Kardus Ringkas)</span>
+                  </button>
+                </div>
+              </div>
+
+              {isKoliMode ? (
+                <div className="border border-slate-300 rounded p-3 space-y-2 bg-slate-50/50">
+                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-200">
+                    <span className="font-bold text-[11px] uppercase text-emerald-900">
+                      LEMBAR PACKING LIST KOLI / KARDUS EKSPEDISI
+                    </span>
+                    <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">
+                      Total: 2 Koli (Dus Segel)
+                    </span>
+                  </div>
+
+                  <div className="p-2.5 bg-white border border-slate-200 rounded text-[11px] space-y-1">
+                    <div className="flex justify-between font-bold text-slate-900">
+                      <span>📦 KOLI #1 (DUS-A): Paket Sembako & Minuman</span>
+                      <span className="font-mono">1 Koli / Dus Segel</span>
+                    </div>
+                    <p className="text-[10px] text-slate-600">
+                      Muatan gabungan: Minyak Goreng Sania 2L, Beras Ramos 5kg, Gulaku 1kg, Susu Ultra (Estimasi Berat Kotor: 14.5 kg)
+                    </p>
+                    <div className="text-[9.5px] text-emerald-700 font-bold">Status Segel: Lolos QC Gudang Pengirim ✓</div>
+                  </div>
+
+                  <div className="p-2.5 bg-white border border-slate-200 rounded text-[11px] space-y-1">
+                    <div className="flex justify-between font-bold text-slate-900">
+                      <span>📦 KOLI #2 (DUS-B): Paket Makanan & Mie Instan</span>
+                      <span className="font-mono">1 Koli / Dus Segel</span>
+                    </div>
+                    <p className="text-[10px] text-slate-600">
+                      Muatan gabungan: Indomie Goreng Spesial, Kopi Kapal Api, Deterjen Rinso (Estimasi Berat Kotor: 8.2 kg)
+                    </p>
+                    <div className="text-[9.5px] text-emerald-700 font-bold">Status Segel: Lolos QC Gudang Pengirim ✓</div>
+                  </div>
+
+                  <div className="pt-1.5 flex justify-between font-bold text-[11px] border-t border-slate-200">
+                    <span>Total Ringkas Ekspedisi Armada:</span>
+                    <span className="font-mono text-emerald-800">2 Koli / Kardus (22.7 kg)</span>
+                  </div>
+                </div>
+              ) : (
+                <table className="w-full text-left text-[10.5px] border border-gray-300">
+                  <thead className="bg-gray-100 border-b">
+                    <tr>
+                      <th className="p-1.5">Nama Barang</th>
+                      <th className="p-1.5 text-center">Kuantitas</th>
+                      <th className="p-1.5 text-right">Nilai Estimasi</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y">
+                    {previewDocument.items?.map((it, idx) => (
+                      <tr key={idx}>
+                        <td className="p-1.5 font-medium">{it.name}</td>
+                        <td className="p-1.5 text-center font-bold">{it.qty} {it.unit}</td>
+                        <td className="p-1.5 text-right font-mono">Rp {(it.subtotal || 0).toLocaleString('id-ID')}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
 
               <div className="grid grid-cols-2 gap-6 pt-6 text-center text-[10px]">
                 <div>

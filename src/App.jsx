@@ -13,6 +13,7 @@ import UserRoleModal, { USER_ROLES } from './components/UserRoleModal';
 import LoginPage from './components/LoginPage';
 import UserAccountManagerModal from './components/UserAccountManagerModal';
 import TerminalManagerModal from './components/TerminalManagerModal';
+import CustomerModal from './components/CustomerModal';
 
 import { 
   INITIAL_WAREHOUSES, 
@@ -20,7 +21,10 @@ import {
   INITIAL_TRANSFERS, 
   INITIAL_SALES_HISTORY,
   INITIAL_USERS,
-  INITIAL_TERMINALS
+  INITIAL_TERMINALS,
+  INITIAL_CUSTOMERS,
+  INITIAL_EXPENSES,
+  INITIAL_COMMISSIONS
 } from './data/mockData';
 
 export default function App() {
@@ -42,6 +46,10 @@ export default function App() {
   const [warehouses, setWarehouses] = useState(INITIAL_WAREHOUSES);
   const [transfers, setTransfers] = useState(INITIAL_TRANSFERS);
   const [salesHistory, setSalesHistory] = useState(INITIAL_SALES_HISTORY);
+  const [customers, setCustomers] = useState(INITIAL_CUSTOMERS);
+  const [selectedCustomer, setSelectedCustomer] = useState(INITIAL_CUSTOMERS[0]);
+  const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
+  const [commissions, setCommissions] = useState(INITIAL_COMMISSIONS);
 
   // Active Cashier Shift State
   const [shiftData, setShiftData] = useState({
@@ -59,6 +67,7 @@ export default function App() {
   const [isShiftOpen, setIsShiftOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isCustomerDisplayOpen, setIsCustomerDisplayOpen] = useState(false);
+  const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
 
   // Active Cart to Checkout
   const [checkoutData, setCheckoutData] = useState({
@@ -155,6 +164,27 @@ export default function App() {
     setIsPaymentOpen(true);
   };
 
+  const handleAddCustomer = (newCust) => {
+    setCustomers(prev => [newCust, ...prev]);
+  };
+
+  const handleAddExpense = (newExp) => {
+    setExpenses(prev => [newExp, ...prev]);
+    setShiftData(prev => ({
+      ...prev,
+      cashLogs: [
+        ...prev.cashLogs,
+        {
+          id: Date.now(),
+          time: newExp.time,
+          type: 'OUT',
+          amount: newExp.amount,
+          note: `${newExp.category}: ${newExp.description}`
+        }
+      ]
+    }));
+  };
+
   // Payment Completed Callback
   const handlePaymentSuccess = (transactionData) => {
     // 1. Deduct Stock from active warehouse based on multiplier
@@ -178,10 +208,38 @@ export default function App() {
     // 2. Append to Sales History
     setSalesHistory(prev => [transactionData, ...prev]);
 
-    // 3. Save as Last Transaction
+    // 3. Update Customer Debt if Piutang or DP
+    if (transactionData.remainingDebt > 0 && transactionData.customerId) {
+      setCustomers(prev => prev.map(c => {
+        if (c.id === transactionData.customerId) {
+          const newDebt = (c.currentDebt || 0) + transactionData.remainingDebt;
+          return {
+            ...c,
+            currentDebt: newDebt,
+            dueDate: transactionData.dueDate || c.dueDate,
+            status: (c.creditLimit > 0 && newDebt >= c.creditLimit) ? 'OVERDUE' : 'ACTIVE'
+          };
+        }
+        return c;
+      }));
+    }
+
+    // 4. Update Commission for Cashier
+    setCommissions(prev => prev.map(comm => {
+      if (comm.role === activeTerminal || comm.cashierName.includes(shiftData.cashier)) {
+        return {
+          ...comm,
+          totalSales: comm.totalSales + transactionData.totalAmount,
+          commissionAmount: comm.commissionAmount + Math.round(transactionData.totalAmount * 0.015)
+        };
+      }
+      return comm;
+    }));
+
+    // 5. Save as Last Transaction
     setLastTransaction(transactionData);
 
-    // 4. Close Payment Modal & Open Receipt
+    // 6. Close Payment Modal & Open Receipt
     setIsPaymentOpen(false);
     setIsReceiptOpen(true);
   };
@@ -238,6 +296,14 @@ export default function App() {
             lastScannedItem={lastScannedItem}
             setLastScannedItem={setLastScannedItem}
             currentRole={currentUserRole}
+            activeTerminal={activeTerminal}
+            shiftData={shiftData}
+            customers={customers}
+            selectedCustomer={selectedCustomer}
+            onSelectCustomer={setSelectedCustomer}
+            onAddCustomer={handleAddCustomer}
+            expenses={expenses}
+            onAddExpense={handleAddExpense}
           />
         )}
 
@@ -268,6 +334,22 @@ export default function App() {
             products={products}
             warehouses={warehouses}
             currentRole={currentUserRole}
+            customers={customers}
+            expenses={expenses}
+            commissions={commissions}
+            onRecordDebtPayment={(customerId, paidAmount) => {
+              setCustomers(prev => prev.map(c => {
+                if (c.id === customerId) {
+                  const updatedDebt = Math.max(0, (c.currentDebt || 0) - paidAmount);
+                  return {
+                    ...c,
+                    currentDebt: updatedDebt,
+                    status: updatedDebt === 0 ? 'ACTIVE' : c.status
+                  };
+                }
+                return c;
+              }));
+            }}
           />
         )}
       </main>
@@ -317,6 +399,21 @@ export default function App() {
         onPaymentSuccess={handlePaymentSuccess}
         activeTerminal={activeTerminal}
         shiftData={shiftData}
+        customers={customers}
+        selectedCustomer={selectedCustomer}
+        onOpenCustomerModal={() => setIsCustomerModalOpen(true)}
+      />
+
+      <CustomerModal
+        isOpen={isCustomerModalOpen}
+        onClose={() => setIsCustomerModalOpen(false)}
+        customers={customers}
+        selectedCustomer={selectedCustomer}
+        onSelectCustomer={(cust) => {
+          setSelectedCustomer(cust);
+          setIsCustomerModalOpen(false);
+        }}
+        onAddCustomer={handleAddCustomer}
       />
 
       <ThermalReceiptModal

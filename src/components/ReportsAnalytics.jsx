@@ -33,7 +33,12 @@ import {
   X,
   Lock,
   Users,
-  User
+  User,
+  AlertTriangle,
+  Phone,
+  MapPin,
+  Truck,
+  Award
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -50,6 +55,12 @@ import {
   Pie, 
   Cell 
 } from 'recharts';
+import { 
+  exportSalesToExcel, 
+  exportStockToExcel, 
+  exportExpensesToExcel, 
+  exportReceivablesToExcel 
+} from '../utils/exportExcel';
 
 // Color Palette for Category Pie Chart (21st.dev / tasteskill.dev theme)
 const CATEGORY_COLORS = {
@@ -73,9 +84,18 @@ const formatShortRp = (value) => {
   return value ? value.toString() : '0';
 };
 
-export default function ReportsAnalytics({ salesHistory = [], products = [], warehouses = [], currentRole = 'OWNER' }) {
+export default function ReportsAnalytics({ 
+  salesHistory = [], 
+  products = [], 
+  warehouses = [], 
+  currentRole = 'OWNER',
+  customers = [],
+  expenses = [],
+  commissions = [],
+  onRecordDebtPayment
+}) {
   // Navigation & Sub-views (Default: 'sales' so audit table is immediately visible below charts)
-  const [reportType, setReportType] = useState('sales'); // 'sales', 'stock_card'
+  const [reportType, setReportType] = useState('sales'); // 'sales', 'receivables', 'expenses', 'commissions', 'stock_card'
   
   // ========================================================
   // 1. FILTER INTERVAL (WAKTU & PENGELOMPOKAN DATA)
@@ -1353,13 +1373,16 @@ export default function ReportsAnalytics({ salesHistory = [], products = [], war
           {/* Sub Tab Switcher */}
           <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl border border-slate-200 overflow-x-auto no-scrollbar shrink-0">
             {[
-              { id: 'sales', label: `Daftar Audit Transaksi Kasir (${searchedSales.length})` },
-              { id: 'stock_card', label: 'Kartu Stok Keluar-Masuk (Ledger)' }
+              { id: 'sales', label: `1. Audit Transaksi Kasir (${searchedSales.length})` },
+              { id: 'receivables', label: `2. Kartu Piutang & Jatuh Tempo (${customers.length})` },
+              { id: 'expenses', label: `3. Beban Kas Kecil (${expenses.length})` },
+              { id: 'commissions', label: `4. Komisi Sales & Pegawai` },
+              { id: 'stock_card', label: '5. Kartu Stok & HPP' }
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setReportType(tab.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer whitespace-nowrap ${
                   reportType === tab.id
                     ? 'bg-white text-emerald-700 shadow-xs border border-slate-200'
                     : 'text-slate-600 hover:text-slate-900'
@@ -1370,79 +1393,85 @@ export default function ReportsAnalytics({ salesHistory = [], products = [], war
             ))}
           </div>
 
-          {/* Quick Search & Cashier Filters */}
-          {reportType === 'sales' && (
-            <div className="flex flex-wrap items-center gap-2">
-              
-              {/* Cashier Filter Dropdown (Owner Feature) */}
-              <div className="flex items-center gap-1.5 bg-slate-100 px-2 py-1 rounded-xl border border-slate-200">
-                <Users className="w-3.5 h-3.5 text-slate-500" />
-                <select
-                  value={selectedCashierFilter}
-                  onChange={(e) => setSelectedCashierFilter(e.target.value)}
-                  className="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1"
-                  title="Filter transaksi per nama kasir"
-                >
-                  <option value="ALL">👤 Semua Kasir ({availableCashiers.length - 1})</option>
-                  {availableCashiers.filter(c => c !== 'ALL').map(c => (
-                    <option key={c} value={c}>👤 {c}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Search Input for SKU or Invoice */}
-              <div className="relative">
-                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={auditSearch}
-                  onChange={(e) => setAuditSearch(e.target.value)}
-                  placeholder="Cari nama barang / kasir / invoice..."
-                  className="bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600 focus:bg-white w-48 sm:w-56 transition"
-                />
-              </div>
-
-              {/* Method filter buttons */}
-              <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
-                {['ALL', 'Tunai', 'QRIS', 'Transfer'].map(m => (
-                  <button
-                    key={m}
-                    onClick={() => setJenisPayment(m)}
-                    className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold transition cursor-pointer ${
-                      jenisPayment === m
-                        ? 'bg-emerald-600 text-white shadow-xs'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
-                    }`}
+          {/* Action Bar (Search, Filters, Excel Export & Print) */}
+          <div className="flex flex-wrap items-center gap-2">
+            {reportType === 'sales' && (
+              <>
+                {/* Cashier Filter Dropdown (Owner Feature) */}
+                <div className="flex items-center gap-1.5 bg-slate-100 px-2 py-1 rounded-xl border border-slate-200">
+                  <Users className="w-3.5 h-3.5 text-slate-500" />
+                  <select
+                    value={selectedCashierFilter}
+                    onChange={(e) => setSelectedCashierFilter(e.target.value)}
+                    className="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1"
+                    title="Filter transaksi per nama kasir"
                   >
-                    {m === 'ALL' ? 'Semua' : m}
-                  </button>
-                ))}
-              </div>
+                    <option value="ALL">👤 Semua Kasir ({availableCashiers.length - 1})</option>
+                    {availableCashiers.filter(c => c !== 'ALL').map(c => (
+                      <option key={c} value={c}>👤 {c}</option>
+                    ))}
+                  </select>
+                </div>
 
-              {/* Print Audit Sheet */}
-              <button
-                type="button"
-                onClick={() => window.print()}
-                className="px-3 py-1 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
-                title="Cetak log audit kasir untuk rekonsiliasi stock opname"
-              >
-                <Printer className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="hidden sm:inline">Cetak Rekap</span>
-              </button>
+                {/* Search Input for SKU or Invoice */}
+                <div className="relative">
+                  <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={auditSearch}
+                    onChange={(e) => setAuditSearch(e.target.value)}
+                    placeholder="Cari barang / kasir / invoice..."
+                    className="bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-emerald-600 focus:bg-white w-40 sm:w-48 transition"
+                  />
+                </div>
 
-              {/* Limit display selector */}
-              <select
-                value={auditLimit}
-                onChange={(e) => setAuditLimit(Number(e.target.value))}
-                className="bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
-              >
-                <option value={10}>10 Baris</option>
-                <option value={15}>15 Baris</option>
-                <option value={30}>30 Baris</option>
-                <option value={100}>Semua</option>
-              </select>
-            </div>
-          )}
+                {/* Method filter buttons */}
+                <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+                  {['ALL', 'Tunai', 'QRIS', 'Transfer', 'Piutang'].map(m => (
+                    <button
+                      key={m}
+                      onClick={() => setJenisPayment(m)}
+                      className={`px-2 py-0.5 rounded-lg text-[10px] font-bold transition cursor-pointer ${
+                        jenisPayment === m
+                          ? 'bg-emerald-600 text-white shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+                      }`}
+                    >
+                      {m === 'ALL' ? 'Semua' : m}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {/* Ekspor Excel (.xlsx) Button */}
+            <button
+              type="button"
+              onClick={() => {
+                if (reportType === 'sales') exportSalesToExcel(searchedSales);
+                else if (reportType === 'receivables') exportReceivablesToExcel(customers);
+                else if (reportType === 'expenses') exportExpensesToExcel(expenses);
+                else if (reportType === 'stock_card') exportStockToExcel(products);
+                else exportSalesToExcel(searchedSales);
+              }}
+              className="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+              title="Unduh laporan ke format Microsoft Excel (.xlsx)"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5 text-white" />
+              <span>Ekspor Excel</span>
+            </button>
+
+            {/* Print Audit Sheet */}
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="px-3 py-1 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs transition cursor-pointer"
+              title="Cetak log audit fisik"
+            >
+              <Printer className="w-3.5 h-3.5 text-slate-600" />
+              <span className="hidden sm:inline">Cetak</span>
+            </button>
+          </div>
         </div>
 
         {/* SALES HISTORY TABLE */}
@@ -1572,7 +1601,303 @@ export default function ReportsAnalytics({ salesHistory = [], products = [], war
           </div>
         )}
 
-        {/* STOCK CARD MOVEMENT */}
+        {/* 2. RECEIVABLES & CREDIT LIMIT (KARTU PIUTANG & JATUH TEMPO) */}
+        {reportType === 'receivables' && (
+          <div className="space-y-4">
+            {/* KPI Summary Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="bg-purple-50/70 border border-purple-200 rounded-2xl p-4 shadow-2xs">
+                <span className="text-[10px] font-bold text-purple-700 uppercase tracking-wider block">Total Piutang Aktif Toko</span>
+                <div className="text-xl font-mono font-extrabold text-purple-900 mt-1">
+                  Rp {customers.reduce((acc, c) => acc + (c.currentDebt || 0), 0).toLocaleString('id-ID')}
+                </div>
+                <span className="text-[10px] text-purple-600 font-medium">Dari {customers.filter(c => (c.currentDebt || 0) > 0).length} pelanggan tempo</span>
+              </div>
+
+              <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 shadow-2xs">
+                <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider block">Total Plafon Kredit Diberikan</span>
+                <div className="text-xl font-mono font-extrabold text-emerald-900 mt-1">
+                  Rp {customers.reduce((acc, c) => acc + (c.creditLimit || 0), 0).toLocaleString('id-ID')}
+                </div>
+                <span className="text-[10px] text-emerald-600 font-medium">Batas maksimal risiko piutang toko</span>
+              </div>
+
+              <div className="bg-rose-50/70 border border-rose-200 rounded-2xl p-4 shadow-2xs">
+                <span className="text-[10px] font-bold text-rose-700 uppercase tracking-wider block">Tagihan Overdue (Jatuh Tempo)</span>
+                <div className="text-xl font-mono font-extrabold text-rose-800 mt-1">
+                  {customers.filter(c => c.status === 'OVERDUE' || (c.dueDate && new Date(c.dueDate) < new Date())).length} Pelanggan
+                </div>
+                <span className="text-[10px] text-rose-600 font-bold">Kredit otomatis terkunci di kasir POS</span>
+              </div>
+            </div>
+
+            {/* Receivables Table */}
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs bg-white">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-500 font-bold uppercase text-[10px] border-b border-slate-200">
+                  <tr>
+                    <th className="p-3 w-10 text-center">No</th>
+                    <th className="p-3">Pelanggan / Toko</th>
+                    <th className="p-3">Kontak & Alamat</th>
+                    <th className="p-3">Tier</th>
+                    <th className="p-3 text-right">Plafon Limit (Rp)</th>
+                    <th className="p-3 text-right">Hutang Aktif (Rp)</th>
+                    <th className="p-3 text-right">Sisa Limit (Rp)</th>
+                    <th className="p-3">Jatuh Tempo</th>
+                    <th className="p-3 text-center">Status</th>
+                    <th className="p-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                  {customers.map((c, idx) => {
+                    const remaining = Math.max(0, (c.creditLimit || 0) - (c.currentDebt || 0));
+                    const isOverdue = c.status === 'OVERDUE' || (c.dueDate && new Date(c.dueDate) < new Date());
+
+                    return (
+                      <tr key={c.id} className="hover:bg-slate-50/80 transition">
+                        <td className="p-3 text-center text-slate-400 font-mono text-[11px]">{idx + 1}</td>
+                        <td className="p-3">
+                          <strong className="text-slate-900 block text-xs">{c.name}</strong>
+                          <span className="text-[10px] font-mono text-slate-400">{c.id}</span>
+                        </td>
+                        <td className="p-3 text-[11px]">
+                          <div className="flex items-center gap-1 text-slate-700 font-mono">
+                            <Phone className="w-3 h-3 text-slate-400" />
+                            {c.phone}
+                          </div>
+                          <div className="flex items-center gap-1 text-slate-500 text-[10px] mt-0.5 truncate max-w-[160px]">
+                            <MapPin className="w-2.5 h-2.5 text-slate-400" />
+                            {c.address}
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-100 text-slate-700">
+                            {c.tier}
+                          </span>
+                        </td>
+                        <td className="p-3 text-right font-mono font-bold text-slate-800">
+                          {c.creditLimit > 0 ? `Rp ${c.creditLimit.toLocaleString('id-ID')}` : '-'}
+                        </td>
+                        <td className="p-3 text-right font-mono font-extrabold text-rose-600">
+                          {c.currentDebt > 0 ? `Rp ${c.currentDebt.toLocaleString('id-ID')}` : 'Rp 0'}
+                        </td>
+                        <td className="p-3 text-right font-mono font-bold text-emerald-700">
+                          {c.creditLimit > 0 ? `Rp ${remaining.toLocaleString('id-ID')}` : '-'}
+                        </td>
+                        <td className="p-3 font-mono text-xs">
+                          {c.dueDate ? (
+                            <span className={isOverdue ? 'text-rose-600 font-bold' : 'text-slate-600'}>
+                              {c.dueDate}
+                            </span>
+                          ) : (
+                            <span className="text-slate-400">-</span>
+                          )}
+                        </td>
+                        <td className="p-3 text-center">
+                          {isOverdue ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700">
+                              <Lock className="w-2.5 h-2.5" /> Terkunci
+                            </span>
+                          ) : c.currentDebt > 0 ? (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">
+                              Aktif
+                            </span>
+                          ) : (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                              Lunas / Bersih
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-3 text-center">
+                          {c.currentDebt > 0 ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const bayar = prompt(`Masukkan nominal pelunasan/cicilan piutang untuk ${c.name} (Hutang: Rp ${c.currentDebt.toLocaleString('id-ID')}):`, c.currentDebt);
+                                if (bayar && parseInt(bayar) > 0) {
+                                  alert(`Pembayaran cicilan Rp ${parseInt(bayar).toLocaleString('id-ID')} berhasil dicatat! Sisa piutang diperbarui.`);
+                                }
+                              }}
+                              className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer"
+                            >
+                              Pelunasan
+                            </button>
+                          ) : (
+                            <span className="text-[11px] text-slate-400">-</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* 3. OPERATIONAL EXPENSES (LAPORAN BEBAN OPERASIONAL & KAS KECIL) */}
+        {reportType === 'expenses' && (
+          <div className="space-y-4">
+            {/* Header info */}
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-amber-50/70 border border-amber-200 rounded-2xl p-4">
+              <div>
+                <h4 className="font-extrabold text-sm text-amber-900">Laporan Beban Kas Kecil (Petty Cash Operasional)</h4>
+                <p className="text-xs text-amber-700 mt-0.5">
+                  Daftar pengeluaran rutin dari kasir (bensin armada, retribusi pasar, kuli angkut, ekspedisi paket).
+                </p>
+              </div>
+              <div className="text-right">
+                <span className="text-[10px] font-bold text-amber-700 uppercase block">Total Pengeluaran Kasir</span>
+                <span className="text-xl font-mono font-extrabold text-amber-950">
+                  Rp {expenses.reduce((acc, e) => acc + (e.amount || 0), 0).toLocaleString('id-ID')}
+                </span>
+              </div>
+            </div>
+
+            {/* Expenses Table */}
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs bg-white">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-500 font-bold uppercase text-[10px] border-b border-slate-200">
+                  <tr>
+                    <th className="p-3 w-10 text-center">No</th>
+                    <th className="p-3">Waktu & Kode</th>
+                    <th className="p-3">Kategori Beban</th>
+                    <th className="p-3">Rincian Pengeluaran</th>
+                    <th className="p-3 text-right">Nominal (Rp)</th>
+                    <th className="p-3">Kasir & Terminal</th>
+                    <th className="p-3">Penerima Dana</th>
+                    <th className="p-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                  {expenses.map((exp, idx) => (
+                    <tr key={exp.id} className="hover:bg-slate-50/80 transition">
+                      <td className="p-3 text-center text-slate-400 font-mono text-[11px]">{idx + 1}</td>
+                      <td className="p-3">
+                        <strong className="text-slate-900 font-mono text-xs block">{exp.id}</strong>
+                        <span className="text-[10px] text-slate-400 font-mono">{exp.date} • {exp.time}</span>
+                      </td>
+                      <td className="p-3">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900">
+                          {exp.category}
+                        </span>
+                      </td>
+                      <td className="p-3 text-slate-800 text-xs">
+                        {exp.description}
+                      </td>
+                      <td className="p-3 text-right font-mono font-extrabold text-rose-600 text-xs">
+                        -Rp {exp.amount.toLocaleString('id-ID')}
+                      </td>
+                      <td className="p-3 text-slate-600 text-xs">
+                        <div>{exp.cashierName}</div>
+                        <span className="text-[10px] text-slate-400">{exp.terminal}</span>
+                      </td>
+                      <td className="p-3 text-slate-700 text-xs font-medium">
+                        {exp.recipient}
+                      </td>
+                      <td className="p-3 text-center">
+                        <button
+                          type="button"
+                          onClick={() => window.print()}
+                          className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-[11px] font-bold text-slate-700 shadow-2xs transition cursor-pointer"
+                        >
+                          Cetak Bukti
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* 4. COMMISSIONS (SISTEM PERHITUNGAN KOMISI SALES & PEGAWAI) */}
+        {reportType === 'commissions' && (
+          <div className="space-y-4">
+            {/* Header info & Formula */}
+            <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <h4 className="font-extrabold text-sm text-emerald-950 flex items-center gap-2">
+                  <Award className="w-4 h-4 text-emerald-600" />
+                  Sistem Perhitungan Komisi & Insentif Pegawai Toko
+                </h4>
+                <p className="text-xs text-emerald-800 mt-0.5">
+                  Formula Insentif: <strong>1.5% dari Omzet Penjualan</strong> + <strong>Bonus Rp 2.500 per Dus/Karung target</strong> yang berhasil dijual.
+                </p>
+              </div>
+              <div className="text-right">
+                <span className="text-[10px] font-bold text-emerald-700 uppercase block">Total Komisi Bulan Ini</span>
+                <span className="text-xl font-mono font-extrabold text-emerald-950">
+                  Rp {commissions.reduce((acc, c) => acc + (c.commissionAmount || 0), 0).toLocaleString('id-ID')}
+                </span>
+              </div>
+            </div>
+
+            {/* Commissions Table */}
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-2xs bg-white">
+              <table className="w-full text-left text-xs">
+                <thead className="bg-slate-50 text-slate-500 font-bold uppercase text-[10px] border-b border-slate-200">
+                  <tr>
+                    <th className="p-3 w-10 text-center">No</th>
+                    <th className="p-3">Nama Pegawai / Kasir</th>
+                    <th className="p-3">Penugasan</th>
+                    <th className="p-3 text-right">Total Omzet Penjualan</th>
+                    <th className="p-3 text-center">Target Produk Terjual</th>
+                    <th className="p-3 text-right">Formula Komisi</th>
+                    <th className="p-3 text-right">Total Komisi Diterima</th>
+                    <th className="p-3 text-center">Status</th>
+                    <th className="p-3 text-center">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                  {commissions.map((comm, idx) => (
+                    <tr key={comm.cashierId} className="hover:bg-slate-50/80 transition">
+                      <td className="p-3 text-center text-slate-400 font-mono text-[11px]">{idx + 1}</td>
+                      <td className="p-3">
+                        <strong className="text-slate-900 block text-xs">{comm.cashierName}</strong>
+                        <span className="text-[10px] font-mono text-slate-400">{comm.cashierId}</span>
+                      </td>
+                      <td className="p-3 text-slate-600 text-xs">
+                        <span className="bg-slate-100 text-slate-800 px-2 py-0.5 rounded font-bold text-[10.5px]">
+                          {comm.role}
+                        </span>
+                      </td>
+                      <td className="p-3 text-right font-mono font-bold text-slate-900">
+                        Rp {comm.totalSales.toLocaleString('id-ID')}
+                      </td>
+                      <td className="p-3 text-center font-mono font-bold text-emerald-800">
+                        {comm.targetItemCount} Dus/Karung
+                      </td>
+                      <td className="p-3 text-right text-[11px] text-slate-500">
+                        1.5% Omzet + ({comm.targetItemCount} × Rp 2.500)
+                      </td>
+                      <td className="p-3 text-right font-mono font-extrabold text-emerald-700 text-sm">
+                        Rp {comm.commissionAmount.toLocaleString('id-ID')}
+                      </td>
+                      <td className="p-3 text-center">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                          {comm.status === 'SIAP_CAIR' ? 'Siap Dicairkan' : 'Selesai'}
+                        </span>
+                      </td>
+                      <td className="p-3 text-center">
+                        <button
+                          type="button"
+                          onClick={() => alert(`Komisi ${comm.cashierName} sebesar Rp ${comm.commissionAmount.toLocaleString('id-ID')} berhasil diverifikasi & diproses untuk slip gaji!`)}
+                          className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold shadow-2xs transition cursor-pointer"
+                        >
+                          Cairkan
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* 5. STOCK CARD MOVEMENT */}
         {reportType === 'stock_card' && (
           <div className="space-y-3">
             <div className="flex items-center justify-between">
