@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Proposal Penawaran - POS & Inventori Retail Pak Noor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 10mm 12mm 10mm 12mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 10px;
+      line-height: 1.45;
+      color: #1e293b;
+      background-color: #ffffff;
+    }
+
+    .page {
+      width: 100%;
+      height: 277mm;
+      max-height: 277mm;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .page-break {
+      page-break-after: always;
+      break-after: page;
+    }
+
+    /* Header */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #2563eb;
+      margin-bottom: 10px;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+    }
+
+    .brand-subtitle {
+      font-size: 9px;
+      font-weight: 600;
+      color: #2563eb;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .doc-badge {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1d4ed8;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 8.5px;
+      font-weight: 700;
+      text-align: right;
+    }
+
+    /* Proposal Title */
+    .proposal-title-block {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .proposal-label {
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #93c5fd;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .proposal-main-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+
+    /* Meta Table */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .meta-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 6px 8px;
+      border-radius: 5px;
+    }
+
+    .meta-card-label {
+      font-size: 7.5px;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 700;
+    }
+
+    .meta-card-value {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 1px;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 6px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 3.5px;
+      height: 10.5px;
+      background: #2563eb;
+      border-radius: 2px;
+    }
+
+    p {
+      color: #334155;
+      margin-bottom: 6px;
+      text-align: justify;
+      font-size: 9.5px;
+      line-height: 1.45;
+    }
+
+    /* Modules Grid */
+    .modules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .module-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 8px 10px;
+    }
+
+    .module-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .module-title span {
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 8px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    ul.feature-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.feature-list li {
+      position: relative;
+      padding-left: 12px;
+      margin-bottom: 3px;
+      font-size: 9px;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    ul.feature-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #16a34a;
+      font-weight: bold;
+      font-size: 8.5px;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-left: 3.5px solid #2563eb;
+      padding: 7px 10px;
+      border-radius: 4px;
+      font-size: 8.8px;
+      color: #334155;
+      line-height: 1.4;
+    }
+
+    .warning-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 3.5px solid #d97706;
+      padding: 7px 10px;
+      border-radius: 4px;
+      font-size: 8.8px;
+      color: #92400e;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    /* Tables */
+    table.custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 8px;
+      font-size: 9px;
+    }
+
+    table.custom-table th {
+      background: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 5px 8px;
+      font-weight: 700;
+      font-size: 8.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    table.custom-table td {
+      padding: 5px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+      vertical-align: top;
+    }
+
+    table.custom-table tr:nth-child(even) td {
+      background: #f8fafc;
+    }
+
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+
+    .price-col {
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .total-row td {
+      background: #eff6ff !important;
+      font-size: 10px;
+      font-weight: 800;
+      color: #1e3a8a;
+      border-top: 1.5px solid #2563eb;
+      border-bottom: 1.5px solid #2563eb;
+    }
+
+    /* Signatures */
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+    }
+
+    .signature-box {
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 10px 12px;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .signature-title {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .signature-company {
+      font-size: 10px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 2px;
+      margin-bottom: 42px;
+    }
+
+    .signature-name {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #0f172a;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 4px;
+      display: inline-block;
+      width: 80%;
+    }
+
+    .signature-role {
+      font-size: 8.5px;
+      color: #64748b;
+      margin-top: 1px;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 8px;
+      color: #94a3b8;
+      padding-top: 6px;
+      border-top: 1px solid #e2e8f0;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== HALAMAN 1 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header-container">
+        <div>
+          <div class="brand-title">WAHYU UTOMO, S.Kom</div>
+          <div class="brand-subtitle">Full-Stack Software Engineer & Data Specialist</div>
+        </div>
+        <div class="doc-badge">
+          PROPOSAL PENAWARAN RESMI<br>
+          <span style="font-weight: 500; color: #64748b;">Ref: 2026/PROP-POS/X/001</span>
+        </div>
+      </div>
+
+      <div class="proposal-title-block">
+        <div class="proposal-label">Dokumen Kerjasama Pengembangan Sistem</div>
+        <div class="proposal-main-title">Sistem Point of Sale (POS) & Manajemen Inventori Retail Multi-Gudang</div>
+      </div>
+
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="meta-card-label">Klien / Pemilik</div>
+          <div class="meta-card-value">Bpk. Noor</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-card-label">Tanggal Pengajuan</div>
+          <div class="meta-card-value">9 Oktober 2026</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-card-label">Referensi Teknis</div>
+          <div class="meta-card-value">PRD Versi 1.0</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-card-label">Model Kerjasama</div>
+          <div class="meta-card-value">Fase 1 (MVP) + Cloud Hosting</div>
+        </div>
+      </div>
+
+      <!-- Section 1 -->
+      <div style="margin-bottom: 8px;">
+        <div class="section-title">1. Ringkasan Eksekutif & Tujuan Proyek</div>
+        <p>
+          Proposal ini diajukan untuk merancang dan membangun sistem Point of Sale (POS) dan Manajemen Inventori Retail berbasis Web & Cloud yang terintegrasi khusus untuk toko retail fisik <strong>Bpk. Noor</strong>. Sistem difokuskan pada kecepatan transaksi kasir, integritas data stok tanpa selisih di 2 lokasi gudang, fleksibilitas konversi multi-satuan dan tingkatan harga, serta pelaporan keuangan yang transparan dan akurat.
+        </p>
+        <p>
+          Melalui <strong>Skema Fase 1 (Core MVP)</strong>, sistem menghadirkan fitur-fitur operasional paling krusial dengan kinerja andal, efisiensi investasi awal, dan pemeliharaan server cloud tahunan yang ekonomis.
+        </p>
+      </div>
+
+      <!-- Section 2 -->
+      <div style="margin-bottom: 8px;">
+        <div class="section-title">2. Ruang Lingkup Pekerjaan (Scope of Work - Fase 1)</div>
+        <div class="modules-grid">
+          <!-- Modul 1 -->
+          <div class="module-card">
+            <div class="module-title">
+              Modul Kasir (POS)
+              <span>5 Terminal</span>
+            </div>
+            <ul class="feature-list">
+              <li><strong>5 Terminal Kasir Bersamaan:</strong> Transaksi konkuren aman dengan penguncian database (anti race-condition).</li>
+              <li><strong>Navigasi Cepat (Keyboard & Touch):</strong> Cepat untuk PC kasir dan fleksibel untuk tablet.</li>
+              <li><strong>Integrasi Barcode Scanner:</strong> Scan instan via USB HID / Bluetooth.</li>
+              <li><strong>Integrasi Thermal Printer:</strong> Cetak struk kasir otomatis (58mm & 80mm).</li>
+              <li><strong>Multi-Satuan Otomatis:</strong> Deteksi satuan saat barcode satuan discan.</li>
+              <li><strong>Level Harga Dinamis:</strong> Eceran, Grosir 1, Grosir 2, dan Member.</li>
+              <li><strong>Hold / Pending Order:</strong> Simpan transaksi antrean sementara.</li>
+              <li><strong>Manajemen Shift Kasir:</strong> Modal awal, kas masuk/keluar, audit selisih kas.</li>
+            </ul>
+          </div>
+
+          <!-- Modul 2 -->
+          <div class="module-card">
+            <div class="module-title">
+              Modul Inventori & Multi-Gudang
+              <span>2 Gudang Fisik</span>
+            </div>
+            <ul class="feature-list">
+              <li><strong>Pemisahan Stok 2 Gudang:</strong> Pemantauan stok fisik presisi per gudang.</li>
+              <li><strong>Mutasi Stok Antar-Gudang:</strong> Pengurangan gudang asal dan penambahan gudang tujuan secara instan & akurat.</li>
+              <li><strong>Stock Opname Digital:</strong> Penyesuaian stok berkala dengan riwayat audit (*adjustment log*).</li>
+              <li><strong>Peringatan Stok Minimum:</strong> Notifikasi otomatis saat stok mencapai batas aman.</li>
+              <li><strong>Kartu Stok (Stock Card):</strong> Histori keluar-masuk barang per gudang.</li>
+            </ul>
+          </div>
+
+          <!-- Modul 3 -->
+          <div class="module-card">
+            <div class="module-title">
+              Master Data Produk & HPP
+              <span>Multi-Satuan</span>
+            </div>
+            <ul class="feature-list">
+              <li><strong>Satuan Bertingkat:</strong> Relasi satuan (contoh: 1 Dus = 12 Box = 144 Pcs) dengan barcode unik per tingkatan.</li>
+              <li><strong>Metode HPP Rata-Rata (Average Cost):</strong> Perhitungan HPP stabil dan otomatis dari transaksi pembelian barang.</li>
+              <li><strong>Kategori & Metadata:</strong> Kategori, Brand, Supplier, dan konfigurasi Pajak (PPN).</li>
+            </ul>
+          </div>
+
+          <!-- Modul 4 -->
+          <div class="module-card">
+            <div class="module-title">
+              Laporan & Analitik Bisnis
+              <span>Excel & PDF</span>
+            </div>
+            <ul class="feature-list">
+              <li><strong>Laporan Penjualan:</strong> Rekap harian, mingguan, bulanan, per kasir, per produk, dan metode bayar (Tunai/QRIS).</li>
+              <li><strong>Laba Rugi Kotor:</strong> Analisis Gross Profit otomatis secara real-time.</li>
+              <li><strong>Rekonsiliasi Shift:</strong> Laporan audit pencocokan kas fisik vs sistem.</li>
+              <li><strong>Ekspor Dokumen:</strong> Seluruh laporan dapat diunduh ke Excel & PDF.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div>
+        <div class="section-title">3. Batasan Ruang Lingkup (Out of Scope - Fase 1)</div>
+        <div class="highlight-box">
+          <strong>Demi ketepatan waktu rilis dan efisiensi biaya, batasan berikut berlaku untuk Fase 1:</strong>
+          <ol style="margin-left: 14px; margin-top: 3px;">
+            <li><strong>Pengadaan Hardware:</strong> Perangkat kasir (Laptop/PC, printer thermal, barcode scanner) disediakan oleh pihak Klien (Pak Noor) sesuai rekomendasi spesifikasi pengembang.</li>
+            <li><strong>Migrasi Data Awal:</strong> Pengembang menyediakan template spreadsheet (Excel) standar. Pengisian dan validasi data produk awal dilakukan mandiri oleh pihak toko sebelum diimpor.</li>
+            <li><strong>Pelatihan Pengguna:</strong> Dilakukan secara daring (*remote*) melalui Google Meet + video tutorial operasional lengkap.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Halaman 1 dari 2 • Proposal Penawaran Sistem POS & Inventori Retail Toko Pak Noor
+    </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ==================== HALAMAN 2 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header-container">
+        <div>
+          <div class="brand-title">WAHYU UTOMO, S.Kom</div>
+          <div class="brand-subtitle">Full-Stack Software Engineer & Data Specialist</div>
+        </div>
+        <div class="doc-badge">
+          Rincian Biaya & Ketentuan Kerjasama
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div style="margin-bottom: 8px;">
+        <div class="section-title">4. Rencana Anggaran Biaya & Investasi</div>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th style="width: 5%;">No</th>
+              <th style="width: 55%;">Deskripsi Komponen Layanan</th>
+              <th style="width: 15%;" class="text-center">Skema</th>
+              <th style="width: 25%;" class="text-right">Biaya Investasi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">1</td>
+              <td>
+                <strong>Pengembangan Sistem POS & Inventori Retail (Fase 1 - Core MVP)</strong><br>
+                <span style="color: #64748b; font-size: 8.5px;">
+                  • Modul Kasir 5 Terminal Konkuren, Multi-Satuan, Multi-Harga, Shift Kasir<br>
+                  • Modul Inventori 2 Gudang, Mutasi Stok Langsung, Stock Opname, Kartu Stok<br>
+                  • Master Data Produk Satuan Bertingkat, Supplier, Kategori<br>
+                  • Laporan Penjualan, Laba Rugi Kotor, Rekonsiliasi Kasir (Ekspor Excel & PDF)<br>
+                  • Garansi Perbaikan Bug: 30 Hari kalender pasca Go-Live
+                </span>
+              </td>
+              <td class="text-center" style="font-weight: 600;">Sekali Bayar<br><span style="font-size: 8px; color: #64748b;">(One-Time)</span></td>
+              <td class="text-right price-col">Rp 15.000.000</td>
+            </tr>
+            <tr>
+              <td class="text-center">2</td>
+              <td>
+                <strong>Paket Layanan Cloud Hosting, Domain & Keamanan Data (Tahun ke-1)</strong><br>
+                <span style="color: #64748b; font-size: 8.5px;">
+                  • Cloud VPS High-Performance (Beban transaksi 5 kasir aktif bersamaan)<br>
+                  • Domain Kustom Usaha (.com / .id / .my.id)<br>
+                  • Sertifikat Keamanan SSL (HTTPS 256-bit Encryption)<br>
+                  • Sistem Backup Otomatis Database Harian (*Auto Cloud Backup*)<br>
+                  • Pemeliharaan & Monitoring Uptime Server
+                </span>
+              </td>
+              <td class="text-center" style="font-weight: 600;">Tahunan<br><span style="font-size: 8px; color: #64748b;">(Per Tahun)</span></td>
+              <td class="text-right price-col">Rp 2.000.000</td>
+            </tr>
+            <tr class="total-row">
+              <td colspan="3" class="text-right">TOTAL INVESTASI AWAL (TAHUN PERTAMA)</td>
+              <td class="text-right price-col" style="font-size: 11px;">Rp 17.000.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 5 -->
+      <div>
+        <div class="section-title">5. Ketentuan Khusus Layanan Cloud Hosting (Rp 2.000.000 / Tahun)</div>
+        <div class="warning-box">
+          <strong>Ketentuan & Batasan Layanan Tahunan:</strong>
+          <ul style="margin-left: 14px; margin-top: 2px;">
+            <li><strong>Cakupan Layanan:</strong> Pemeliharaan server agar sistem aktif 24/7, perpanjangan sewa Cloud VPS & domain, pembaruan sertifikat SSL, serta backup harian database transaksi toko secara otomatis ke cloud storage.</li>
+            <li><strong>Di Luar Paket Tahunan:</strong> Permintaan penambahan fitur baru di luar ruang lingkup Fase 1 akan dikenakan biaya pengembangan terpisah. Kerusakan perangkat fisik atau jaringan internet lokal toko bukan tanggung jawab penyedia server.</li>
+            <li><strong>Dukungan Teknis:</strong> Bantuan teknis jarak jauh (WhatsApp / Remote) dilayani pada hari kerja (Senin–Sabtu, 08.00–18.00 WIB) dengan tanggap cepat untuk kendala operasional kasir.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Section 6 -->
+      <div style="margin-bottom: 8px;">
+        <div class="section-title">6. Skema Termin Pembayaran (Term of Payment)</div>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Tahapan</th>
+              <th style="width: 52%;">Keterangan & Milestone Capaian</th>
+              <th style="width: 15%;" class="text-center">Persentase</th>
+              <th style="width: 15%;" class="text-right">Nominal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Termin 1 (DP)</strong></td>
+              <td>Uang Muka saat persetujuan proposal + Setup Cloud VPS & Domain</td>
+              <td class="text-center">40% + Cloud</td>
+              <td class="text-right price-col">Rp 8.000.000</td>
+            </tr>
+            <tr>
+              <td><strong>Termin 2</strong></td>
+              <td>Penyelesaian Modul Master Data, Stok 2 Gudang, & Antarmuka Kasir</td>
+              <td class="text-center">30%</td>
+              <td class="text-right price-col">Rp 4.500.000</td>
+            </tr>
+            <tr>
+              <td><strong>Termin 3</strong></td>
+              <td>Penyelesaian UAT, integrasi hardware, serah terima sistem, & Go-Live</td>
+              <td class="text-center">30%</td>
+              <td class="text-right price-col">Rp 4.500.000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 7 -->
+      <div style="margin-bottom: 8px;">
+        <div class="section-title">7. Estimasi Jadwal Pengerjaan (Timeline: 5 Minggu)</div>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th style="width: 20%;">Periode</th>
+              <th style="width: 32%;">Fokus Modul</th>
+              <th style="width: 48%;">Target Output / Capaian</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Minggu 1</strong></td>
+              <td>Arsitektur & Server</td>
+              <td>Skema database 2 gudang, multi-satuan, dan konfigurasi Cloud VPS</td>
+            </tr>
+            <tr>
+              <td><strong>Minggu 2</strong></td>
+              <td>Master Data & Stok</td>
+              <td>Manajemen produk, konversi satuan, mutasi stok, dan stok opname</td>
+            </tr>
+            <tr>
+              <td><strong>Minggu 3</strong></td>
+              <td>Modul POS Kasir</td>
+              <td>Antarmuka kasir, integrasi scanner, cetak struk thermal, & shift kasir</td>
+            </tr>
+            <tr>
+              <td><strong>Minggu 4</strong></td>
+              <td>Laporan & Stress-Test</td>
+              <td>Laporan penjualan, kartu stok, uji beban 5 kasir bersamaan</td>
+            </tr>
+            <tr>
+              <td><strong>Minggu 5</strong></td>
+              <td>UAT & Peluncuran</td>
+              <td>Uji coba bersama Pak Noor, impor data awal, pelatihan staf, Go-Live</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section 8 -->
+      <div>
+        <div class="section-title">8. Lembar Persetujuan Kerjasama</div>
+        <p style="font-size: 8.8px; color: #64748b; margin-bottom: 4px;">
+          Kedua belah pihak menyetujui seluruh ruang lingkup pekerjaan, rincian biaya investasi, serta syarat dan ketentuan yang tercantum dalam dokumen proposal ini.
+        </p>
+
+        <div class="signature-grid">
+          <div class="signature-box">
+            <div class="signature-title">Disetujui Oleh (Klien)</div>
+            <div class="signature-company">TOKO RETAIL PAK NOOR</div>
+            <div class="signature-name">Bpk. Noor</div>
+            <div class="signature-role">Owner / Pemilik Toko</div>
+          </div>
+
+          <div class="signature-box">
+            <div class="signature-title">Diajukan Oleh (Pengembang)</div>
+            <div class="signature-company">PROFESSIONAL SOFTWARE ENGINEER</div>
+            <div class="signature-name">Wahyu Utomo, S.Kom</div>
+            <div class="signature-role">Full-Stack Engineer & Data Specialist</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Halaman 2 dari 2 • Dokumen Penawaran Resmi Pengembangan Perangkat Lunak • Dicetak pada 9 Oktober 2026
+    </div>
+  </div>
+
+</body>
+</html>
