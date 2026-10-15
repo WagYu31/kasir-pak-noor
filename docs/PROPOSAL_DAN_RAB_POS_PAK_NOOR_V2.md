@@ -12,7 +12,7 @@ Banjarmasin, Indonesia
 **Wahyu Utomo, S.Kom & Tim Rekayasa Perangkat Lunak**  
 *Lead Full-Stack Software Engineer & Retail Systems Architect*  
 - Portofolio Repositori: [https://github.com/WagYu31/kasir-pak-noor](https://github.com/WagYu31/kasir-pak-noor)  
-- Aplikasi Siap Uji (Live Demo): [https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)  
+- Prototipe Interaktif (Staging Preview): [https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)  
 
 **Nomor Dokumen:** 029/PROP-POS-PN/X/2026  
 **Tanggal Penerbitan:** 16 Oktober 2026  
@@ -45,8 +45,9 @@ Banjarmasin, Indonesia
 
 Berdasarkan dokumen spesifikasi kebutuhan teknis yang disampaikan oleh **Bpk. Noor**, tim rekayasa perangkat lunak kami telah menganalisis seluruh tantangan operasional toko ritel grosir dan eceran milik Bpk. Noor. Kami menyatakan bahwa **seluruh kebutuhan sistem tersebut telah 100% SESUAI dan SIAP DIJALANKAN oleh kapabilitas teknologi tim kami**.
 
-Sebagai wujud profesionalisme dan pembuktian langsung atas kesiapan teknologi kami, tim pengembang telah membangun **Aplikasi Operasional Penuh (Fully Functional Live Application)** yang saat ini sudah aktif dan dapat langsung diuji coba oleh Bpk. Noor melalui tautan resmi:  
-👉 **[https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)**
+Sebagai wujud profesionalisme dan pembuktian langsung atas kesiapan logika sistem kami, tim pengembang telah menyiapkan **Prototipe Interaktif / Lingkungan Simulasi Pengujian (Staging Preview / Proof of Concept)** yang saat ini dapat langsung dicoba dan disimulasikan alurnya oleh Bpk. Noor melalui tautan pengujian:  
+👉 **[https://kasir-pak-noor.vercel.app](https://kasir-pak-noor.vercel.app)**  
+*(Catatan Teknis: Tautan di atas merupakan server pengujian sementara / staging dengan data simulasi untuk membuktikan kesiapan alur kerja sistem. Pada tahap pelaksanaan kontrak resmi, sistem akan dipasang dan dikonfigurasi secara menyeluruh pada Server Cloud VPS Mandiri dan Domain Bisnis Resmi milik Toko Pak Noor).*
 
 Sistem ini dirancang khusus untuk memecahkan 5 kendala utama toko retail:
 1. **Kecepatan Layanan Kasir**: Mencegah antrean panjang di jam sibuk dengan transaksi cepat berbasis keyboard & pemindai barcode.
