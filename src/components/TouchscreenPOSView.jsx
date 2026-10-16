@@ -765,19 +765,19 @@ export default function TouchscreenPOSView({
               <div
                 key={product.id}
                 className={`bg-white rounded-2xl border border-slate-200/90 ${catCfg.accentBorder} ${
-                  isCompact ? 'p-2.5 min-h-[310px] max-h-[340px]' : 'p-3 min-h-[365px] max-h-[390px]'
-                } flex flex-col justify-between shadow-2xs hover:shadow-xl transition-all duration-300 group overflow-hidden relative glow-card-hover`}
+                  isCompact ? 'p-2.5 min-h-[320px]' : 'p-3 min-h-[370px]'
+                } h-full flex flex-col justify-between shadow-2xs hover:shadow-xl transition-all duration-300 group overflow-hidden relative glow-card-hover`}
               >
                 {/* Subtle Ambient Color Glow at Top-Right of Card */}
                 <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${catCfg.glow} pointer-events-none rounded-bl-full transition-opacity group-hover:opacity-100 opacity-60`} />
 
                 {/* Header Card: Category with dot & Brand */}
-                <div className="flex items-center justify-between gap-1.5 mb-1.5 relative z-10">
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg border flex items-center gap-1.5 ${catCfg.badge} truncate shadow-2xs`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${catCfg.dot}`} />
+                <div className="flex items-center justify-between gap-1 mb-1.5 relative z-10 min-w-0">
+                  <span className={`text-[9.5px] font-bold px-1.5 py-0.5 rounded-lg border flex items-center gap-1 ${catCfg.badge} min-w-0 shadow-2xs truncate`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${catCfg.dot} shrink-0`} />
                     <span className="truncate">{product.category}</span>
                   </span>
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 group-hover:text-slate-600 transition-colors truncate">
+                  <span className="text-[9.5px] font-extrabold uppercase tracking-wider text-slate-400 group-hover:text-slate-600 transition-colors shrink-0 max-w-[45%] truncate text-right">
                     {product.brand}
                   </span>
                 </div>
@@ -872,23 +872,25 @@ export default function TouchscreenPOSView({
                     </div>
                   </button>
 
-                  {/* Secondary Units / Bulk Acceleration Row */}
+                  {/* Secondary Units / Bulk Acceleration Section (Fully Responsive Stack) */}
                   {secondaryUnits.length > 0 ? (
-                    <div className="flex items-center gap-1.5">
+                    <div className={secondaryUnits.length > 1 ? "flex flex-col gap-1" : "flex items-center"}>
                       {secondaryUnits.map((u) => {
-                        const cleanUnit = secondaryUnits.length > 1 
-                          ? u.unit.replace(/\s*\(\d+\)/, '') 
-                          : (u.unit.includes('(') ? u.unit : `${u.unit} (${u.multiplier}x)`);
+                        const cleanUnit = u.unit.replace(/\s*\(\d+\)/, '');
                         return (
                           <button
                             key={u.unit}
                             type="button"
                             onClick={() => addItemToCart(product, u.unit, 1)}
-                            className="flex-1 py-1 px-2 bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] font-bold flex items-center justify-between transition-all cursor-pointer active:scale-[0.98] shadow-2xs group/sec"
+                            className="w-full py-1 px-2.5 bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] sm:text-[10.5px] font-bold flex items-center justify-between transition-all cursor-pointer active:scale-[0.98] shadow-2xs group/sec"
                             title={`Tambah 1 ${u.unit} (${u.multiplier}x)`}
                           >
-                            <span className="truncate">{cleanUnit}:</span>
-                            <span className="font-mono font-extrabold ml-1 whitespace-nowrap text-[10px] text-emerald-700">
+                            <span className="flex items-center gap-1 min-w-0">
+                              <Plus className="w-3 h-3 text-emerald-600 shrink-0" />
+                              <span className="font-extrabold text-slate-700 truncate">{cleanUnit}</span>
+                              <span className="text-[9px] text-slate-400 font-mono shrink-0">({u.multiplier}x)</span>
+                            </span>
+                            <span className="font-mono font-black text-emerald-700 text-[10.5px] shrink-0 ml-1">
                               Rp {getPrice(u).toLocaleString('id-ID')}
                             </span>
                           </button>
@@ -904,8 +906,8 @@ export default function TouchscreenPOSView({
                         className="flex-1 py-1 px-2 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-[0.98] cursor-pointer shadow-2xs"
                         title="Tambah 5 unit sekaligus"
                       >
-                        <Plus className="w-3 h-3 text-slate-400" />
-                        <span>5 {primaryUnit.unit}</span>
+                        <Plus className="w-3 h-3 text-slate-400 shrink-0" />
+                        <span className="font-mono font-bold">5 {primaryUnit.unit.replace(/\s*\(.*?\)/, '')}</span>
                       </button>
 
                       <button
@@ -914,8 +916,8 @@ export default function TouchscreenPOSView({
                         className="flex-1 py-1 px-2 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-[0.98] cursor-pointer shadow-2xs"
                         title="Tambah 10 unit sekaligus"
                       >
-                        <Plus className="w-3 h-3 text-slate-400" />
-                        <span>10 {primaryUnit.unit}</span>
+                        <Plus className="w-3 h-3 text-slate-400 shrink-0" />
+                        <span className="font-mono font-bold">10 {primaryUnit.unit.replace(/\s*\(.*?\)/, '')}</span>
                       </button>
                     </div>
                   )}
