@@ -39,10 +39,14 @@ export default function SidebarNav({
 }) {
   const { 
     activeTheme, 
+    navLayout,
     sidebarCollapsed, 
     toggleSidebar, 
     openThemeModal 
   } = useTheme();
+
+  const isRail = navLayout === 'rail';
+  const isCollapsed = isRail || sidebarCollapsed;
 
   const roleObj = USER_ROLES[currentRole] || USER_ROLES.OWNER;
 
@@ -57,7 +61,7 @@ export default function SidebarNav({
   return (
     <aside 
       className={`bg-white border-r border-slate-200/90 flex flex-col justify-between transition-all duration-300 z-40 shrink-0 select-none shadow-xs ${
-        sidebarCollapsed ? 'w-18' : 'w-64'
+        isCollapsed ? 'w-18' : 'w-64'
       }`}
     >
       {/* Top Section: Logo & Toggle Button */}
@@ -67,7 +71,7 @@ export default function SidebarNav({
             <Store className="w-5 h-5" />
           </div>
 
-          {!sidebarCollapsed && (
+          {!isCollapsed && (
             <div className="min-w-0 flex-1 animate-fade-in">
               <h1 className="text-xs font-black text-slate-900 tracking-tight leading-none truncate">
                 TOKO PAK NOOR
@@ -80,26 +84,28 @@ export default function SidebarNav({
           )}
         </div>
 
-        {/* Collapse / Expand Toggle Button */}
-        <button
-          type="button"
-          onClick={toggleSidebar}
-          className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition active:scale-90 cursor-pointer shrink-0"
-          title={sidebarCollapsed ? 'Perluas Sidebar' : 'Ciutkan Sidebar'}
-        >
-          {sidebarCollapsed ? (
-            <ChevronRight className="w-4 h-4" />
-          ) : (
-            <ChevronLeft className="w-4 h-4" />
-          )}
-        </button>
+        {/* Collapse / Expand Toggle Button (Hidden in Rail mode) */}
+        {!isRail && (
+          <button
+            type="button"
+            onClick={toggleSidebar}
+            className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition active:scale-90 cursor-pointer shrink-0"
+            title={isCollapsed ? 'Perluas Sidebar' : 'Ciutkan Sidebar'}
+          >
+            {isCollapsed ? (
+              <ChevronRight className="w-4 h-4" />
+            ) : (
+              <ChevronLeft className="w-4 h-4" />
+            )}
+          </button>
+        )}
       </div>
 
       {/* Middle Section: Warehouse & Main Navigation Menu */}
       <div className="flex-1 overflow-y-auto p-2.5 space-y-4">
         
         {/* Active Warehouse Tag */}
-        {!sidebarCollapsed ? (
+        {!isCollapsed ? (
           <div className="p-2 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between text-xs">
             <span className="text-[10.5px] text-slate-500 font-medium flex items-center gap-1.5">
               <Warehouse className="w-3.5 h-3.5 text-slate-400" />
@@ -138,17 +144,17 @@ export default function SidebarNav({
                     ? `bg-gradient-to-r ${activeTheme.gradient} text-white shadow-sm`
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
-                title={sidebarCollapsed ? `${item.label} [${item.hotkey}]` : undefined}
+                title={isCollapsed ? `${item.label} [${item.hotkey}]` : undefined}
               >
                 <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-800'}`} />
                 
-                {!sidebarCollapsed && (
+                {!isCollapsed && (
                   <span className="flex-1 text-left truncate">
                     {item.label}
                   </span>
                 )}
 
-                {!sidebarCollapsed && (
+                {!isCollapsed && (
                   <kbd className={`kbd-badge text-[9px] ${
                     isActive ? 'bg-black/20 text-white border-transparent' : ''
                   }`}>
@@ -179,7 +185,7 @@ export default function SidebarNav({
                 style={{ backgroundColor: activeTheme.primaryHex }}
               />
             </div>
-            {!sidebarCollapsed && <span>Ganti Tema / Layout</span>}
+            {!isCollapsed && <span>Ganti Tema / Layout</span>}
           </button>
 
           {/* Kelola Akun (Owner Only) */}
@@ -191,7 +197,7 @@ export default function SidebarNav({
               title="Kelola Akun Kasir & PIN"
             >
               <Users className="w-4 h-4 text-slate-600" />
-              {!sidebarCollapsed && <span>Kelola Akun</span>}
+              {!isCollapsed && <span>Kelola Akun</span>}
             </button>
           )}
 
@@ -203,7 +209,7 @@ export default function SidebarNav({
             title="Daftar Pintasan Keyboard & Bantuan"
           >
             <HelpCircle className="w-4 h-4 text-slate-600" />
-            {!sidebarCollapsed && <span>Bantuan Pintasan</span>}
+            {!isCollapsed && <span>Bantuan Pintasan</span>}
           </button>
         </div>
 
@@ -221,13 +227,13 @@ export default function SidebarNav({
         >
           <div className="flex items-center gap-2 min-w-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            {!sidebarCollapsed && (
+            {!isCollapsed && (
               <span className="font-extrabold text-[11px] text-slate-800 truncate">
                 {activeTerminal} (ONLINE)
               </span>
             )}
           </div>
-          {!sidebarCollapsed && (
+          {!isCollapsed && (
             <div className="flex items-center gap-1 text-[10px] text-emerald-800 font-bold bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded-lg group-hover:bg-emerald-100 transition">
               <Settings className="w-3 h-3 text-emerald-600" />
               <span>Kelola</span>
@@ -246,7 +252,7 @@ export default function SidebarNav({
             <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center shrink-0">
               {roleObj.name[0]}
             </div>
-            {!sidebarCollapsed && (
+            {!isCollapsed && (
               <div className="min-w-0 flex-1">
                 <div className="font-extrabold text-[11px] text-slate-900 truncate">
                   {roleObj.name}

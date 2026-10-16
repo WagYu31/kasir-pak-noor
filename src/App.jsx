@@ -15,6 +15,7 @@ import UserAccountManagerModal from './components/UserAccountManagerModal';
 import TerminalManagerModal from './components/TerminalManagerModal';
 import CustomerModal from './components/CustomerModal';
 import SidebarNav from './components/SidebarNav';
+import FloatingBottomDock from './components/FloatingBottomDock';
 import ThemeSettingsModal from './components/ThemeSettingsModal';
 import { useTheme } from './context/ThemeContext';
 import { Palette } from 'lucide-react';
@@ -341,8 +342,8 @@ export default function App() {
   return (
     <div className={`min-h-screen ${themeId === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} flex flex-col selection:bg-emerald-500/20 selection:text-emerald-800`}>
       
-      {navLayout === 'sidebar' ? (
-        /* SIDEBAR MODERN ENTERPRISE LAYOUT */
+      {navLayout === 'sidebar' || navLayout === 'rail' ? (
+        /* SIDEBAR / RAIL ENTERPRISE LAYOUT */
         <div className="flex-1 flex overflow-hidden min-h-screen">
           <SidebarNav
             activeTab={activeTab}
@@ -363,7 +364,7 @@ export default function App() {
           />
 
           <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-            {/* Slim Header Bar for Sidebar Mode */}
+            {/* Slim Header Bar for Sidebar/Rail Mode */}
             <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-2.5 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-black uppercase tracking-wider text-slate-800">
@@ -393,6 +394,63 @@ export default function App() {
               {renderTabContent()}
             </main>
           </div>
+        </div>
+      ) : navLayout === 'dock' ? (
+        /* FLOATING DOCK BOTTOM TABLET / MODERN LAYOUT */
+        <div className="flex-1 flex flex-col min-h-screen">
+          {/* Slim Floating Header */}
+          <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-2.5 flex items-center justify-between shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className={`w-8 h-8 rounded-xl bg-gradient-to-tr ${activeTheme.gradient} text-white flex items-center justify-center font-bold text-xs shadow-xs`}>
+                TPN
+              </div>
+              <div>
+                <span className="text-xs font-black text-slate-900 tracking-tight block leading-tight">
+                  TOKO PAK NOOR
+                </span>
+                <span className="text-[10px] text-slate-500 font-semibold">
+                  Multi-Terminal POS • {activeWarehouse === 'WH-01' ? 'Gudang Toko' : 'Gudang DC'}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsTerminalManagerOpen(true)}
+                className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold cursor-pointer hover:bg-slate-100"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>{activeTerminal}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={openThemeModal}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold transition cursor-pointer shadow-2xs"
+                title="Ganti Tema & Layout"
+              >
+                <Palette className="w-3.5 h-3.5 text-slate-600" />
+                <span className="hidden sm:inline">Tema & Layout</span>
+              </button>
+            </div>
+          </header>
+
+          {/* Main Content with padding bottom for dock */}
+          <main className="flex-1 p-2 sm:p-4 pb-28">
+            {renderTabContent()}
+          </main>
+
+          {/* Floating Dock */}
+          <FloatingBottomDock
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            currentRole={currentUserRole}
+            onLogout={handleLogout}
+            onOpenHelpModal={() => setIsHelpOpen(true)}
+            onOpenTerminalManager={() => setIsTerminalManagerOpen(true)}
+            activeTerminal={activeTerminal}
+          />
         </div>
       ) : (
         /* STANDARD HORIZONTAL TOPBAR LAYOUT */
