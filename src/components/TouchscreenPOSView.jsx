@@ -346,7 +346,7 @@ export default function TouchscreenPOSView({
 
                   <div className="grid grid-cols-2 gap-2">
                     {popularShortcuts.map((p) => {
-                      const primaryUnit = p.units[0];
+                      const primaryUnit = p.units.find(u => u.multiplier === 1) || p.units[0];
                       const price = primaryUnit.prices[priceTier] || primaryUnit.prices.eceran;
                       return (
                         <button
@@ -666,8 +666,24 @@ export default function TouchscreenPOSView({
         } gap-3 flex-1 overflow-y-auto pr-1 pb-10 content-start`}>
           {filteredProducts.map(product => {
             const currentStock = product.stock[activeWarehouse] || 0;
-            const primaryUnit = product.units[0];
-            const secondaryUnits = product.units.slice(1);
+            
+            // Dynamic resolver for primary retail vs bulk unit based on price tier
+            const getEffectiveUnits = (prod) => {
+              const baseUnitObj = prod.units.find(u => u.multiplier === 1) || prod.units[0];
+              const bulkUnits = prod.units.filter(u => u.multiplier > 1);
+
+              if (priceTier === 'grosir1' || priceTier === 'grosir2') {
+                // Mode Grosir: Utamakan unit partai/grosir (Karton, Dus, Slop) jika tersedia
+                const bulkPrimary = bulkUnits.length > 0 ? bulkUnits[bulkUnits.length - 1] : baseUnitObj;
+                const secondaries = prod.units.filter(u => u !== bulkPrimary);
+                return { primaryUnit: bulkPrimary, secondaryUnits: secondaries };
+              } else {
+                // Mode Eceran (atau Member): Utamakan Satuan Eceran (Pcs, Botol, Bungkus, Kotak, Zak 5kg)
+                return { primaryUnit: baseUnitObj, secondaryUnits: bulkUnits };
+              }
+            };
+
+            const { primaryUnit, secondaryUnits } = getEffectiveUnits(product);
             const catCfg = CATEGORY_CONFIG[product.category] || CATEGORY_CONFIG['Semua'];
 
             // Get active price based on priceTier

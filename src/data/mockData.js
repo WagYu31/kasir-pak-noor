@@ -33,18 +33,18 @@ export const INITIAL_PRODUCTS = [
     expiryDate: '2027-11-20',
     units: [
       {
-        unit: 'Dus',
-        multiplier: 6,
-        barcode: '8991234001001',
-        prices: { eceran: 215000, grosir1: 208000, grosir2: 204000, member: 205000 },
-        hpp: 192000
-      },
-      {
         unit: 'Pcs',
         multiplier: 1,
         barcode: '8991234001002',
         prices: { eceran: 37000, grosir1: 35500, grosir2: 34500, member: 35000 },
         hpp: 32000
+      },
+      {
+        unit: 'Dus',
+        multiplier: 6,
+        barcode: '8991234001001',
+        prices: { eceran: 215000, grosir1: 208000, grosir2: 204000, member: 205000 },
+        hpp: 192000
       }
     ],
     stock: {
@@ -67,11 +67,11 @@ export const INITIAL_PRODUCTS = [
     expiryDate: '2027-06-15',
     units: [
       {
-        unit: 'Karton',
-        multiplier: 40,
-        barcode: '899886611001',
-        prices: { eceran: 128000, grosir1: 122000, grosir2: 119000, member: 120000 },
-        hpp: 110000
+        unit: 'Pcs',
+        multiplier: 1,
+        barcode: '899886611003',
+        prices: { eceran: 3500, grosir1: 3200, grosir2: 3100, member: 3150 },
+        hpp: 2750
       },
       {
         unit: 'Pack (10)',
@@ -81,11 +81,11 @@ export const INITIAL_PRODUCTS = [
         hpp: 28000
       },
       {
-        unit: 'Pcs',
-        multiplier: 1,
-        barcode: '899886611003',
-        prices: { eceran: 3500, grosir1: 3200, grosir2: 3100, member: 3150 },
-        hpp: 2750
+        unit: 'Karton',
+        multiplier: 40,
+        barcode: '899886611001',
+        prices: { eceran: 128000, grosir1: 122000, grosir2: 119000, member: 120000 },
+        hpp: 110000
       }
     ],
     stock: {
@@ -102,13 +102,13 @@ export const INITIAL_PRODUCTS = [
     supplier: 'PT Beras Nusantara Jaya',
     tax: 0,
     minStock: 15,
-    baseUnit: 'Karung',
+    baseUnit: 'Zak',
     rack: { 'WH-01': 'Rak A-01 (Beras)', 'WH-02': 'Pallet P-05 (DC)' },
     batchNo: 'BRS-2610-A1',
     expiryDate: '2027-10-01',
     units: [
       {
-        unit: 'Karung',
+        unit: 'Zak (5kg)',
         multiplier: 1,
         barcode: '899554422001',
         prices: { eceran: 76000, grosir1: 73000, grosir2: 71000, member: 72000 },
@@ -135,18 +135,18 @@ export const INITIAL_PRODUCTS = [
     expiryDate: '2028-01-10',
     units: [
       {
-        unit: 'Dus (24)',
-        multiplier: 24,
-        barcode: '899223344001',
-        prices: { eceran: 420000, grosir1: 408000, grosir2: 400000, member: 404000 },
-        hpp: 384000
-      },
-      {
         unit: 'Pcs',
         multiplier: 1,
         barcode: '899223344002',
         prices: { eceran: 18000, grosir1: 17200, grosir2: 16800, member: 17000 },
         hpp: 16000
+      },
+      {
+        unit: 'Dus (24)',
+        multiplier: 24,
+        barcode: '899223344001',
+        prices: { eceran: 420000, grosir1: 408000, grosir2: 400000, member: 404000 },
+        hpp: 384000
       }
     ],
     stock: {
@@ -169,18 +169,18 @@ export const INITIAL_PRODUCTS = [
     expiryDate: '2027-09-30',
     units: [
       {
-        unit: 'Dus (24)',
-        multiplier: 24,
-        barcode: '899332211001',
-        prices: { eceran: 74000, grosir1: 70000, grosir2: 67000, member: 68500 },
-        hpp: 62000
-      },
-      {
         unit: 'Botol',
         multiplier: 1,
         barcode: '899332211002',
         prices: { eceran: 3500, grosir1: 3100, grosir2: 2900, member: 3000 },
         hpp: 2600
+      },
+      {
+        unit: 'Dus (24)',
+        multiplier: 24,
+        barcode: '899332211001',
+        prices: { eceran: 74000, grosir1: 70000, grosir2: 67000, member: 68500 },
+        hpp: 62000
       }
     ],
     stock: {
@@ -203,18 +203,18 @@ export const INITIAL_PRODUCTS = [
     expiryDate: '2027-07-22',
     units: [
       {
-        unit: 'Karton (12)',
-        multiplier: 12,
-        barcode: '899445566001',
-        prices: { eceran: 175000, grosir1: 168000, grosir2: 164000, member: 165000 },
-        hpp: 154000
-      },
-      {
         unit: 'Renceng',
         multiplier: 1,
         barcode: '899445566002',
         prices: { eceran: 15500, grosir1: 14500, grosir2: 14000, member: 14200 },
         hpp: 12900
+      },
+      {
+        unit: 'Karton (12)',
+        multiplier: 12,
+        barcode: '899445566001',
+        prices: { eceran: 175000, grosir1: 168000, grosir2: 164000, member: 165000 },
+        hpp: 154000
       }
     ],
     stock: {
@@ -237,18 +237,18 @@ export const INITIAL_PRODUCTS = [
     expiryDate: '2028-05-18',
     units: [
       {
-        unit: 'Dus (12)',
-        multiplier: 12,
-        barcode: '899667788001',
-        prices: { eceran: 285000, grosir1: 275000, grosir2: 270000, member: 272000 },
-        hpp: 252000
-      },
-      {
         unit: 'Pcs',
         multiplier: 1,
         barcode: '899667788002',
         prices: { eceran: 25000, grosir1: 23800, grosir2: 23000, member: 23500 },
         hpp: 21000
+      },
+      {
+        unit: 'Dus (12)',
+        multiplier: 12,
+        barcode: '899667788001',
+        prices: { eceran: 285000, grosir1: 275000, grosir2: 270000, member: 272000 },
+        hpp: 252000
       }
     ],
     stock: {
@@ -265,24 +265,24 @@ export const INITIAL_PRODUCTS = [
     supplier: 'PT Ultrajaya Milk Industry',
     tax: 0.11,
     minStock: 12,
-    baseUnit: 'Pcs',
+    baseUnit: 'Kotak',
     rack: { 'WH-01': 'Chiller 02 & Rak C', 'WH-02': 'Pallet P-04 (DC)' },
     batchNo: 'UM-2609-M8',
     expiryDate: '2027-04-12',
     units: [
+      {
+        unit: 'Kotak',
+        multiplier: 1,
+        barcode: '899778899002',
+        prices: { eceran: 20000, grosir1: 19000, grosir2: 18500, member: 18800 },
+        hpp: 16500
+      },
       {
         unit: 'Karton (12)',
         multiplier: 12,
         barcode: '899778899001',
         prices: { eceran: 228000, grosir1: 220000, grosir2: 216000, member: 217000 },
         hpp: 198000
-      },
-      {
-        unit: 'Pcs',
-        multiplier: 1,
-        barcode: '899778899002',
-        prices: { eceran: 20000, grosir1: 19000, grosir2: 18500, member: 18800 },
-        hpp: 16500
       }
     ],
     stock: {
@@ -306,18 +306,18 @@ export const INITIAL_PRODUCTS = [
     isHighShrinkage: true,
     units: [
       {
-        unit: 'Karton (12)',
-        multiplier: 12,
-        barcode: '899881122001',
-        prices: { eceran: 1140000, grosir1: 1110000, grosir2: 1090000, member: 1100000 },
-        hpp: 1020000
-      },
-      {
         unit: 'Box',
         multiplier: 1,
         barcode: '899881122002',
         prices: { eceran: 98000, grosir1: 94500, grosir2: 92000, member: 93500 },
         hpp: 85000
+      },
+      {
+        unit: 'Karton (12)',
+        multiplier: 12,
+        barcode: '899881122001',
+        prices: { eceran: 1140000, grosir1: 1110000, grosir2: 1090000, member: 1100000 },
+        hpp: 1020000
       }
     ],
     stock: {
@@ -341,18 +341,18 @@ export const INITIAL_PRODUCTS = [
     isHighShrinkage: true,
     units: [
       {
-        unit: 'Slop (10)',
-        multiplier: 10,
-        barcode: '899990900101',
-        prices: { eceran: 345000, grosir1: 340000, grosir2: 338000, member: 339000 },
-        hpp: 325000
-      },
-      {
         unit: 'Bungkus',
         multiplier: 1,
         barcode: '899990900102',
         prices: { eceran: 35000, grosir1: 34500, grosir2: 34000, member: 34200 },
         hpp: 32500
+      },
+      {
+        unit: 'Slop (10)',
+        multiplier: 10,
+        barcode: '899990900101',
+        prices: { eceran: 345000, grosir1: 340000, grosir2: 338000, member: 339000 },
+        hpp: 325000
       }
     ],
     stock: {
