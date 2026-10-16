@@ -216,8 +216,8 @@ export default function SidebarNav({
         <button
           type="button"
           onClick={onOpenTerminalManager}
-          className="w-full flex items-center justify-between p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-left transition cursor-pointer shadow-2xs"
-          title="Manajemen Hardware & Terminal Kasir"
+          className="w-full flex items-center justify-between p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-left transition cursor-pointer shadow-2xs group"
+          title="Kelola & Tambah Mesin Kasir / Hardware POS"
         >
           <div className="flex items-center gap-2 min-w-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
@@ -227,7 +227,12 @@ export default function SidebarNav({
               </span>
             )}
           </div>
-          {!sidebarCollapsed && <Settings className="w-3.5 h-3.5 text-slate-400" />}
+          {!sidebarCollapsed && (
+            <div className="flex items-center gap-1 text-[10px] text-emerald-800 font-bold bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded-lg group-hover:bg-emerald-100 transition">
+              <Settings className="w-3 h-3 text-emerald-600" />
+              <span>Kelola</span>
+            </div>
+          )}
         </button>
 
         {/* User Role Card & Logout */}

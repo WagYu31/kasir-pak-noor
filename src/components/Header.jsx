@@ -174,7 +174,7 @@ export default function Header({
           </button>
 
           {/* Terminal Switcher & Hardware Manager */}
-          <div className="hidden xl:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl shadow-2xs">
+          <div className="hidden lg:flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1.5 rounded-xl shadow-2xs">
             <button
               type="button"
               onClick={onOpenTerminalManager}
@@ -212,6 +212,19 @@ export default function Header({
               </button>
             )}
           </div>
+
+          {/* Quick Terminal Icon Button on Tablet/Mobile */}
+          {onOpenTerminalManager && (
+            <button
+              type="button"
+              onClick={onOpenTerminalManager}
+              className="lg:hidden p-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 flex items-center gap-1 text-xs font-bold transition cursor-pointer"
+              title="Kelola Mesin Kasir & Hardware POS"
+            >
+              <Monitor className="w-3.5 h-3.5 text-emerald-600" />
+              <span className="hidden sm:inline text-[11px]">{activeTerminal}</span>
+            </button>
+          )}
 
           {/* Active Shift Card */}
           <button 

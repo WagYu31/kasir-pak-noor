@@ -29,7 +29,8 @@ export default function UserAccountManagerModal({
   users, 
   setUsers, 
   currentRole, 
-  onSelectRole 
+  onSelectRole,
+  onOpenTerminalManager
 }) {
   const [activeTab, setActiveTab] = useState('accounts'); // 'accounts' | 'roles'
   const [searchQuery, setSearchQuery] = useState('');
@@ -288,6 +289,18 @@ export default function UserAccountManagerModal({
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Matriks Hak Akses (RBAC)</span>
             </button>
+
+            {onOpenTerminalManager && (
+              <button
+                type="button"
+                onClick={onOpenTerminalManager}
+                className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-700 hover:text-emerald-800 hover:bg-slate-200/60 transition flex items-center gap-1.5 cursor-pointer"
+                title="Buka Manajemen Mesin Kasir, Tambah Mesin Baru & Setting Hardware"
+              >
+                <Monitor className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Mesin Kasir (Terminal)</span>
+              </button>
+            )}
           </div>
 
           {activeTab === 'accounts' && (
@@ -696,9 +709,22 @@ export default function UserAccountManagerModal({
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Otorisasi Mesin Kasir (Terminal POS):
-                </label>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-bold text-slate-700 block">
+                    Otorisasi Mesin Kasir (Terminal POS):
+                  </label>
+                  {onOpenTerminalManager && (
+                    <button
+                      type="button"
+                      onClick={onOpenTerminalManager}
+                      className="text-[10.5px] font-bold text-emerald-700 hover:text-emerald-900 hover:underline flex items-center gap-1 cursor-pointer"
+                      title="Tambah mesin kasir baru di sistem"
+                    >
+                      <Plus className="w-3 h-3" />
+                      <span>Tambah Mesin Kasir</span>
+                    </button>
+                  )}
+                </div>
                 <select
                   value={formData.assignedTerminal || 'ALL'}
                   onChange={(e) => setFormData({ ...formData, assignedTerminal: e.target.value })}

@@ -526,6 +526,10 @@ export default function App() {
         setUsers={setUsers}
         currentRole={currentUserRole}
         onSelectRole={handleSelectRole}
+        onOpenTerminalManager={() => {
+          setIsAccountManagerOpen(false);
+          setIsTerminalManagerOpen(true);
+        }}
       />
 
       <TerminalManagerModal
