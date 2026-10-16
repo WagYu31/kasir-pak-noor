@@ -577,7 +577,7 @@ export default function POSTerminal({
   const isEligibleTebusMurah = totalAmount >= 50000 && !tebusMurahClaimed;
 
   return (
-    <div className="max-w-[1920px] mx-auto p-3.5 space-y-3">
+    <div className="max-w-[1920px] mx-auto p-1.5 sm:p-3.5 space-y-2.5 sm:space-y-3">
       
       {/* CASH DRAWER OPEN ALERT BANNER */}
       {drawerOpenNotice && (
@@ -590,54 +590,54 @@ export default function POSTerminal({
       )}
 
       {/* POS LAYOUT MODE SWITCHER (21ST.DEV SEGMENTED CONTROL) */}
-      <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xs">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-slate-800 font-extrabold text-xs">
+      <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 shadow-xs">
+        <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2 text-slate-800 font-extrabold text-xs shrink-0">
             <div className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
               <Store className="w-3.5 h-3.5" />
             </div>
-            <span>Mode Tampilan:</span>
+            <span className="hidden xs:inline">Mode:</span>
           </div>
 
           <div className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/80">
             <button
               type="button"
               onClick={() => setPosViewMode('retail')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                 posViewMode === 'retail'
                   ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
               <Keyboard className="w-3.5 h-3.5 text-slate-500" />
-              <span>Retail (Barcode & Keyboard)</span>
+              <span>Retail <span className="hidden md:inline">(Barcode & Keyboard)</span></span>
             </button>
 
             <button
               type="button"
               onClick={() => setPosViewMode('touchscreen')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
+              className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                 posViewMode === 'touchscreen'
                   ? 'bg-gradient-to-r from-emerald-600 via-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/25'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
-              <span>Touchscreen Visual (Tablet / POS)</span>
+              <span>Touchscreen <span className="hidden md:inline">(Tablet / POS)</span></span>
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2">
           <button
             type="button"
             onClick={() => setIsSplitBillOpen(true)}
             disabled={cart.length === 0}
-            className="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs"
+            className="w-full sm:w-auto justify-center px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs"
             title="Pisahkan tagihan rombongan (Split Bill)"
           >
             <Split className="w-3.5 h-3.5 text-slate-500" />
-            <span>Split Bill (Pisah Tagihan)</span>
+            <span>Split Bill <span className="hidden md:inline">(Pisah Tagihan)</span></span>
           </button>
         </div>
       </div>
@@ -675,38 +675,38 @@ export default function POSTerminal({
       ) : (
         <>
           {/* TOP SCANNER & LIVE SCAN BANNER (Clean Light Theme) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3 items-stretch">
         
         {/* Scanner Form & Quick Input (8 cols) */}
-        <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between shadow-xs">
-          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+        <div className="lg:col-span-8 bg-white border border-slate-200 rounded-2xl p-2.5 sm:p-3.5 flex flex-col justify-between shadow-xs">
+          <div className="flex flex-wrap items-center justify-between gap-1.5 mb-2">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-              <span className="text-xs font-mono font-extrabold text-emerald-800 tracking-wider">
+              <span className="text-[11px] sm:text-xs font-mono font-extrabold text-emerald-800 tracking-wider">
                 READY SCANNER BARCODE / PLU
               </span>
             </div>
             
             {/* Quick Multiplier format info */}
-            <span className="text-[10.5px] text-slate-600 font-mono bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200">
-              Format Kuantitas: <strong>[Qty]*[Barcode]</strong> (Contoh: <strong>3*8991234001001</strong>)
+            <span className="text-[10px] text-slate-600 font-mono bg-slate-100 px-2 py-0.5 rounded-lg border border-slate-200">
+              Format: <strong>[Qty]*[Barcode]</strong> <span className="hidden sm:inline">(Contoh: <strong>3*8991234001001</strong>)</span>
             </span>
           </div>
 
-          <form onSubmit={handleBarcodeSubmit} className="flex gap-2">
+          <form onSubmit={handleBarcodeSubmit} className="flex gap-1.5 sm:gap-2">
             <div className="relative flex-1">
-              <Barcode className="w-6 h-6 text-emerald-600 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Barcode className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2" />
               <input
                 ref={barcodeInputRef}
                 type="text"
                 value={barcodeInput}
                 onChange={(e) => setBarcodeInput(e.target.value)}
-                placeholder="Scan Barcode atau masukkan Kode PLU barang..."
-                className="w-full bg-slate-50 text-slate-900 font-mono font-extrabold text-base pl-11 pr-24 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition placeholder:text-slate-400"
+                placeholder="Scan Barcode atau ketik Kode PLU barang..."
+                className="w-full bg-slate-50 text-slate-900 font-mono font-extrabold text-sm sm:text-base pl-9 sm:pl-11 pr-20 sm:pr-24 py-2 sm:py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 transition placeholder:text-slate-400"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-extrabold text-xs rounded-lg shadow-sm transition"
+                className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 px-2.5 sm:px-3 py-1 sm:py-1.5 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white font-extrabold text-[11px] sm:text-xs rounded-lg shadow-sm transition"
               >
                 ENTER ↵
               </button>
@@ -715,59 +715,60 @@ export default function POSTerminal({
             <button
               type="button"
               onClick={() => setIsSearchModalOpen(true)}
-              className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs"
+              className="px-2.5 sm:px-3.5 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1 sm:gap-1.5 transition shadow-xs shrink-0 cursor-pointer"
               title="Cari PLU Barang [F1]"
             >
               <Search className="w-4 h-4 text-emerald-700" />
-              <span>Cari [F1]</span>
+              <span className="hidden sm:inline">Cari [F1]</span>
+              <span className="sm:hidden text-[11px]">F1</span>
             </button>
 
             <button
               type="button"
               onClick={() => setIsCameraScannerOpen(true)}
-              className="px-3.5 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-xs"
+              className="px-2.5 sm:px-3.5 py-2 sm:py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-xl text-xs font-bold flex items-center gap-1 sm:gap-1.5 transition shadow-xs shrink-0 cursor-pointer"
               title="Scan Barcode Menggunakan Kamera Laptop / HP"
             >
               <Camera className="w-4 h-4 text-emerald-600" />
-              <span>Scan Kamera</span>
+              <span className="hidden sm:inline">Kamera</span>
             </button>
           </form>
 
           {/* Quick Demo Barcodes */}
-          <div className="flex items-center gap-1.5 mt-2.5 overflow-x-auto">
+          <div className="flex items-center gap-1.5 mt-2.5 overflow-x-auto no-scrollbar py-0.5">
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider shrink-0">
-              Demo Barcode:
+              Demo:
             </span>
             <button
               type="button"
               onClick={() => addItemToCart(products[0], 'Dus', 1)}
-              className="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono transition"
+              className="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono transition shrink-0 cursor-pointer"
             >
-              Sania Dus (8991234001001)
+              Sania Dus
             </button>
             <button
               type="button"
               onClick={() => addItemToCart(products[1], 'Pack (10)', 2)}
-              className="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono transition"
+              className="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono transition shrink-0 cursor-pointer"
             >
-              Indomie 2xPack (899886611002)
+              Indomie 2xPack
             </button>
             <button
               type="button"
               onClick={() => addItemToCart(products[2], 'Karung', 1)}
-              className="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono transition"
+              className="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-mono transition shrink-0 cursor-pointer"
             >
-              Beras 5kg (899554422001)
+              Beras 5kg
             </button>
           </div>
         </div>
 
         {/* GIANT TOTAL LED BOX (Executive Dual Emerald Gradient & Ambient Glow) (4 cols) */}
-        <div className="lg:col-span-4 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 text-white rounded-3xl p-5 flex flex-col justify-between shadow-lg shadow-emerald-700/20 border border-emerald-500/30 relative overflow-hidden">
+        <div className="lg:col-span-4 bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-lg shadow-emerald-700/20 border border-emerald-500/30 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none" />
           
           <div className="flex items-center justify-between text-xs relative z-10">
-            <span className="font-extrabold uppercase tracking-widest text-emerald-200 text-[10.5px] flex items-center gap-1.5">
+            <span className="font-extrabold uppercase tracking-widest text-emerald-200 text-[10px] sm:text-[10.5px] flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
               TOTAL BELANJA (RP)
             </span>
@@ -776,11 +777,11 @@ export default function POSTerminal({
             </span>
           </div>
 
-          <div className="text-3xl xl:text-4xl font-mono font-black text-white tracking-tight my-2 drop-shadow-sm relative z-10">
+          <div className="text-2xl sm:text-3xl xl:text-4xl font-mono font-black text-white tracking-tight my-1.5 sm:my-2 drop-shadow-sm relative z-10">
             Rp {totalAmount.toLocaleString('id-ID')}
           </div>
 
-          <div className="flex items-center justify-between text-xs text-emerald-100 pt-2 border-t border-white/15 relative z-10">
+          <div className="flex items-center justify-between text-[11px] sm:text-xs text-emerald-100 pt-1.5 sm:pt-2 border-t border-white/15 relative z-10">
             <span className="flex items-center gap-1">
               <span className="text-emerald-300 font-medium">Antrean:</span>
               <strong className="text-white font-bold bg-white/15 px-2 py-0.5 rounded-md">{activeQueue}</strong>
@@ -836,37 +837,37 @@ export default function POSTerminal({
       </div>
 
       {/* MEMBER & TEBUS MURAH RETAIL PROMO STRIP */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-3 items-stretch">
         
         {/* Member Input Bar */}
-        <div className="md:col-span-6 bg-white border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-3 shadow-xs">
+        <div className="md:col-span-6 bg-white border border-slate-200 p-2 sm:p-2.5 rounded-xl flex items-center justify-between gap-2 shadow-xs">
           <div className="flex items-center gap-2 flex-1">
             <UserCheck className="w-4 h-4 text-emerald-600 shrink-0" />
             {activeMember ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 flex-wrap">
                 <span className="text-xs font-extrabold text-emerald-800">{activeMember.name}</span>
                 <span className="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded border border-emerald-200 font-bold">
                   {activeMember.tier} ({activeMember.points} Poin)
                 </span>
                 <button 
                   onClick={() => { setActiveMember(null); setPriceTier('eceran'); }}
-                  className="text-[10px] text-rose-600 hover:underline ml-2 font-bold"
+                  className="text-[10px] text-rose-600 hover:underline ml-1 font-bold"
                 >
-                  Logout Member
+                  Logout
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleCheckMember} className="flex items-center gap-2 flex-1">
+              <form onSubmit={handleCheckMember} className="flex items-center gap-1.5 sm:gap-2 flex-1">
                 <input
                   type="text"
                   placeholder="Input No. HP Member (cth: 08123456789)..."
                   value={memberPhone}
                   onChange={(e) => setMemberPhone(e.target.value)}
-                  className="bg-slate-50 text-xs text-slate-900 px-2.5 py-1.5 rounded-lg border border-slate-300 w-full focus:outline-none focus:border-emerald-500 font-mono"
+                  className="bg-slate-50 text-xs text-slate-900 px-2 sm:px-2.5 py-1.5 rounded-lg border border-slate-300 w-full focus:outline-none focus:border-emerald-500 font-mono"
                 />
                 <button
                   type="submit"
-                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] rounded-lg shrink-0 shadow-xs"
+                  className="px-2.5 sm:px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[11px] rounded-lg shrink-0 shadow-xs cursor-pointer"
                 >
                   Cek Member
                 </button>
@@ -876,16 +877,16 @@ export default function POSTerminal({
         </div>
 
         {/* Promo Tebus Murah (Alfamart signature PWP) */}
-        <div className="md:col-span-6 bg-amber-50/70 border border-amber-200 p-2.5 rounded-xl flex items-center justify-between gap-2 shadow-xs">
-          <div className="flex items-center gap-2 text-xs">
+        <div className="md:col-span-6 bg-amber-50/70 border border-amber-200 p-2 sm:p-2.5 rounded-xl flex flex-col xs:flex-row items-start xs:items-center justify-between gap-2 shadow-xs">
+          <div className="flex items-center gap-2 text-xs flex-1 min-w-0">
             <Sparkles className="w-4 h-4 text-amber-600 shrink-0 animate-pulse" />
-            <div>
-              <span className="font-extrabold text-amber-900 text-[11px] block">
+            <div className="min-w-0">
+              <span className="font-extrabold text-amber-900 text-[11px] block leading-tight">
                 PROMO TEBUS MURAH (PWP):
               </span>
-              <span className="text-[10.5px] text-amber-800">
+              <span className="text-[10px] sm:text-[10.5px] text-amber-800 line-clamp-1 xs:line-clamp-none">
                 {totalAmount >= 50000 
-                  ? 'Selamat! Belanja > Rp 50.000 berhak tebus Minyak Sania 2L seharga Rp 32.000!'
+                  ? 'Belanja > Rp 50.000 tebus Minyak Sania 2L seharga Rp 32.000!'
                   : `Tambah belanja Rp ${(50000 - totalAmount).toLocaleString('id-ID')} lagi untuk tebus murah!`}
               </span>
             </div>
@@ -894,7 +895,7 @@ export default function POSTerminal({
           {isEligibleTebusMurah && (
             <button
               onClick={handleClaimTebusMurah}
-              className="px-3 py-1 bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-[10.5px] rounded-lg shrink-0 shadow-xs"
+              className="px-2.5 sm:px-3 py-1 bg-amber-600 hover:bg-amber-500 text-white font-extrabold text-[10.5px] rounded-lg shrink-0 shadow-xs cursor-pointer w-full xs:w-auto text-center"
             >
               Klaim Tebus Murah
             </button>
@@ -904,19 +905,19 @@ export default function POSTerminal({
       </div>
 
       {/* MAIN TRANSACTION LEDGER (Clean Table) & RIGHT FUNCTIONAL KEYPAD */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-2.5 sm:gap-3 items-start">
         
         {/* LEFT PANE: High-Speed Cashier Ledger Table (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col bg-white rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden min-h-[520px]">
+        <div className="lg:col-span-8 flex flex-col bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-sm overflow-hidden min-h-[440px] sm:min-h-[520px]">
           
           {/* Antrean Switcher Bar */}
-          <div className="bg-gradient-to-r from-slate-50 via-slate-100/60 to-slate-50 px-4 py-3 border-b border-slate-200/90 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-black text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+          <div className="bg-gradient-to-r from-slate-50 via-slate-100/60 to-slate-50 px-3 sm:px-4 py-2 sm:py-3 border-b border-slate-200/90 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              <span className="text-[11px] sm:text-xs font-black text-slate-600 uppercase tracking-wider flex items-center gap-1">
                 <Store className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Antrean Transaksi:</span>
+                <span className="hidden xs:inline">Antrean:</span>
               </span>
-              <div className="flex items-center gap-1.5 bg-slate-200/60 p-1 rounded-xl border border-slate-300/70">
+              <div className="flex items-center gap-1 bg-slate-200/60 p-0.5 sm:p-1 rounded-xl border border-slate-300/70">
                 {['Antrean 1', 'Antrean 2', 'Antrean 3'].map(q => {
                   const count = cartQueue[q]?.length || 0;
                   const isSelected = activeQueue === q;
@@ -924,7 +925,7 @@ export default function POSTerminal({
                     <button
                       key={q}
                       onClick={() => setActiveQueue(q)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer ${
+                      className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-black flex items-center gap-1 transition-all cursor-pointer ${
                         isSelected
                           ? 'bg-emerald-600 text-white shadow-md shadow-emerald-700/20 scale-[1.02]'
                           : 'bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 border border-slate-200'
@@ -932,7 +933,7 @@ export default function POSTerminal({
                     >
                       <span>{q}</span>
                       {count > 0 && (
-                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+                        <span className={`text-[9px] sm:text-[10px] px-1 sm:px-1.5 py-0.2 rounded-full font-mono font-bold ${
                           isSelected ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-100 text-slate-700 border border-slate-200'
                         }`}>
                           {count}
@@ -944,48 +945,48 @@ export default function POSTerminal({
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {cart.length > 0 && (
                 <button
                   type="button"
                   onClick={() => setIsDraftPickingListOpen(true)}
-                  className="px-3 py-1.5 bg-gradient-to-r from-amber-50 to-amber-100 hover:from-amber-100 hover:to-amber-200 text-amber-900 border border-amber-300 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition shadow-2xs cursor-pointer active:scale-95"
+                  className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-gradient-to-r from-amber-50 to-amber-100 hover:from-amber-100 hover:to-amber-200 text-amber-900 border border-amber-300 rounded-xl text-[11px] sm:text-xs font-extrabold flex items-center gap-1.5 transition shadow-2xs cursor-pointer active:scale-95"
                   title="Cetak Struk Draf / Lembar Instruksi Picking Gudang untuk staf penyiapan barang"
                 >
                   <Printer className="w-3.5 h-3.5 text-amber-700" />
-                  <span>Cetak Draf (Picking List)</span>
+                  <span>Draf (Picking List)</span>
                 </button>
               )}
               <div className="hidden sm:flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
-                <span>Navigasi: <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 font-mono text-[10px]">↑</kbd> <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 font-mono text-[10px]">↓</kbd></span>
+                <span>Nav: <kbd className="px-1 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 font-mono text-[9px]">↑</kbd> <kbd className="px-1 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 font-mono text-[9px]">↓</kbd></span>
               </div>
             </div>
           </div>
 
-          {/* Table of Scanned Items with Product Images & Category Badges */}
-          <div className="flex-1 overflow-y-auto max-h-[460px]">
-            <table className="w-full text-left text-xs font-sans">
+          {/* Table of Scanned Items with Product Images & Category Badges (Responsive Optimized) */}
+          <div className="flex-1 overflow-x-auto overflow-y-auto max-h-[460px] scrollbar-thin">
+            <table className="w-full text-left text-xs font-sans min-w-full">
               <thead className="sticky top-0 bg-gradient-to-r from-slate-50 via-slate-100/80 to-slate-50 text-slate-600 text-[10px] font-black uppercase tracking-wider border-b border-slate-200/90 z-10 shadow-2xs">
                 <tr>
-                  <th className="py-3 px-2 w-10 text-center">No</th>
-                  <th className="py-3 px-2 w-16 text-center">Foto</th>
-                  <th className="py-3 px-3">Nama & Kategori Barang</th>
-                  <th className="py-3 px-2">PLU / Barcode</th>
-                  <th className="py-3 px-2 text-center">Satuan (F3)</th>
-                  <th className="py-3 px-2 text-center">Qty (F2)</th>
-                  <th className="py-3 px-2 text-right">Harga (Rp)</th>
-                  <th className="py-3 px-2 text-right">Diskon</th>
-                  <th className="py-3 px-3 text-right">Subtotal (Rp)</th>
-                  <th className="py-3 px-2 w-12 text-center">Aksi</th>
+                  <th className="hidden md:table-cell py-2.5 px-2 w-8 text-center">No</th>
+                  <th className="py-2.5 px-1.5 sm:px-2 w-12 sm:w-16 text-center">Foto</th>
+                  <th className="py-2.5 px-2 sm:px-3">Nama & Kategori Barang</th>
+                  <th className="hidden lg:table-cell py-2.5 px-2">PLU / Barcode</th>
+                  <th className="py-2.5 px-1.5 sm:px-2 text-center">Satuan (F3)</th>
+                  <th className="py-2.5 px-1.5 sm:px-2 text-center">Qty (F2)</th>
+                  <th className="hidden sm:table-cell py-2.5 px-2 text-right">Harga (Rp)</th>
+                  <th className="hidden xl:table-cell py-2.5 px-2 text-right">Diskon</th>
+                  <th className="py-2.5 px-2 sm:px-3 text-right">Subtotal (Rp)</th>
+                  <th className="py-2.5 px-1 sm:px-2 w-10 sm:w-12 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {cart.length === 0 ? (
                   <tr>
-                    <td colSpan="10" className="py-20 text-center text-slate-400 font-sans">
-                      <Barcode className="w-12 h-12 mx-auto text-slate-300 mb-2 stroke-1" />
+                    <td colSpan="10" className="py-16 sm:py-20 text-center text-slate-400 font-sans">
+                      <Barcode className="w-10 h-10 sm:w-12 sm:h-12 mx-auto text-slate-300 mb-2 stroke-1" />
                       <div className="text-sm font-extrabold text-slate-600">Belum Ada Barang Di-Scan</div>
-                      <div className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+                      <div className="text-xs text-slate-400 mt-1 max-w-sm mx-auto px-4">
                         Arahkan scanner barcode, klik demo barcode di atas, atau ketik kode PLU barang.
                       </div>
                     </td>
@@ -1011,9 +1012,9 @@ export default function POSTerminal({
                             : 'hover:bg-slate-50/90 text-slate-800'
                         }`}
                       >
-                        {/* No */}
-                        <td className="py-2.5 px-2 text-center">
-                          <span className={`w-6 h-6 rounded-lg flex items-center justify-center mx-auto text-[11px] font-mono font-bold ${
+                        {/* No (hidden on md) */}
+                        <td className="hidden md:table-cell py-2 px-2 text-center">
+                          <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-lg flex items-center justify-center mx-auto text-[10px] sm:text-[11px] font-mono font-bold ${
                             isSelected ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600'
                           }`}>
                             {idx + 1}
@@ -1021,8 +1022,8 @@ export default function POSTerminal({
                         </td>
 
                         {/* Foto Produk Squircle */}
-                        <td className="py-2.5 px-2 text-center">
-                          <div className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200/90 shadow-2xs overflow-hidden p-1 flex items-center justify-center shrink-0 mx-auto group-hover:scale-105 transition-transform">
+                        <td className="py-2 px-1.5 sm:px-2 text-center">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-slate-50 border border-slate-200/90 shadow-2xs overflow-hidden p-0.5 sm:p-1 flex items-center justify-center shrink-0 mx-auto group-hover:scale-105 transition-transform">
                             <img 
                               src={itemImage} 
                               alt={item.name} 
@@ -1032,34 +1033,44 @@ export default function POSTerminal({
                           </div>
                         </td>
 
-                        {/* Nama Barang, Category Badge & PPN Pill */}
-                        <td className="py-2.5 px-3">
-                          <div className="flex flex-col gap-1 min-w-[150px]">
-                            <div className="flex items-center gap-1.5 flex-wrap">
+                        {/* Nama Barang, Category Badge & PPN Pill & Barcode on Small Screens */}
+                        <td className="py-2 px-2 sm:px-3">
+                          <div className="flex flex-col gap-0.5 sm:gap-1 min-w-[120px] sm:min-w-[150px]">
+                            <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
                               <span className="font-sans font-black text-slate-900 text-xs leading-tight">
                                 {item.name}
                               </span>
                               {item.tax > 0 && (
-                                <span className="text-[9px] font-black text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.2 rounded-md">
+                                <span className="text-[8.5px] sm:text-[9px] font-black text-sky-700 bg-sky-50 border border-sky-200 px-1 py-0.2 rounded-md">
                                   PPN 11%
                                 </span>
                               )}
                             </div>
-                            <div className="flex items-center gap-1.5">
-                              <span className={`text-[9.5px] font-extrabold px-2 py-0.5 rounded-md border ${catChip.bg} ${catChip.text} ${catChip.border}`}>
+                            <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap">
+                              <span className={`text-[8.5px] sm:text-[9.5px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded-md border ${catChip.bg} ${catChip.text} ${catChip.border}`}>
                                 {item.category || 'Retail'}
                               </span>
+                              {/* Barcode badge directly inside row for tablet/mobile */}
+                              <span className="lg:hidden inline-flex items-center gap-0.5 font-mono text-[9px] text-slate-500 bg-slate-100 px-1 py-0.2 rounded border border-slate-200">
+                                <Barcode className="w-2.5 h-2.5 text-slate-400" />
+                                {item.barcode}
+                              </span>
                               {item.brand && (
-                                <span className="text-[9.5px] text-slate-400 font-medium">
+                                <span className="hidden sm:inline text-[9px] sm:text-[9.5px] text-slate-400 font-medium">
                                   {item.brand}
                                 </span>
                               )}
                             </div>
+                            {item.discount > 0 && (
+                              <span className="xl:hidden text-[9px] font-mono font-bold text-rose-600">
+                                Diskon: -{(item.discount * item.qty).toLocaleString('id-ID')}
+                              </span>
+                            )}
                           </div>
                         </td>
 
-                        {/* PLU / Barcode */}
-                        <td className="py-2.5 px-2">
+                        {/* PLU / Barcode (Desktop only) */}
+                        <td className="hidden lg:table-cell py-2 px-2">
                           <span className="inline-flex items-center gap-1 font-mono text-[11px] text-slate-600 bg-slate-100/90 px-2 py-1 rounded-lg border border-slate-200">
                             <Barcode className="w-3 h-3 text-slate-400" />
                             <span>{item.barcode}</span>
@@ -1067,11 +1078,11 @@ export default function POSTerminal({
                         </td>
 
                         {/* Satuan (F3) */}
-                        <td className="py-2.5 px-2 text-center">
+                        <td className="py-2 px-1.5 sm:px-2 text-center">
                           <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); toggleRowUnit(idx); }}
-                            className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/90 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold shadow-2xs transition active:scale-95 cursor-pointer whitespace-nowrap"
+                            className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/90 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[10px] sm:text-[10.5px] font-extrabold shadow-2xs transition active:scale-95 cursor-pointer whitespace-nowrap"
                             title="Tekan F3 untuk ganti satuan (Eceran / Karton)"
                           >
                             {item.unit} {item.multiplier > 1 && <span className="text-emerald-600 font-normal">({item.multiplier}x)</span>}
@@ -1079,23 +1090,23 @@ export default function POSTerminal({
                         </td>
 
                         {/* Qty (F2) Stepper */}
-                        <td className="py-2.5 px-2 text-center">
+                        <td className="py-2 px-1.5 sm:px-2 text-center">
                           <div className="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200 shadow-2xs">
                             <button
                               type="button"
                               onClick={(e) => { e.stopPropagation(); updateRowQty(idx, item.qty - 1); }}
-                              className="w-6 h-6 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-black flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer text-xs"
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-white hover:bg-slate-200 text-slate-700 font-black flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer text-xs"
                               title="Kurangi Qty"
                             >
                               -
                             </button>
-                            <span className="font-mono font-black text-slate-900 px-2 text-xs">
+                            <span className="font-mono font-black text-slate-900 px-1 sm:px-2 text-xs">
                               {item.qty}
                             </span>
                             <button
                               type="button"
                               onClick={(e) => { e.stopPropagation(); updateRowQty(idx, item.qty + 1); }}
-                              className="w-6 h-6 rounded-lg bg-white hover:bg-emerald-600 hover:text-white text-slate-700 font-black flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer text-xs"
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-white hover:bg-emerald-600 hover:text-white text-slate-700 font-black flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer text-xs"
                               title="Tambah Qty"
                             >
                               +
@@ -1104,12 +1115,12 @@ export default function POSTerminal({
                         </td>
 
                         {/* Harga (Rp) */}
-                        <td className="py-2.5 px-2 text-right font-mono font-bold text-slate-800 text-xs">
+                        <td className="hidden sm:table-cell py-2 px-2 text-right font-mono font-bold text-slate-800 text-xs whitespace-nowrap">
                           {item.price.toLocaleString('id-ID')}
                         </td>
 
-                        {/* Diskon */}
-                        <td className="py-2.5 px-2 text-right">
+                        {/* Diskon (Desktop only) */}
+                        <td className="hidden xl:table-cell py-2 px-2 text-right">
                           {item.discount > 0 ? (
                             <span className="font-mono text-xs font-black text-rose-600 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded">
                               -{(item.discount * item.qty).toLocaleString('id-ID')}
@@ -1119,17 +1130,17 @@ export default function POSTerminal({
                           )}
                         </td>
 
-                        {/* Subtotal (Rp) */}
-                        <td className="py-2.5 px-3 text-right font-mono font-black text-emerald-700 text-sm tracking-tight">
+                        {/* Subtotal (Rp) - Always cleanly visible */}
+                        <td className="py-2 px-2 sm:px-3 text-right font-mono font-black text-emerald-700 text-xs sm:text-sm tracking-tight whitespace-nowrap">
                           Rp {rowTotal.toLocaleString('id-ID')}
                         </td>
 
-                        {/* Aksi */}
-                        <td className="py-2.5 px-2 text-center">
+                        {/* Aksi - Always accessible */}
+                        <td className="py-2 px-1 sm:px-2 text-center">
                           <button
                             type="button"
                             onClick={(e) => { e.stopPropagation(); removeRow(idx); }}
-                            className="w-8 h-8 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 border border-transparent hover:border-rose-200 flex items-center justify-center transition shadow-2xs mx-auto cursor-pointer"
+                            className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 border border-transparent hover:border-rose-200 flex items-center justify-center transition shadow-2xs mx-auto cursor-pointer"
                             title="Hapus / Void baris ini (F7)"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -1143,25 +1154,25 @@ export default function POSTerminal({
             </table>
           </div>
 
-          {/* Ledger Bottom Summary Bar with High-Contrast Highlights */}
-          <div className="bg-gradient-to-r from-slate-50 via-slate-100/70 to-slate-50 p-3.5 border-t border-slate-200/90 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-            <div className="text-slate-700 flex flex-wrap items-center gap-3">
-              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-2xs">
-                Total Item: <strong className="text-slate-900 font-black">{totalItems} Pcs</strong>
+          {/* Ledger Bottom Summary Bar with High-Contrast Highlights (Responsive) */}
+          <div className="bg-gradient-to-r from-slate-50 via-slate-100/70 to-slate-50 p-2.5 sm:p-3.5 border-t border-slate-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 text-xs font-mono">
+            <div className="text-slate-700 flex flex-wrap items-center gap-1.5 sm:gap-3 text-[11px] sm:text-xs">
+              <span className="bg-white px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-slate-200 shadow-2xs">
+                Total: <strong className="text-slate-900 font-black">{totalItems} Pcs</strong>
               </span>
-              <span className="bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-2xs">
+              <span className="bg-white px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-slate-200 shadow-2xs">
                 Subtotal: <strong className="text-slate-900 font-black">Rp {subtotal.toLocaleString('id-ID')}</strong>
               </span>
               {totalTax > 0 && (
-                <span className="bg-sky-50 text-sky-800 px-2.5 py-1 rounded-lg border border-sky-200 shadow-2xs">
-                  PPN 11%: <strong className="text-sky-900 font-black">+Rp {totalTax.toLocaleString('id-ID')}</strong>
+                <span className="bg-sky-50 text-sky-800 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg border border-sky-200 shadow-2xs">
+                  PPN: <strong className="text-sky-900 font-black">+Rp {totalTax.toLocaleString('id-ID')}</strong>
                 </span>
               )}
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="text-slate-500 font-extrabold uppercase text-[11px] tracking-wider">TOTAL AKHIR:</span>
-              <span className="text-lg sm:text-xl font-black text-white bg-gradient-to-r from-emerald-600 to-teal-700 px-3.5 py-1 rounded-xl shadow-xs border border-emerald-500/40">
+            <div className="flex items-center justify-between sm:justify-end gap-2 pt-1 sm:pt-0 border-t sm:border-t-0 border-slate-200/80">
+              <span className="text-slate-500 font-extrabold uppercase text-[10px] sm:text-[11px] tracking-wider">TOTAL AKHIR:</span>
+              <span className="text-base sm:text-xl font-black text-white bg-gradient-to-r from-emerald-600 to-teal-700 px-3 sm:px-3.5 py-1 rounded-xl shadow-xs border border-emerald-500/40">
                 Rp {totalAmount.toLocaleString('id-ID')}
               </span>
             </div>
@@ -1170,31 +1181,31 @@ export default function POSTerminal({
         </div>
 
         {/* RIGHT PANE: Alfamart / Indomaret Function Keypad & Actions (4 cols) */}
-        <div className="lg:col-span-4 flex flex-col gap-2.5">
+        <div className="lg:col-span-4 flex flex-col gap-2 sm:gap-2.5">
           
           {/* Main Action: BAYAR / CHECKOUT (F9) */}
           <button
             onClick={() => onCheckout(cart, totalAmount, activeQueue)}
             disabled={cart.length === 0}
-            className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="w-full py-3.5 sm:py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 active:scale-[0.99] text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-sm transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             <CreditCard className="w-5 h-5" />
             <span>BAYAR / CHECKOUT [F9]</span>
           </button>
 
           {/* 12-Button POS Functional Hotkey Pad */}
-          <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs space-y-2">
+          <div className="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs space-y-2">
             <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block">
               Papan Tombol Fungsi Kasir (Function Pad):
             </span>
 
-            <div className="grid grid-cols-3 gap-1.5 text-xs font-bold">
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 gap-1.5 text-xs font-bold">
               <button
                 onClick={() => setIsSearchModalOpen(true)}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-blue-700">F1</span>
-                <span className="text-[10.5px]">Cari PLU</span>
+                <span className="text-[10px] sm:text-[10.5px]">Cari PLU</span>
               </button>
 
               <button
@@ -1204,18 +1215,18 @@ export default function POSTerminal({
                     if (newQty && !isNaN(newQty)) updateRowQty(selectedRowIndex, Number(newQty));
                   }
                 }}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-blue-700">F2</span>
-                <span className="text-[10.5px]">Ubah Qty</span>
+                <span className="text-[10px] sm:text-[10.5px]">Ubah Qty</span>
               </button>
 
               <button
                 onClick={() => toggleRowUnit(selectedRowIndex)}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-blue-700">F3</span>
-                <span className="text-[10.5px]">Ganti Satuan</span>
+                <span className="text-[10px] sm:text-[10.5px]">Ganti Satuan</span>
               </button>
 
               <button
@@ -1223,66 +1234,66 @@ export default function POSTerminal({
                   const nextQueue = activeQueue === 'Antrean 1' ? 'Antrean 2' : activeQueue === 'Antrean 2' ? 'Antrean 3' : 'Antrean 1';
                   setActiveQueue(nextQueue);
                 }}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-amber-700">F5</span>
-                <span className="text-[10.5px]">Hold Antrean</span>
+                <span className="text-[10px] sm:text-[10.5px]">Hold Antrean</span>
               </button>
 
               <button
                 onClick={() => removeRow(selectedRowIndex)}
                 disabled={cart.length === 0}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 flex flex-col items-center gap-1 transition disabled:opacity-30 shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition disabled:opacity-30 shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-rose-700">F7</span>
-                <span className="text-[10.5px]">Void Baris</span>
+                <span className="text-[10px] sm:text-[10.5px]">Void Baris</span>
               </button>
 
               <button
                 onClick={onOpenCustomerDisplay}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-emerald-700">F8</span>
-                <span className="text-[10.5px]">Layar Pembeli</span>
+                <span className="text-[10px] sm:text-[10.5px]">Layar Pembeli</span>
               </button>
 
               <button
                 onClick={triggerCashDrawer}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-amber-700">F10</span>
-                <span className="text-[10.5px]">Buka Laci</span>
+                <span className="text-[10px] sm:text-[10.5px]">Buka Laci</span>
               </button>
 
               <button
                 onClick={onReprintLast}
                 disabled={!lastTransaction}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-1 transition disabled:opacity-30 shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition disabled:opacity-30 shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-blue-700">F11</span>
-                <span className="text-[10.5px]">Reprint Struk</span>
+                <span className="text-[10px] sm:text-[10.5px]">Reprint Struk</span>
               </button>
 
               <button
                 onClick={clearCart}
                 disabled={cart.length === 0}
-                className="p-2.5 rounded-xl bg-slate-50 hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 flex flex-col items-center gap-1 transition disabled:opacity-30 shadow-2xs"
+                className="p-2 sm:p-2.5 rounded-xl bg-slate-50 hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 flex flex-col items-center gap-0.5 sm:gap-1 transition disabled:opacity-30 shadow-2xs cursor-pointer"
               >
                 <span className="kbd-badge text-[9px] text-rose-700">ESC</span>
-                <span className="text-[10.5px]">Batal Semua</span>
+                <span className="text-[10px] sm:text-[10.5px]">Batal Semua</span>
               </button>
             </div>
           </div>
 
           {/* Quick Price Tier Radio buttons */}
-          <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between text-xs">
+          <div className="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-1 text-xs">
             <span className="font-extrabold text-slate-500 uppercase text-[10px]">Level Harga:</span>
             <div className="flex gap-1">
               {['eceran', 'grosir1', 'grosir2', 'member'].map(t => (
                 <button
                   key={t}
                   onClick={() => setPriceTier(t)}
-                  className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase transition ${
+                  className={`px-2 sm:px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase transition cursor-pointer ${
                     priceTier === t
                       ? 'bg-emerald-600 text-white'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
