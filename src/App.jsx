@@ -33,6 +33,8 @@ import {
 } from './data/mockData';
 
 export default function App() {
+  const { navLayout, isThemeModalOpen, closeThemeModal, openThemeModal, activeTheme, themeId } = useTheme();
+
   const [terminals, setTerminals] = useState(INITIAL_TERMINALS);
   const [isTerminalManagerOpen, setIsTerminalManagerOpen] = useState(false);
   const [users, setUsers] = useState(INITIAL_USERS); // Managed Cashier/Staff Accounts
@@ -260,8 +262,6 @@ export default function App() {
       />
     );
   }
-
-  const { navLayout, isThemeModalOpen, closeThemeModal, openThemeModal, activeTheme, themeId } = useTheme();
 
   const renderTabContent = () => (
     <>
