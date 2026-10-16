@@ -134,6 +134,9 @@ export default function TouchscreenPOSView({
   const isCartRight = cartPosition === 'right';
   const isCompact = cardDensity === 'compact';
 
+  // Responsive View Tab for Tablet Portrait & Mobile screens (< 1024px)
+  const [mobileViewTab, setMobileViewTab] = useState('catalog'); // 'catalog' or 'cart'
+
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -173,14 +176,71 @@ export default function TouchscreenPOSView({
   const popularShortcuts = products.slice(0, 4);
 
   return (
-    <div className="grid grid-cols-1 ipad:grid-cols-12 gap-4 items-start animate-fade-in">
+    <div className="flex flex-col gap-3 animate-fade-in pb-14 lg:pb-0">
       
       {/* ======================================================== */}
-      {/* LEFT/RIGHT PANEL: RETAIL CASHIER REGISTER (CART)         */}
+      {/* MOBILE & TABLET PORTRAIT VIEW SWITCHER (< 1024px)        */}
       {/* ======================================================== */}
-      <div className={`ipad:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col h-[590px] ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px] overflow-hidden ${
-        isCartRight ? 'ipad:order-2' : 'ipad:order-1'
-      }`}>
+      <div className="lg:hidden flex items-center bg-slate-200/90 p-1 rounded-2xl shadow-inner shrink-0">
+        <button
+          type="button"
+          onClick={() => setMobileViewTab('catalog')}
+          className={`flex-1 py-2.5 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            mobileViewTab === 'catalog'
+              ? 'bg-white text-slate-900 shadow-sm font-black'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Package className="w-4 h-4 text-emerald-600" />
+          <span>Katalog Produk</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileViewTab('cart')}
+          className={`flex-1 py-2.5 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer relative ${
+            mobileViewTab === 'cart'
+              ? 'bg-white text-slate-900 shadow-sm font-black'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <ShoppingBag className="w-4 h-4 text-emerald-600" />
+          <span>Keranjang Nota</span>
+          {cart.length > 0 && (
+            <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-mono font-bold ml-1 shadow-2xs">
+              {totalItems} item
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Main Container: On Desktop (>= 1024px) it is a 12-column grid side-by-side */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+        
+        {/* ======================================================== */}
+        {/* LEFT/RIGHT PANEL: RETAIL CASHIER REGISTER (CART)         */}
+        {/* ======================================================== */}
+        <div className={`
+          ${mobileViewTab === 'cart' ? 'flex' : 'hidden'} lg:flex
+          lg:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex-col
+          h-[calc(100vh-210px)] min-h-[500px] lg:h-[calc(100vh-190px)] overflow-hidden
+          ${isCartRight ? 'lg:order-2' : 'lg:order-1'}
+        `}>
+          
+          {/* Mobile Back-to-Catalog Banner */}
+          <div className="lg:hidden px-3.5 py-2 bg-emerald-50/90 border-b border-emerald-100 flex items-center justify-between text-xs shrink-0">
+            <div className="flex items-center gap-1.5 text-emerald-900 font-bold text-[11px]">
+              <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Meninjau Nota ({totalItems} item)</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileViewTab('catalog')}
+              className="px-2.5 py-1 bg-white hover:bg-emerald-100 text-emerald-700 font-extrabold text-[11px] rounded-lg border border-emerald-200 shadow-2xs flex items-center gap-1 cursor-pointer transition active:scale-95"
+            >
+              <Plus className="w-3 h-3" />
+              <span>Tambah Produk</span>
+            </button>
+          </div>
         
         {/* Clean Corporate Header: Antrean Switcher & Tier Controls */}
         <div className="p-3.5 sm:p-4 bg-slate-50/90 border-b border-slate-200 flex items-center justify-between gap-2 shrink-0">
@@ -255,7 +315,7 @@ export default function TouchscreenPOSView({
           <button
             type="button"
             onClick={onOpenCustomerModal}
-            className="flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 transition cursor-pointer truncate max-w-[210px] shadow-2xs"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 transition cursor-pointer truncate flex-1 min-w-0 max-w-sm shadow-2xs"
             title="Pilih Pelanggan / Limit Piutang"
           >
             <Users className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
@@ -567,9 +627,11 @@ export default function TouchscreenPOSView({
       {/* ======================================================== */}
       {/* RIGHT/LEFT PANEL: PRODUCT CATALOG (RETAIL TOUCHSCREEN)   */}
       {/* ======================================================== */}
-      <div className={`ipad:col-span-7 flex flex-col gap-3 h-auto ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px] ${
-        isCartRight ? 'ipad:order-1' : 'ipad:order-2'
-      }`}>
+      <div className={`
+        ${mobileViewTab === 'catalog' ? 'flex' : 'hidden'} lg:flex
+        lg:col-span-7 flex-col gap-3 h-auto lg:h-[calc(100vh-190px)] min-h-[500px]
+        ${isCartRight ? 'lg:order-1' : 'lg:order-2'}
+      `}>
         
         {/* Top Control Bar: Search & Category Filter */}
         <div className="bg-white p-3 rounded-2xl border border-slate-200/90 shadow-sm space-y-2.5 shrink-0">
@@ -661,9 +723,9 @@ export default function TouchscreenPOSView({
         {/* Product Grid: 21st.dev Upgraded Cards with Category Aesthetics & Density */}
         <div className={`grid ${
           isCompact 
-            ? 'grid-cols-2 sm:grid-cols-3 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-4' 
-            : 'grid-cols-2 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-3'
-        } gap-3 flex-1 overflow-y-auto pr-1 pb-10 content-start`}>
+            ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4' 
+            : 'grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3'
+        } gap-3 flex-1 overflow-y-auto pr-1 pb-16 content-start`}>
           {filteredProducts.map(product => {
             const currentStock = product.stock[activeWarehouse] || 0;
             
@@ -867,6 +929,35 @@ export default function TouchscreenPOSView({
 
       </div>
 
+      {/* Floating Bottom Quick Checkout Bar on Mobile/Tablet when in Catalog */}
+      {mobileViewTab === 'catalog' && cart.length > 0 && (
+        <div className="lg:hidden fixed bottom-4 inset-x-3 sm:inset-x-4 z-40 animate-slide-up">
+          <div className="bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-2xl shadow-2xl border border-slate-700/80 flex items-center justify-between">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className={`w-9 h-9 rounded-xl bg-gradient-to-tr ${activeTheme.gradient} text-white flex items-center justify-center font-bold shadow-xs shrink-0`}>
+                <ShoppingBag className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block leading-tight">
+                  {totalItems} Item • Subtotal
+                </span>
+                <div className="font-mono font-black text-emerald-400 text-sm truncate">
+                  Rp {totalAmount.toLocaleString('id-ID')}
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobileViewTab('cart')}
+              className={`px-3.5 sm:px-4 py-2 rounded-xl bg-gradient-to-r ${activeTheme.gradient} text-white font-extrabold text-xs flex items-center gap-1.5 shadow-md active:scale-95 cursor-pointer shrink-0`}
+            >
+              <span>Lihat Nota & Bayar</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Upload / Ganti Gambar Modal */}
       <UploadProductImageModal
         isOpen={Boolean(editingImageProduct)}
@@ -875,6 +966,7 @@ export default function TouchscreenPOSView({
         onSaveImage={handleSaveProductImage}
       />
 
+      </div>
     </div>
   );
 }

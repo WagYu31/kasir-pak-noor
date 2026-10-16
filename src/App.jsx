@@ -18,7 +18,7 @@ import SidebarNav from './components/SidebarNav';
 import FloatingBottomDock from './components/FloatingBottomDock';
 import ThemeSettingsModal from './components/ThemeSettingsModal';
 import { useTheme } from './context/ThemeContext';
-import { Palette } from 'lucide-react';
+import { Palette, Menu } from 'lucide-react';
 
 import { 
   INITIAL_WAREHOUSES, 
@@ -73,6 +73,7 @@ export default function App() {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isCustomerDisplayOpen, setIsCustomerDisplayOpen] = useState(false);
   const [isCustomerModalOpen, setIsCustomerModalOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   // Active Cart to Checkout
   const [checkoutData, setCheckoutData] = useState({
@@ -361,22 +362,36 @@ export default function App() {
             onOpenUserRoleModal={() => setIsUserRoleModalOpen(true)}
             onOpenAccountManager={() => setIsAccountManagerOpen(true)}
             onLogout={handleLogout}
+            isMobileOpen={isMobileSidebarOpen}
+            onCloseMobile={() => setIsMobileSidebarOpen(false)}
           />
 
           <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
             {/* Slim Header Bar for Sidebar/Rail Mode */}
-            <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-2.5 flex items-center justify-between shadow-xs">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-800">
-                  {activeTab === 'pos' ? 'Kasir POS' : activeTab === 'inventory' ? 'Inventori & Mutasi' : activeTab === 'products' ? 'Master Produk' : 'Laporan & Laba'}
-                </span>
-                <span className="text-slate-300">•</span>
-                <span className="text-xs font-bold text-slate-500">
-                  {activeWarehouse === 'WH-01' ? 'Gudang Toko' : 'Gudang Pusat'}
-                </span>
+            <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-4 py-2.5 flex items-center justify-between shadow-xs">
+              <div className="flex items-center gap-2.5 min-w-0">
+                {/* Mobile/Tablet Hamburger Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setIsMobileSidebarOpen(true)}
+                  className="lg:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer active:scale-95 shadow-2xs"
+                  title="Buka Menu Navigasi"
+                >
+                  <Menu className="w-4 h-4" />
+                </button>
+
+                <div className="flex items-center gap-2 truncate">
+                  <span className="text-xs font-black uppercase tracking-wider text-slate-800 truncate">
+                    {activeTab === 'pos' ? 'Kasir POS' : activeTab === 'inventory' ? 'Inventori & Mutasi' : activeTab === 'products' ? 'Master Produk' : 'Laporan & Laba'}
+                  </span>
+                  <span className="hidden sm:inline text-slate-300">•</span>
+                  <span className="hidden sm:inline text-xs font-bold text-slate-500">
+                    {activeWarehouse === 'WH-01' ? 'Gudang Toko' : 'Gudang Pusat'}
+                  </span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 shrink-0">
                 <button
                   type="button"
                   onClick={openThemeModal}
@@ -384,7 +399,7 @@ export default function App() {
                   title="Ganti Tema & Layout"
                 >
                   <Palette className="w-3.5 h-3.5 text-slate-600" />
-                  <span>Tema & Layout</span>
+                  <span className="hidden sm:inline">Tema & Layout</span>
                 </button>
               </div>
             </header>

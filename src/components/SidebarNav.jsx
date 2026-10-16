@@ -15,7 +15,8 @@ import {
   HelpCircle,
   Palette,
   Clock,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react';
 import { USER_ROLES } from './UserRoleModal';
 import { useTheme } from '../context/ThemeContext';
@@ -35,7 +36,9 @@ export default function SidebarNav({
   currentRole,
   onOpenUserRoleModal,
   onOpenAccountManager,
-  onLogout
+  onLogout,
+  isMobileOpen = false,
+  onCloseMobile
 }) {
   const { 
     activeTheme, 
@@ -58,48 +61,78 @@ export default function SidebarNav({
     { id: 'shift', label: 'Shift Kasir', hotkey: 'F5', icon: UserCheck },
   ].filter(item => roleObj.allowedTabs.includes(item.id));
 
+  const handleNavClick = (id) => {
+    if (id === 'shift') {
+      onOpenShiftModal();
+    } else {
+      setActiveTab(id);
+    }
+    if (onCloseMobile) onCloseMobile();
+  };
+
   return (
-    <aside 
-      className={`bg-white border-r border-slate-200/90 flex flex-col justify-between transition-all duration-300 z-40 shrink-0 select-none shadow-xs ${
-        isCollapsed ? 'w-18' : 'w-64'
-      }`}
-    >
-      {/* Top Section: Logo & Toggle Button */}
-      <div className="p-3.5 border-b border-slate-100 flex items-center justify-between">
-        <div className="flex items-center gap-2.5 min-w-0">
-          <div className={`w-10 h-10 rounded-2xl bg-gradient-to-tr ${activeTheme.gradient} text-white flex items-center justify-center shadow-sm shrink-0 font-bold`}>
-            <Store className="w-5 h-5" />
+    <>
+      {/* Mobile Drawer Backdrop Overlay (< 1024px) */}
+      {isMobileOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 lg:hidden animate-fade-in"
+          onClick={onCloseMobile}
+        />
+      )}
+
+      <aside 
+        className={`bg-white border-r border-slate-200/90 flex flex-col justify-between transition-all duration-300 select-none shadow-2xl lg:shadow-xs z-50
+          fixed inset-y-0 left-0 w-72 lg:static lg:z-40
+          ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          ${isCollapsed ? 'lg:w-18' : 'lg:w-64'}
+        `}
+      >
+        {/* Top Section: Logo & Toggle Button */}
+        <div className="p-3.5 border-b border-slate-100 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className={`w-10 h-10 rounded-2xl bg-gradient-to-tr ${activeTheme.gradient} text-white flex items-center justify-center shadow-sm shrink-0 font-bold`}>
+              <Store className="w-5 h-5" />
+            </div>
+
+            {(!isCollapsed || isMobileOpen) && (
+              <div className="min-w-0 flex-1 animate-fade-in">
+                <h1 className="text-xs font-black text-slate-900 tracking-tight leading-none truncate">
+                  TOKO PAK NOOR
+                </h1>
+                <p className="text-[10px] text-slate-500 font-semibold mt-1 flex items-center gap-1 truncate">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                  <span>Multi-Terminal POS</span>
+                </p>
+              </div>
+            )}
           </div>
 
-          {!isCollapsed && (
-            <div className="min-w-0 flex-1 animate-fade-in">
-              <h1 className="text-xs font-black text-slate-900 tracking-tight leading-none truncate">
-                TOKO PAK NOOR
-              </h1>
-              <p className="text-[10px] text-slate-500 font-semibold mt-1 flex items-center gap-1 truncate">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <span>Multi-Terminal POS</span>
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Collapse / Expand Toggle Button (Hidden in Rail mode) */}
-        {!isRail && (
+          {/* Mobile Close Button (< 1024px) */}
           <button
             type="button"
-            onClick={toggleSidebar}
-            className="w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition active:scale-90 cursor-pointer shrink-0"
-            title={isCollapsed ? 'Perluas Sidebar' : 'Ciutkan Sidebar'}
+            onClick={onCloseMobile}
+            className="lg:hidden w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition active:scale-90 cursor-pointer shrink-0"
+            title="Tutup Menu"
           >
-            {isCollapsed ? (
-              <ChevronRight className="w-4 h-4" />
-            ) : (
-              <ChevronLeft className="w-4 h-4" />
-            )}
+            <X className="w-4 h-4" />
           </button>
-        )}
-      </div>
+
+          {/* Desktop Collapse / Expand Toggle Button (Hidden in Rail mode and hidden on mobile) */}
+          {!isRail && (
+            <button
+              type="button"
+              onClick={toggleSidebar}
+              className="hidden lg:flex w-7 h-7 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 items-center justify-center transition active:scale-90 cursor-pointer shrink-0"
+              title={isCollapsed ? 'Perluas Sidebar' : 'Ciutkan Sidebar'}
+            >
+              {isCollapsed ? (
+                <ChevronRight className="w-4 h-4" />
+              ) : (
+                <ChevronLeft className="w-4 h-4" />
+              )}
+            </button>
+          )}
+        </div>
 
       {/* Middle Section: Warehouse & Main Navigation Menu */}
       <div className="flex-1 overflow-y-auto p-2.5 space-y-4">
@@ -132,13 +165,7 @@ export default function SidebarNav({
               <button
                 key={item.id}
                 type="button"
-                onClick={() => {
-                  if (item.id === 'shift') {
-                    onOpenShiftModal();
-                  } else {
-                    setActiveTab(item.id);
-                  }
-                }}
+                onClick={() => handleNavClick(item.id)}
                 className={`w-full flex items-center gap-3 p-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer relative group ${
                   isActive
                     ? `bg-gradient-to-r ${activeTheme.gradient} text-white shadow-sm`
@@ -148,13 +175,13 @@ export default function SidebarNav({
               >
                 <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-800'}`} />
                 
-                {!isCollapsed && (
+                {(!isCollapsed || isMobileOpen) && (
                   <span className="flex-1 text-left truncate">
                     {item.label}
                   </span>
                 )}
 
-                {!isCollapsed && (
+                {(!isCollapsed || isMobileOpen) && (
                   <kbd className={`kbd-badge text-[9px] ${
                     isActive ? 'bg-black/20 text-white border-transparent' : ''
                   }`}>
@@ -174,7 +201,10 @@ export default function SidebarNav({
           {/* Theme & Customizer Button */}
           <button
             type="button"
-            onClick={openThemeModal}
+            onClick={() => {
+              openThemeModal();
+              if (onCloseMobile) onCloseMobile();
+            }}
             className="w-full flex items-center gap-3 p-2.5 rounded-xl font-bold text-xs text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition cursor-pointer"
             title="Kustomisasi Tema Warna & Layout"
           >
@@ -185,31 +215,37 @@ export default function SidebarNav({
                 style={{ backgroundColor: activeTheme.primaryHex }}
               />
             </div>
-            {!isCollapsed && <span>Ganti Tema / Layout</span>}
+            {(!isCollapsed || isMobileOpen) && <span>Ganti Tema / Layout</span>}
           </button>
 
           {/* Kelola Akun (Owner Only) */}
           {currentRole === 'OWNER' && onOpenAccountManager && (
             <button
               type="button"
-              onClick={onOpenAccountManager}
+              onClick={() => {
+                onOpenAccountManager();
+                if (onCloseMobile) onCloseMobile();
+              }}
               className="w-full flex items-center gap-3 p-2.5 rounded-xl font-bold text-xs text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition cursor-pointer"
               title="Kelola Akun Kasir & PIN"
             >
               <Users className="w-4 h-4 text-slate-600" />
-              {!isCollapsed && <span>Kelola Akun</span>}
+              {(!isCollapsed || isMobileOpen) && <span>Kelola Akun</span>}
             </button>
           )}
 
           {/* Bantuan Pintasan [?] */}
           <button
             type="button"
-            onClick={onOpenHelpModal}
+            onClick={() => {
+              onOpenHelpModal();
+              if (onCloseMobile) onCloseMobile();
+            }}
             className="w-full flex items-center gap-3 p-2.5 rounded-xl font-bold text-xs text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition cursor-pointer"
             title="Daftar Pintasan Keyboard & Bantuan"
           >
             <HelpCircle className="w-4 h-4 text-slate-600" />
-            {!isCollapsed && <span>Bantuan Pintasan</span>}
+            {(!isCollapsed || isMobileOpen) && <span>Bantuan Pintasan</span>}
           </button>
         </div>
 
@@ -221,19 +257,22 @@ export default function SidebarNav({
         {/* Terminal Pill */}
         <button
           type="button"
-          onClick={onOpenTerminalManager}
+          onClick={() => {
+            onOpenTerminalManager();
+            if (onCloseMobile) onCloseMobile();
+          }}
           className="w-full flex items-center justify-between p-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-left transition cursor-pointer shadow-2xs group"
           title="Kelola & Tambah Mesin Kasir / Hardware POS"
         >
           <div className="flex items-center gap-2 min-w-0">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            {!isCollapsed && (
+            {(!isCollapsed || isMobileOpen) && (
               <span className="font-extrabold text-[11px] text-slate-800 truncate">
                 {activeTerminal} (ONLINE)
               </span>
             )}
           </div>
-          {!isCollapsed && (
+          {(!isCollapsed || isMobileOpen) && (
             <div className="flex items-center gap-1 text-[10px] text-emerald-800 font-bold bg-emerald-50 border border-emerald-200/90 px-1.5 py-0.5 rounded-lg group-hover:bg-emerald-100 transition">
               <Settings className="w-3 h-3 text-emerald-600" />
               <span>Kelola</span>
@@ -245,14 +284,17 @@ export default function SidebarNav({
         <div className="flex items-center justify-between gap-1.5">
           <button
             type="button"
-            onClick={onOpenUserRoleModal}
+            onClick={() => {
+              onOpenUserRoleModal();
+              if (onCloseMobile) onCloseMobile();
+            }}
             className="flex-1 flex items-center gap-2 p-1.5 rounded-xl hover:bg-white transition cursor-pointer text-left min-w-0"
             title="Ganti Peran Hak Akses (RBAC)"
           >
             <div className="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-800 font-extrabold text-xs flex items-center justify-center shrink-0">
               {roleObj.name[0]}
             </div>
-            {!isCollapsed && (
+            {(!isCollapsed || isMobileOpen) && (
               <div className="min-w-0 flex-1">
                 <div className="font-extrabold text-[11px] text-slate-900 truncate">
                   {roleObj.name}
@@ -278,5 +320,6 @@ export default function SidebarNav({
       </div>
 
     </aside>
+    </>
   );
 }
