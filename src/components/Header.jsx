@@ -14,9 +14,11 @@ import {
   Lock,
   LogOut,
   Settings,
-  Receipt
+  Receipt,
+  Palette
 } from 'lucide-react';
 import { USER_ROLES } from './UserRoleModal';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Header({ 
   activeTab, 
@@ -36,6 +38,7 @@ export default function Header({
   terminals,
   onOpenTerminalManager
 }) {
+  const { activeTheme, openThemeModal } = useTheme();
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -64,7 +67,7 @@ export default function Header({
         
         {/* Left: Brand & Warehouse Status */}
         <div className="flex items-center gap-2.5 sm:gap-3.5 shrink-0">
-          <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-emerald-600 flex items-center justify-center shadow-xs shrink-0 text-white font-bold">
+          <div className={`h-9 w-9 sm:h-10 sm:w-10 rounded-xl bg-gradient-to-tr ${activeTheme.gradient} flex items-center justify-center shadow-xs shrink-0 text-white font-bold`}>
             <Store className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div>
@@ -105,13 +108,13 @@ export default function Header({
                 }}
                 className={`relative flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 outline-none whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'text-white bg-gradient-to-r from-emerald-600 via-emerald-600 to-teal-600 shadow-sm'
+                    ? `text-white bg-gradient-to-r ${activeTheme.gradient} shadow-sm`
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
                 }`}
               >
                 <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-slate-500'}`} />
                 <span className="text-[11px] sm:text-xs">{item.label}</span>
-                <span className={`hidden xl:inline-block kbd-badge ml-1 ${isActive ? 'bg-emerald-700 text-white border-emerald-800' : ''}`}>
+                <span className={`hidden xl:inline-block kbd-badge ml-1 ${isActive ? 'bg-black/20 text-white border-transparent' : ''}`}>
                   {item.hotkey}
                 </span>
               </button>
@@ -232,6 +235,23 @@ export default function Header({
             <Clock className="w-3.5 h-3.5 text-slate-400" />
             <span>{formatTime(currentTime)}</span>
           </div>
+
+          {/* Tema & Layout Customizer Button */}
+          <button
+            type="button"
+            onClick={openThemeModal}
+            className="flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer shadow-2xs group"
+            title="Kustomisasi Warna Tema & Tata Letak POS"
+          >
+            <div className="relative">
+              <Palette className="w-3.5 h-3.5 text-slate-600 group-hover:text-slate-900" />
+              <span 
+                className="w-1.5 h-1.5 rounded-full absolute -top-0.5 -right-0.5"
+                style={{ backgroundColor: activeTheme.primaryHex }}
+              />
+            </div>
+            <span className="hidden xl:inline text-xs font-bold">Tema & Layout</span>
+          </button>
 
           {/* Help Modal */}
           <button

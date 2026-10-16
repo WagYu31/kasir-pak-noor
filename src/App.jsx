@@ -14,6 +14,10 @@ import LoginPage from './components/LoginPage';
 import UserAccountManagerModal from './components/UserAccountManagerModal';
 import TerminalManagerModal from './components/TerminalManagerModal';
 import CustomerModal from './components/CustomerModal';
+import SidebarNav from './components/SidebarNav';
+import ThemeSettingsModal from './components/ThemeSettingsModal';
+import { useTheme } from './context/ThemeContext';
+import { Palette } from 'lucide-react';
 
 import { 
   INITIAL_WAREHOUSES, 
@@ -255,104 +259,168 @@ export default function App() {
     );
   }
 
+  const { navLayout, isThemeModalOpen, closeThemeModal, openThemeModal, activeTheme, themeId } = useTheme();
+
+  const renderTabContent = () => (
+    <>
+      {activeTab === 'pos' && (
+        <POSTerminal
+          products={products}
+          setProducts={setProducts}
+          activeWarehouse={activeWarehouse}
+          priceTier={priceTier}
+          setPriceTier={setPriceTier}
+          onCheckout={handleOpenCheckout}
+          lastTransaction={lastTransaction}
+          onReprintLast={() => {
+            if (lastTransaction) setIsReceiptOpen(true);
+          }}
+          onOpenCustomerDisplay={() => setIsCustomerDisplayOpen(true)}
+          lastScannedItem={lastScannedItem}
+          setLastScannedItem={setLastScannedItem}
+          currentRole={currentUserRole}
+          activeTerminal={activeTerminal}
+          shiftData={shiftData}
+          customers={customers}
+          selectedCustomer={selectedCustomer}
+          onSelectCustomer={setSelectedCustomer}
+          onAddCustomer={handleAddCustomer}
+          expenses={expenses}
+          onAddExpense={handleAddExpense}
+        />
+      )}
+
+      {activeTab === 'inventory' && (
+        <InventoryManager
+          products={products}
+          setProducts={setProducts}
+          warehouses={warehouses}
+          transfers={transfers}
+          setTransfers={setTransfers}
+          currentRole={currentUserRole}
+          salesHistory={salesHistory}
+          onViewTransactionAudit={() => setActiveTab('reports')}
+        />
+      )}
+
+      {activeTab === 'products' && (
+        <MasterProducts
+          products={products}
+          setProducts={setProducts}
+          currentRole={currentUserRole}
+        />
+      )}
+
+      {activeTab === 'reports' && (
+        <ReportsAnalytics
+          salesHistory={salesHistory}
+          products={products}
+          warehouses={warehouses}
+          currentRole={currentUserRole}
+          customers={customers}
+          expenses={expenses}
+          commissions={commissions}
+          onRecordDebtPayment={(customerId, paidAmount) => {
+            setCustomers(prev => prev.map(c => {
+              if (c.id === customerId) {
+                const updatedDebt = Math.max(0, (c.currentDebt || 0) - paidAmount);
+                return {
+                  ...c,
+                  currentDebt: updatedDebt,
+                  status: updatedDebt === 0 ? 'ACTIVE' : c.status
+                };
+              }
+              return c;
+            }));
+          }}
+        />
+      )}
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-emerald-500/20 selection:text-emerald-800">
+    <div className={`min-h-screen ${themeId === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} flex flex-col selection:bg-emerald-500/20 selection:text-emerald-800`}>
       
-      {/* Top Header */}
-      <Header
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        activeTerminal={activeTerminal}
-        setActiveTerminal={setActiveTerminal}
-        terminals={terminals}
-        onOpenTerminalManager={() => setIsTerminalManagerOpen(true)}
-        activeWarehouse={activeWarehouse}
-        setActiveWarehouse={setActiveWarehouse}
-        shiftData={shiftData}
-        onOpenShiftModal={() => setIsShiftOpen(true)}
-        onOpenHelpModal={() => setIsHelpOpen(true)}
-        currentRole={currentUserRole}
-        setCurrentRole={handleSelectRole}
-        onOpenUserRoleModal={() => setIsUserRoleModalOpen(true)}
-        onOpenAccountManager={() => setIsAccountManagerOpen(true)}
-        onLogout={handleLogout}
-      />
-
-      {/* Main Tab Content */}
-      <main className="flex-1 pb-12">
-        {activeTab === 'pos' && (
-          <POSTerminal
-            products={products}
-            setProducts={setProducts}
-            activeWarehouse={activeWarehouse}
-            priceTier={priceTier}
-            setPriceTier={setPriceTier}
-            onCheckout={handleOpenCheckout}
-            lastTransaction={lastTransaction}
-            onReprintLast={() => {
-              if (lastTransaction) setIsReceiptOpen(true);
-            }}
-            onOpenCustomerDisplay={() => setIsCustomerDisplayOpen(true)}
-            lastScannedItem={lastScannedItem}
-            setLastScannedItem={setLastScannedItem}
-            currentRole={currentUserRole}
+      {navLayout === 'sidebar' ? (
+        /* SIDEBAR MODERN ENTERPRISE LAYOUT */
+        <div className="flex-1 flex overflow-hidden min-h-screen">
+          <SidebarNav
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
             activeTerminal={activeTerminal}
+            setActiveTerminal={setActiveTerminal}
+            terminals={terminals}
+            onOpenTerminalManager={() => setIsTerminalManagerOpen(true)}
+            activeWarehouse={activeWarehouse}
+            setActiveWarehouse={setActiveWarehouse}
             shiftData={shiftData}
-            customers={customers}
-            selectedCustomer={selectedCustomer}
-            onSelectCustomer={setSelectedCustomer}
-            onAddCustomer={handleAddCustomer}
-            expenses={expenses}
-            onAddExpense={handleAddExpense}
-          />
-        )}
-
-        {activeTab === 'inventory' && (
-          <InventoryManager
-            products={products}
-            setProducts={setProducts}
-            warehouses={warehouses}
-            transfers={transfers}
-            setTransfers={setTransfers}
+            onOpenShiftModal={() => setIsShiftOpen(true)}
+            onOpenHelpModal={() => setIsHelpOpen(true)}
             currentRole={currentUserRole}
-            salesHistory={salesHistory}
-            onViewTransactionAudit={() => setActiveTab('reports')}
+            onOpenUserRoleModal={() => setIsUserRoleModalOpen(true)}
+            onOpenAccountManager={() => setIsAccountManagerOpen(true)}
+            onLogout={handleLogout}
           />
-        )}
 
-        {activeTab === 'products' && (
-          <MasterProducts
-            products={products}
-            setProducts={setProducts}
-            currentRole={currentUserRole}
-          />
-        )}
+          <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+            {/* Slim Header Bar for Sidebar Mode */}
+            <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-2.5 flex items-center justify-between shadow-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black uppercase tracking-wider text-slate-800">
+                  {activeTab === 'pos' ? 'Kasir POS' : activeTab === 'inventory' ? 'Inventori & Mutasi' : activeTab === 'products' ? 'Master Produk' : 'Laporan & Laba'}
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="text-xs font-bold text-slate-500">
+                  {activeWarehouse === 'WH-01' ? 'Gudang Toko' : 'Gudang Pusat'}
+                </span>
+              </div>
 
-        {activeTab === 'reports' && (
-          <ReportsAnalytics
-            salesHistory={salesHistory}
-            products={products}
-            warehouses={warehouses}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={openThemeModal}
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs font-bold transition cursor-pointer shadow-2xs"
+                  title="Ganti Tema & Layout"
+                >
+                  <Palette className="w-3.5 h-3.5 text-slate-600" />
+                  <span>Tema & Layout</span>
+                </button>
+              </div>
+            </header>
+
+            {/* Main Content */}
+            <main className="flex-1 p-3 sm:p-4 pb-16">
+              {renderTabContent()}
+            </main>
+          </div>
+        </div>
+      ) : (
+        /* STANDARD HORIZONTAL TOPBAR LAYOUT */
+        <>
+          <Header
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            activeTerminal={activeTerminal}
+            setActiveTerminal={setActiveTerminal}
+            terminals={terminals}
+            onOpenTerminalManager={() => setIsTerminalManagerOpen(true)}
+            activeWarehouse={activeWarehouse}
+            setActiveWarehouse={setActiveWarehouse}
+            shiftData={shiftData}
+            onOpenShiftModal={() => setIsShiftOpen(true)}
+            onOpenHelpModal={() => setIsHelpOpen(true)}
             currentRole={currentUserRole}
-            customers={customers}
-            expenses={expenses}
-            commissions={commissions}
-            onRecordDebtPayment={(customerId, paidAmount) => {
-              setCustomers(prev => prev.map(c => {
-                if (c.id === customerId) {
-                  const updatedDebt = Math.max(0, (c.currentDebt || 0) - paidAmount);
-                  return {
-                    ...c,
-                    currentDebt: updatedDebt,
-                    status: updatedDebt === 0 ? 'ACTIVE' : c.status
-                  };
-                }
-                return c;
-              }));
-            }}
+            setCurrentRole={handleSelectRole}
+            onOpenUserRoleModal={() => setIsUserRoleModalOpen(true)}
+            onOpenAccountManager={() => setIsAccountManagerOpen(true)}
+            onLogout={handleLogout}
           />
-        )}
-      </main>
+
+          <main className="flex-1 pb-12">
+            {renderTabContent()}
+          </main>
+        </>
+      )}
 
       {/* Floating System Quick Info Bar (Responsive Light Theme) */}
       <footer className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1.5 px-3 sm:px-4 text-[11px] text-slate-500 flex items-center justify-between z-30 shadow-xs overflow-x-auto no-scrollbar">
@@ -469,6 +537,12 @@ export default function App() {
         setActiveTerminal={setActiveTerminal}
         currentRole={currentUserRole}
         currentUser={currentUser}
+      />
+
+      {/* 21ST.DEV THEME & LAYOUT CUSTOMIZER MODAL */}
+      <ThemeSettingsModal
+        isOpen={isThemeModalOpen}
+        onClose={closeThemeModal}
       />
 
     </div>

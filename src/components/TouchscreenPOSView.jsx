@@ -25,6 +25,7 @@ import {
   Zap
 } from 'lucide-react';
 import UploadProductImageModal from './UploadProductImageModal';
+import { useTheme } from '../context/ThemeContext';
 
 // High-fidelity fallback mapping to local authentic product packaging images
 const DEFAULT_PRODUCT_IMAGES = {
@@ -129,6 +130,10 @@ export default function TouchscreenPOSView({
   onOpenPettyCash,
   onOpenPickingList
 }) {
+  const { activeTheme, cartPosition, cardDensity } = useTheme();
+  const isCartRight = cartPosition === 'right';
+  const isCompact = cardDensity === 'compact';
+
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -171,14 +176,16 @@ export default function TouchscreenPOSView({
     <div className="grid grid-cols-1 ipad:grid-cols-12 gap-4 items-start animate-fade-in">
       
       {/* ======================================================== */}
-      {/* LEFT PANEL: AUTHENTIC RETAIL CASHIER REGISTER (CART)     */}
+      {/* LEFT/RIGHT PANEL: RETAIL CASHIER REGISTER (CART)         */}
       {/* ======================================================== */}
-      <div className="ipad:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col h-[590px] ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px] overflow-hidden">
+      <div className={`ipad:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col h-[590px] ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px] overflow-hidden ${
+        isCartRight ? 'ipad:order-2' : 'ipad:order-1'
+      }`}>
         
         {/* Clean Corporate Header: Antrean Switcher & Tier Controls */}
         <div className="p-3.5 sm:p-4 bg-slate-50/90 border-b border-slate-200 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-xs">
+            <div className={`w-8 h-8 rounded-xl bg-gradient-to-tr ${activeTheme.gradient} text-white flex items-center justify-center shadow-xs`}>
               <ShoppingBag className="w-4 h-4" />
             </div>
             <div>
@@ -204,7 +211,7 @@ export default function TouchscreenPOSView({
                     onClick={() => setActiveQueue(q)}
                     className={`px-2 py-1 rounded-lg text-[10.5px] font-bold transition flex items-center gap-1 cursor-pointer ${
                       isSelected
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xs'
+                        ? `bg-gradient-to-r ${activeTheme.gradient} text-white shadow-xs`
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                     title={`Buka ${q}`}
@@ -212,7 +219,7 @@ export default function TouchscreenPOSView({
                     <span>{q.replace('Antrean ', 'Q')}</span>
                     {count > 0 && (
                       <span className={`text-[9px] px-1 py-0.2 rounded-full font-mono font-bold ${
-                        isSelected ? 'bg-emerald-900/60 text-white' : 'bg-slate-100 text-slate-700'
+                        isSelected ? 'bg-black/30 text-white' : 'bg-slate-100 text-slate-700'
                       }`}>
                         {count}
                       </span>
@@ -541,7 +548,7 @@ export default function TouchscreenPOSView({
               className={`col-span-2 py-3.5 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 transition cursor-pointer relative overflow-hidden group/pay ${
                 cart.length === 0
                   ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:via-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 hover:shadow-xl hover:shadow-emerald-500/40 active:scale-[0.98]'
+                  : `bg-gradient-to-r ${activeTheme.gradient} ${activeTheme.gradientHover} text-white shadow-lg active:scale-[0.98]`
               }`}
             >
               {cart.length > 0 && (
@@ -558,9 +565,11 @@ export default function TouchscreenPOSView({
       </div>
 
       {/* ======================================================== */}
-      {/* RIGHT PANEL: PRODUCT CATALOG (RETAIL TOUCHSCREEN POS)    */}
+      {/* RIGHT/LEFT PANEL: PRODUCT CATALOG (RETAIL TOUCHSCREEN)   */}
       {/* ======================================================== */}
-      <div className="ipad:col-span-7 flex flex-col gap-3 h-auto ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px]">
+      <div className={`ipad:col-span-7 flex flex-col gap-3 h-auto ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px] ${
+        isCartRight ? 'ipad:order-1' : 'ipad:order-2'
+      }`}>
         
         {/* Top Control Bar: Search & Category Filter */}
         <div className="bg-white p-3 rounded-2xl border border-slate-200/90 shadow-sm space-y-2.5 shrink-0">
@@ -649,8 +658,12 @@ export default function TouchscreenPOSView({
 
         </div>
 
-        {/* Product Grid: 21st.dev Upgraded Cards with Category Aesthetics */}
-        <div className="grid grid-cols-2 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-3 gap-3 flex-1 overflow-y-auto pr-1 pb-10 content-start">
+        {/* Product Grid: 21st.dev Upgraded Cards with Category Aesthetics & Density */}
+        <div className={`grid ${
+          isCompact 
+            ? 'grid-cols-2 sm:grid-cols-3 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-4' 
+            : 'grid-cols-2 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-3'
+        } gap-3 flex-1 overflow-y-auto pr-1 pb-10 content-start`}>
           {filteredProducts.map(product => {
             const currentStock = product.stock[activeWarehouse] || 0;
             const primaryUnit = product.units[0];
@@ -673,7 +686,9 @@ export default function TouchscreenPOSView({
             return (
               <div
                 key={product.id}
-                className={`bg-white rounded-2xl border border-slate-200/90 ${catCfg.accentBorder} p-3 flex flex-col justify-between shadow-2xs hover:shadow-xl transition-all duration-300 group overflow-hidden min-h-[365px] max-h-[390px] relative glow-card-hover`}
+                className={`bg-white rounded-2xl border border-slate-200/90 ${catCfg.accentBorder} ${
+                  isCompact ? 'p-2.5 min-h-[310px] max-h-[340px]' : 'p-3 min-h-[365px] max-h-[390px]'
+                } flex flex-col justify-between shadow-2xs hover:shadow-xl transition-all duration-300 group overflow-hidden relative glow-card-hover`}
               >
                 {/* Subtle Ambient Color Glow at Top-Right of Card */}
                 <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${catCfg.glow} pointer-events-none rounded-bl-full transition-opacity group-hover:opacity-100 opacity-60`} />
@@ -690,7 +705,7 @@ export default function TouchscreenPOSView({
                 </div>
 
                 {/* Packaging Image Frame with Smooth Scale, Quick-Add Overlay & Edit Button */}
-                <div className="relative h-36 shrink-0 rounded-xl bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 border border-slate-100 p-2 flex items-center justify-center overflow-hidden mb-2 group/img z-10">
+                <div className={`relative ${isCompact ? 'h-28' : 'h-36'} shrink-0 rounded-xl bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 border border-slate-100 p-2 flex items-center justify-center overflow-hidden mb-2 group/img z-10`}>
                   <img 
                     src={imageSrc} 
                     alt={product.name}
@@ -730,7 +745,9 @@ export default function TouchscreenPOSView({
 
                 {/* Product Name & Live Pulsing Stock Indicator */}
                 <div className="flex-1 min-w-0 z-10">
-                  <h4 className="font-extrabold text-slate-900 text-xs sm:text-[13px] leading-snug line-clamp-2 min-h-[32px] group-hover:text-emerald-700 transition-colors">
+                  <h4 className={`font-extrabold text-slate-900 ${
+                    isCompact ? 'text-xs min-h-[20px] line-clamp-1' : 'text-xs sm:text-[13px] min-h-[32px] line-clamp-2'
+                  } leading-snug group-hover:text-emerald-700 transition-colors`}>
                     {product.name}
                   </h4>
                   
@@ -766,9 +783,9 @@ export default function TouchscreenPOSView({
                   <button
                     type="button"
                     onClick={() => addItemToCart(product, primaryUnit.unit, 1)}
-                    className="w-full py-2 px-2.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-xl text-xs font-bold flex items-center justify-between transition-all cursor-pointer active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-emerald-600/20 group/btn"
+                    className={`w-full py-2 px-2.5 bg-gradient-to-r ${activeTheme.gradient} ${activeTheme.gradientHover} text-white rounded-xl text-xs font-bold flex items-center justify-between transition-all cursor-pointer active:scale-[0.98] shadow-sm hover:shadow-md group/btn`}
                   >
-                    <span className="text-[10.5px] bg-emerald-950/30 text-emerald-100 font-extrabold px-2 py-0.5 rounded-lg border border-white/20 flex items-center gap-1">
+                    <span className="text-[10.5px] bg-black/20 text-white font-extrabold px-2 py-0.5 rounded-lg border border-white/20 flex items-center gap-1">
                       {primaryUnit.unit}
                     </span>
                     <div className="flex items-center gap-1.5 font-mono font-black text-[12px] tracking-tight">
