@@ -62,6 +62,29 @@
   border-radius: 5px;
 }
 
+/* 21st.dev Micro-Interactions & Shimmer */
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-150%) skewX(-15deg); }
+  100% { transform: translateX(250%) skewX(-15deg); }
+}
+
+.animate-shimmer {
+  animation: shimmer-sweep 3s ease-in-out infinite;
+}
+
+.glow-emerald-pulse {
+  box-shadow: 0 0 16px -2px rgba(16, 185, 129, 0.5);
+}
+
+.glow-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.glow-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(16, 185, 129, 0.08);
+}
+
+
 /* Thermal Struk Print Style */
 @media print {
   body * {

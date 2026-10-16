@@ -11,14 +11,18 @@ import {
   RotateCcw, 
   Camera, 
   ArrowRight, 
-  Store,
-  Layers,
-  CheckCircle2,
+  Layers, 
   X,
   Package,
   Users,
   DollarSign,
-  Printer
+  Printer,
+  Sparkles,
+  Utensils,
+  Coffee,
+  Heart,
+  Flame,
+  Zap
 } from 'lucide-react';
 import UploadProductImageModal from './UploadProductImageModal';
 
@@ -34,6 +38,66 @@ const DEFAULT_PRODUCT_IMAGES = {
   'PRD-008': '/products/ultra_milk.jpg',
   'PRD-009': '/products/dancow.jpg',
   'PRD-010': '/products/sampoerna.jpg',
+};
+
+// 21st.dev Distinct Category Styling Dictionary (High-Contrast, Anti-Ngantuk)
+const CATEGORY_CONFIG = {
+  'Semua': {
+    badge: 'bg-slate-100 text-slate-800 border-slate-200/80',
+    activeTab: 'bg-gradient-to-r from-slate-900 to-slate-800 text-white shadow-md shadow-slate-900/25',
+    accentBorder: 'hover:border-slate-300',
+    glow: 'from-slate-500/10 via-transparent to-transparent',
+    icon: Layers,
+    dot: 'bg-slate-500',
+  },
+  'Sembako': {
+    badge: 'bg-emerald-50 text-emerald-800 border-emerald-200/90 font-bold',
+    activeTab: 'bg-gradient-to-r from-emerald-600 via-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/30',
+    accentBorder: 'hover:border-emerald-400 group-hover:shadow-emerald-500/10',
+    glow: 'from-emerald-500/15 via-teal-500/5 to-transparent',
+    icon: ShoppingBag,
+    dot: 'bg-emerald-500',
+  },
+  'Makanan Instan': {
+    badge: 'bg-amber-50 text-amber-800 border-amber-200/90 font-bold',
+    activeTab: 'bg-gradient-to-r from-amber-500 via-amber-600 to-orange-500 text-white shadow-md shadow-amber-500/30',
+    accentBorder: 'hover:border-amber-400 group-hover:shadow-amber-500/10',
+    glow: 'from-amber-500/15 via-orange-500/5 to-transparent',
+    icon: Utensils,
+    dot: 'bg-amber-500',
+  },
+  'Minuman': {
+    badge: 'bg-sky-50 text-sky-800 border-sky-200/90 font-bold',
+    activeTab: 'bg-gradient-to-r from-sky-500 via-sky-600 to-blue-600 text-white shadow-md shadow-sky-500/30',
+    accentBorder: 'hover:border-sky-400 group-hover:shadow-sky-500/10',
+    glow: 'from-sky-500/15 via-blue-500/5 to-transparent',
+    icon: Coffee,
+    dot: 'bg-sky-500',
+  },
+  'Perawatan Rumah': {
+    badge: 'bg-purple-50 text-purple-800 border-purple-200/90 font-bold',
+    activeTab: 'bg-gradient-to-r from-purple-600 via-purple-600 to-indigo-600 text-white shadow-md shadow-purple-600/30',
+    accentBorder: 'hover:border-purple-400 group-hover:shadow-purple-500/10',
+    glow: 'from-purple-500/15 via-indigo-500/5 to-transparent',
+    icon: Sparkles,
+    dot: 'bg-purple-500',
+  },
+  'Susu & Bayi': {
+    badge: 'bg-blue-50 text-blue-800 border-blue-200/90 font-bold',
+    activeTab: 'bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white shadow-md shadow-blue-600/30',
+    accentBorder: 'hover:border-indigo-400 group-hover:shadow-indigo-500/10',
+    glow: 'from-blue-500/15 via-indigo-500/5 to-transparent',
+    icon: Heart,
+    dot: 'bg-blue-500',
+  },
+  'Rokok & Tembakau': {
+    badge: 'bg-rose-50 text-rose-800 border-rose-200/90 font-bold',
+    activeTab: 'bg-gradient-to-r from-rose-600 via-rose-600 to-red-600 text-white shadow-md shadow-rose-600/30',
+    accentBorder: 'hover:border-rose-400 group-hover:shadow-rose-500/10',
+    glow: 'from-rose-500/15 via-red-500/5 to-transparent',
+    icon: Flame,
+    dot: 'bg-rose-500',
+  }
 };
 
 export default function TouchscreenPOSView({
@@ -109,16 +173,16 @@ export default function TouchscreenPOSView({
       {/* ======================================================== */}
       {/* LEFT PANEL: AUTHENTIC RETAIL CASHIER REGISTER (CART)     */}
       {/* ======================================================== */}
-      <div className="ipad:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[590px] ipad:h-[calc(100vh-185px)] min-h-[530px] max-h-[780px] overflow-hidden">
+      <div className="ipad:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-sm flex flex-col h-[590px] ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px] overflow-hidden">
         
         {/* Clean Corporate Header: Antrean Switcher & Tier Controls */}
-        <div className="p-3.5 sm:p-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2 shrink-0">
+        <div className="p-3.5 sm:p-4 bg-slate-50/90 border-b border-slate-200 flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-xs">
               <ShoppingBag className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-extrabold tracking-wider uppercase text-slate-800 block">
+              <span className="text-xs font-black tracking-wider uppercase text-slate-900 block">
                 Pesanan Kasir
               </span>
               <p className="text-[10.5px] text-slate-500 font-medium">
@@ -129,7 +193,7 @@ export default function TouchscreenPOSView({
 
           <div className="flex items-center gap-1.5">
             {/* Queue Switcher Pills Q1-Q3 */}
-            <div className="flex items-center bg-white p-0.5 rounded-lg border border-slate-200 shadow-2xs">
+            <div className="flex items-center bg-white p-0.5 rounded-xl border border-slate-200 shadow-2xs">
               {['Antrean 1', 'Antrean 2', 'Antrean 3'].map(q => {
                 const count = cartQueue[q]?.length || 0;
                 const isSelected = activeQueue === q;
@@ -138,9 +202,9 @@ export default function TouchscreenPOSView({
                     key={q}
                     type="button"
                     onClick={() => setActiveQueue(q)}
-                    className={`px-2 py-1 rounded text-[10.5px] font-bold transition flex items-center gap-1 cursor-pointer ${
+                    className={`px-2 py-1 rounded-lg text-[10.5px] font-bold transition flex items-center gap-1 cursor-pointer ${
                       isSelected
-                        ? 'bg-emerald-700 text-white shadow-2xs'
+                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-xs'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                     title={`Buka ${q}`}
@@ -148,7 +212,7 @@ export default function TouchscreenPOSView({
                     <span>{q.replace('Antrean ', 'Q')}</span>
                     {count > 0 && (
                       <span className={`text-[9px] px-1 py-0.2 rounded-full font-mono font-bold ${
-                        isSelected ? 'bg-emerald-900 text-white' : 'bg-slate-100 text-slate-700'
+                        isSelected ? 'bg-emerald-900/60 text-white' : 'bg-slate-100 text-slate-700'
                       }`}>
                         {count}
                       </span>
@@ -159,15 +223,15 @@ export default function TouchscreenPOSView({
             </div>
 
             {/* Price Tier Segmented Control */}
-            <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-[10px]">
+            <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-[10px]">
               {['eceran', 'grosir1', 'member'].map(tier => (
                 <button
                   key={tier}
                   type="button"
                   onClick={() => setPriceTier(tier)}
-                  className={`px-2 py-1 rounded font-bold uppercase transition cursor-pointer ${
+                  className={`px-2 py-1 rounded-lg font-bold uppercase transition cursor-pointer ${
                     priceTier === tier
-                      ? 'bg-slate-800 text-white shadow-2xs'
+                      ? 'bg-slate-900 text-white shadow-2xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                   title={`Ganti tingkat harga: ${tier}`}
@@ -184,11 +248,11 @@ export default function TouchscreenPOSView({
           <button
             type="button"
             onClick={onOpenCustomerModal}
-            className="flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-lg text-xs font-bold text-slate-800 transition cursor-pointer truncate max-w-[210px]"
+            className="flex items-center gap-1.5 px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 transition cursor-pointer truncate max-w-[210px] shadow-2xs"
             title="Pilih Pelanggan / Limit Piutang"
           >
-            <Users className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
-            <span className="truncate">{selectedCustomer?.name || 'Pelanggan Umum'}</span>
+            <Users className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span className="truncate">{selectedCustomer?.name || 'Pelanggan Umum (Walk-in)'}</span>
           </button>
 
           <div className="flex items-center gap-1.5 shrink-0">
@@ -196,10 +260,10 @@ export default function TouchscreenPOSView({
               <button
                 type="button"
                 onClick={onOpenPickingList}
-                className="px-2 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-300 rounded-lg text-[11px] font-bold text-amber-900 transition flex items-center gap-1 cursor-pointer"
+                className="px-2 py-1 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl text-[11px] font-bold text-indigo-900 transition flex items-center gap-1 cursor-pointer"
                 title="Cetak Struk Draf / Lembar Picking Gudang"
               >
-                <Printer className="w-3 h-3 text-amber-600" />
+                <Printer className="w-3 h-3 text-indigo-600" />
                 <span>Draf Picking</span>
               </button>
             )}
@@ -208,7 +272,7 @@ export default function TouchscreenPOSView({
               <button
                 type="button"
                 onClick={onOpenPettyCash}
-                className="px-2 py-1 bg-white hover:bg-amber-50 border border-amber-300 rounded-lg text-[11px] font-bold text-amber-900 transition flex items-center gap-1 cursor-pointer"
+                className="px-2 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-300/80 rounded-xl text-[11px] font-bold text-amber-900 transition flex items-center gap-1 cursor-pointer shadow-2xs"
                 title="Input Kas Kecil (Bensin/Parkir)"
               >
                 <DollarSign className="w-3 h-3 text-amber-600" />
@@ -220,14 +284,14 @@ export default function TouchscreenPOSView({
 
         {/* Member Strip if active */}
         {activeMember && (
-          <div className="px-4 py-2 bg-emerald-50 border-b border-emerald-100 text-emerald-900 flex items-center justify-between text-xs shrink-0 font-medium">
+          <div className="px-4 py-2 bg-emerald-50/80 border-b border-emerald-100 text-emerald-900 flex items-center justify-between text-xs shrink-0 font-medium">
             <div className="flex items-center gap-2">
-              <span className="w-5 h-5 rounded bg-emerald-700 text-white flex items-center justify-center font-bold">
+              <span className="w-5 h-5 rounded-lg bg-emerald-700 text-white flex items-center justify-center font-bold">
                 <UserCheck className="w-3 h-3" />
               </span>
               <span>Member: <strong className="text-slate-900 font-extrabold">{activeMember.name}</strong></span>
             </div>
-            <span className="text-[10px] font-bold text-emerald-800 bg-white px-2 py-0.5 rounded border border-emerald-200">
+            <span className="text-[10px] font-bold text-emerald-800 bg-white px-2 py-0.5 rounded-md border border-emerald-200">
               {activeMember.tier} • {activeMember.points} Poin
             </span>
           </div>
@@ -236,26 +300,41 @@ export default function TouchscreenPOSView({
         {/* Cart Item List (Scrollable Receipt Lines) */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
           {cart.length === 0 ? (
-            /* EMPTY STATE */
-            <div className="h-full flex flex-col justify-between py-6 px-4">
+            /* EMPTY STATE: 21ST.DEV ENERGETIC & MOTIVATING */
+            <div className="h-full flex flex-col justify-between py-4 px-3 sm:px-4">
               
               <div className="my-auto flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400 mb-3">
-                  <ShoppingBag className="w-8 h-8 stroke-1" />
+                
+                {/* Concentric Icon Halo */}
+                <div className="relative mb-3 group">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-emerald-50 via-teal-50 to-sky-50 border border-emerald-200/70 flex items-center justify-center text-emerald-600 shadow-inner">
+                    <ShoppingBag className="w-8 h-8 stroke-[1.75]" />
+                  </div>
+                  <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  </span>
                 </div>
 
-                <h3 className="font-extrabold text-slate-800 text-sm tracking-tight">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-[10px] font-extrabold text-emerald-800 uppercase tracking-wider mb-1.5">
+                  <Zap className="w-3 h-3 text-emerald-600" />
+                  <span>Siap Menerima Transaksi</span>
+                </div>
+
+                <h3 className="font-extrabold text-slate-900 text-sm tracking-tight">
                   Keranjang Masih Kosong
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 max-w-[260px] leading-relaxed">
+                <p className="text-xs text-slate-400 mt-1 max-w-[270px] leading-relaxed">
                   Pilih produk dari katalog di sebelah kanan untuk menambahkan belanjaan ke kasir.
                 </p>
 
                 {/* Popular Quick-Add Chips */}
                 <div className="mt-5 w-full max-w-sm">
-                  <div className="flex items-center justify-center gap-1.5 mb-2.5 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                    <Package className="w-3.5 h-3.5 text-slate-500" />
-                    <span>Produk Cepat Tambah:</span>
+                  <div className="flex items-center justify-between mb-2 text-[10.5px] font-bold text-slate-400 uppercase tracking-wider px-1">
+                    <span className="flex items-center gap-1.5 text-slate-600 font-extrabold">
+                      <Package className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Produk Cepat Tambah</span>
+                    </span>
+                    <span className="text-[9.5px] text-slate-400 font-normal">1-Tap</span>
                   </div>
 
                   <div className="grid grid-cols-2 gap-2">
@@ -267,7 +346,7 @@ export default function TouchscreenPOSView({
                           key={p.id}
                           type="button"
                           onClick={() => addItemToCart(p, primaryUnit.unit, 1)}
-                          className="p-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-left transition-all active:scale-95 group/chip flex items-center gap-2 cursor-pointer shadow-2xs"
+                          className="p-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200/90 hover:border-emerald-300 text-left transition-all active:scale-95 group/chip flex items-center gap-2 cursor-pointer shadow-2xs hover:shadow-xs"
                         >
                           <img 
                             src={p.image || DEFAULT_PRODUCT_IMAGES[p.id]} 
@@ -275,14 +354,16 @@ export default function TouchscreenPOSView({
                             className="w-8 h-8 rounded-lg object-contain bg-slate-50 border border-slate-100 p-0.5 shrink-0"
                           />
                           <div className="min-w-0 flex-1">
-                            <div className="text-[11px] font-bold text-slate-800 truncate group-hover/chip:text-emerald-800">
+                            <div className="text-[11px] font-bold text-slate-800 truncate group-hover/chip:text-emerald-700">
                               {p.name.split(' ').slice(0, 2).join(' ')}
                             </div>
-                            <div className="text-[10px] font-mono font-bold text-emerald-700">
+                            <div className="text-[10px] font-mono font-extrabold text-emerald-600">
                               Rp {price.toLocaleString('id-ID')}
                             </div>
                           </div>
-                          <Plus className="w-3.5 h-3.5 text-slate-400 group-hover/chip:text-emerald-700 shrink-0" />
+                          <div className="w-5 h-5 rounded-md bg-slate-100 group-hover/chip:bg-emerald-600 group-hover/chip:text-white text-slate-400 flex items-center justify-center transition-colors shrink-0">
+                            <Plus className="w-3 h-3" />
+                          </div>
                         </button>
                       );
                     })}
@@ -292,20 +373,20 @@ export default function TouchscreenPOSView({
               </div>
 
               {/* Keyboard Shortcuts Helper */}
-              <div className="bg-slate-50 rounded-xl p-2 border border-slate-200 flex items-center justify-around text-[10px] text-slate-500 font-medium">
-                <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 rounded bg-white border border-slate-200 font-mono text-[9px] font-bold text-slate-700 shadow-2xs">F1</kbd>
-                  <span>Cari PLU</span>
+              <div className="bg-slate-50/80 rounded-xl p-2 border border-slate-200/80 flex items-center justify-around text-[10.5px] text-slate-500 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <kbd className="kbd-badge">F1</kbd>
+                  <span className="text-slate-600 font-semibold">Cari PLU</span>
                 </span>
                 <span className="text-slate-300">•</span>
-                <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 rounded bg-white border border-slate-200 font-mono text-[9px] font-bold text-slate-700 shadow-2xs">F8</kbd>
-                  <span>Layar Pelanggan</span>
+                <span className="flex items-center gap-1.5">
+                  <kbd className="kbd-badge">F8</kbd>
+                  <span className="text-slate-600 font-semibold">Layar Pelanggan</span>
                 </span>
                 <span className="text-slate-300">•</span>
-                <span className="flex items-center gap-1">
-                  <kbd className="px-1.5 py-0.5 rounded bg-white border border-slate-200 font-mono text-[9px] font-bold text-slate-700 shadow-2xs">F9</kbd>
-                  <span>Bayar</span>
+                <span className="flex items-center gap-1.5">
+                  <kbd className="kbd-badge">F9</kbd>
+                  <span className="text-slate-600 font-semibold">Bayar</span>
                 </span>
               </div>
 
@@ -317,7 +398,7 @@ export default function TouchscreenPOSView({
               return (
                 <div 
                   key={item.id || idx}
-                  className="p-2.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 transition-all flex items-center justify-between gap-2.5 text-xs shadow-2xs group"
+                  className="p-2.5 rounded-xl bg-white hover:bg-slate-50/80 border border-slate-200/90 hover:border-slate-300 transition-all flex items-center justify-between gap-2.5 text-xs shadow-2xs group"
                 >
                   {/* Thumbnail & Product Details */}
                   <div className="flex items-center gap-2.5 flex-1 min-w-0">
@@ -334,7 +415,7 @@ export default function TouchscreenPOSView({
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <div className="font-bold text-slate-900 truncate text-xs">
+                      <div className="font-extrabold text-slate-900 truncate text-xs">
                         {item.name}
                       </div>
                       <div className="flex items-center gap-1.5 mt-0.5">
@@ -349,22 +430,22 @@ export default function TouchscreenPOSView({
                   </div>
 
                   {/* Ergonomic Stepper */}
-                  <div className="flex items-center gap-1 bg-slate-50 p-0.5 rounded-lg border border-slate-200 shrink-0">
+                  <div className="flex items-center gap-1 bg-slate-100/80 p-0.5 rounded-lg border border-slate-200 shrink-0">
                     <button
                       type="button"
                       onClick={() => updateRowQty(idx, Math.max(1, item.qty - 1))}
-                      className="w-6 h-6 rounded bg-white hover:bg-slate-100 text-slate-700 hover:text-rose-600 font-bold flex items-center justify-center transition border border-slate-200 shadow-2xs active:scale-90 cursor-pointer"
+                      className="w-6 h-6 rounded-md bg-white hover:bg-slate-100 text-slate-700 hover:text-rose-600 font-bold flex items-center justify-center transition border border-slate-200 shadow-2xs active:scale-90 cursor-pointer"
                       title="Kurangi kuantitas"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
-                    <span className="w-6 text-center font-mono font-bold text-slate-900 text-xs">
+                    <span className="w-6 text-center font-mono font-extrabold text-slate-900 text-xs">
                       {item.qty}
                     </span>
                     <button
                       type="button"
                       onClick={() => updateRowQty(idx, item.qty + 1)}
-                      className="w-6 h-6 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-bold flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer"
+                      className="w-6 h-6 rounded-md bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center justify-center transition shadow-2xs active:scale-90 cursor-pointer"
                       title="Tambah kuantitas"
                     >
                       <Plus className="w-3 h-3" />
@@ -373,7 +454,7 @@ export default function TouchscreenPOSView({
 
                   {/* Subtotal & Trash Button */}
                   <div className="text-right shrink-0 min-w-[70px]">
-                    <div className="font-mono font-bold text-slate-900 text-xs">
+                    <div className="font-mono font-extrabold text-slate-900 text-xs">
                       Rp {(item.price * item.qty).toLocaleString('id-ID')}
                     </div>
                     <button
@@ -392,7 +473,7 @@ export default function TouchscreenPOSView({
         </div>
 
         {/* Real Retail Bill Summary & Action Footer */}
-        <div className="p-3.5 sm:p-4 bg-slate-50 border-t border-slate-200 shrink-0 space-y-2 rounded-b-2xl">
+        <div className="p-3.5 sm:p-4 bg-slate-50/90 border-t border-slate-200 shrink-0 space-y-2 rounded-b-2xl">
           
           {/* Subtotal & Tax Lines */}
           <div className="flex items-center justify-between text-xs text-slate-600 font-medium">
@@ -411,15 +492,21 @@ export default function TouchscreenPOSView({
             </div>
           )}
 
-          {/* Clean High-Contrast Retail Total Display Card */}
-          <div className="p-3 rounded-xl bg-white border border-slate-300 flex items-center justify-between shadow-2xs">
-            <div>
-              <span className="text-[10px] font-bold uppercase text-slate-500 tracking-wider block">
-                Total Tagihan:
-              </span>
-              <span className="text-2xl sm:text-3xl font-mono font-extrabold text-slate-900 tracking-tight">
+          {/* 21ST.DEV HIGH-CONTRAST MIDNIGHT TOTAL CARD */}
+          <div className="p-3.5 rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white border border-slate-800 flex items-center justify-between shadow-xl shadow-slate-950/20 relative overflow-hidden">
+            {/* Ambient emerald neon blur circle */}
+            <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
+                  Total Tagihan:
+                </span>
+              </div>
+              <div className="text-2xl sm:text-3xl font-mono font-black text-emerald-400 tracking-tight drop-shadow-[0_0_12px_rgba(52,211,153,0.35)]">
                 Rp {totalAmount.toLocaleString('id-ID')}
-              </span>
+              </div>
             </div>
 
             {/* Split Bill Button */}
@@ -427,10 +514,10 @@ export default function TouchscreenPOSView({
               type="button"
               onClick={onOpenSplitBill}
               disabled={cart.length === 0}
-              className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs flex items-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs"
+              className="relative z-10 px-3 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-sm"
               title="Pisahkan tagihan rombongan (Split Bill)"
             >
-              <Split className="w-3.5 h-3.5 text-slate-600" />
+              <Split className="w-3.5 h-3.5 text-slate-400" />
               <span>Split Bill</span>
             </button>
           </div>
@@ -441,7 +528,7 @@ export default function TouchscreenPOSView({
               type="button"
               onClick={clearCart}
               disabled={cart.length === 0}
-              className="col-span-1 py-3 rounded-xl bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-300 font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="col-span-1 py-3 rounded-xl bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-700 border border-slate-200 font-bold text-xs flex items-center justify-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Batal</span>
@@ -451,15 +538,18 @@ export default function TouchscreenPOSView({
               type="button"
               onClick={() => onCheckout(cart, totalAmount, activeQueue)}
               disabled={cart.length === 0}
-              className={`col-span-2 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition cursor-pointer shadow-xs ${
+              className={`col-span-2 py-3.5 rounded-xl font-extrabold text-sm flex items-center justify-center gap-2 transition cursor-pointer relative overflow-hidden group/pay ${
                 cart.length === 0
-                  ? 'bg-slate-200 text-slate-400 border border-slate-200 cursor-not-allowed'
-                  : 'bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white'
+                  ? 'bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:via-emerald-500 hover:to-teal-500 text-white shadow-lg shadow-emerald-600/30 hover:shadow-xl hover:shadow-emerald-500/40 active:scale-[0.98]'
               }`}
             >
+              {cart.length > 0 && (
+                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer pointer-events-none" />
+              )}
               <CreditCard className="w-4 h-4" />
-              <span>BAYAR (F9)</span>
-              <ArrowRight className="w-4 h-4" />
+              <span className="tracking-wide">BAYAR (F9)</span>
+              <ArrowRight className="w-4 h-4 group-hover/pay:translate-x-1 transition-transform" />
             </button>
           </div>
 
@@ -470,10 +560,10 @@ export default function TouchscreenPOSView({
       {/* ======================================================== */}
       {/* RIGHT PANEL: PRODUCT CATALOG (RETAIL TOUCHSCREEN POS)    */}
       {/* ======================================================== */}
-      <div className="ipad:col-span-7 flex flex-col gap-3 h-auto ipad:h-[calc(100vh-185px)] min-h-[530px] max-h-[780px]">
+      <div className="ipad:col-span-7 flex flex-col gap-3 h-auto ipad:h-[calc(100vh-190px)] min-h-[520px] max-h-[790px]">
         
         {/* Top Control Bar: Search & Category Filter */}
-        <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm space-y-3 shrink-0">
+        <div className="bg-white p-3 rounded-2xl border border-slate-200/90 shadow-sm space-y-2.5 shrink-0">
           
           {/* Search Input with Camera & PLU Shortcuts */}
           <div className="relative flex items-center">
@@ -483,7 +573,7 @@ export default function TouchscreenPOSView({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari produk (nama, brand, atau barcode)..."
-              className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-900 font-medium text-xs pl-10 pr-24 py-2 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-700 focus:ring-1 focus:ring-emerald-700 transition placeholder:text-slate-400"
+              className="w-full bg-slate-50/80 hover:bg-slate-100/70 focus:bg-white text-slate-900 font-medium text-xs pl-10 pr-24 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-500/20 transition placeholder:text-slate-400"
             />
             
             {/* Quick Actions inside Search Bar */}
@@ -492,7 +582,7 @@ export default function TouchscreenPOSView({
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="w-6 h-6 rounded bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition cursor-pointer"
+                  className="w-6 h-6 rounded-lg bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition cursor-pointer"
                   title="Hapus pencarian"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -503,10 +593,10 @@ export default function TouchscreenPOSView({
                 <button
                   type="button"
                   onClick={onOpenScanner}
-                  className="px-2 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-[10.5px] font-bold flex items-center gap-1 transition active:scale-95 shadow-2xs cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-[10.5px] font-bold flex items-center gap-1.5 transition active:scale-95 shadow-2xs cursor-pointer"
                   title="Scan barcode menggunakan kamera / webcam"
                 >
-                  <Camera className="w-3 h-3 text-slate-600" />
+                  <Camera className="w-3.5 h-3.5 text-slate-600" />
                   <span className="hidden sm:inline">Kamera</span>
                 </button>
               )}
@@ -515,7 +605,7 @@ export default function TouchscreenPOSView({
                 <button
                   type="button"
                   onClick={onOpenSearchModal}
-                  className="px-2 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-[10.5px] font-bold font-mono flex items-center gap-1 transition active:scale-95 cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-[10.5px] font-bold font-mono flex items-center gap-1 transition active:scale-95 cursor-pointer shadow-2xs"
                   title="Pencarian Detail PLU [F1]"
                 >
                   F1
@@ -524,28 +614,31 @@ export default function TouchscreenPOSView({
             </div>
           </div>
 
-          {/* Category Filter Pills (Clean Text with Count Badges, NO EMOJIS) */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+          {/* Category Filter Pills (21st.dev Style with Dynamic Category Color Badges & Icons) */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 no-scrollbar">
             {categories.map(cat => {
               const count = cat === 'Semua' 
                 ? products.length 
                 : products.filter(p => p.category === cat).length;
               const isSelected = selectedCategory === cat;
+              const catCfg = CATEGORY_CONFIG[cat] || CATEGORY_CONFIG['Semua'];
+              const IconComponent = catCfg.icon || Layers;
 
               return (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
                     isSelected
-                      ? 'bg-emerald-700 text-white shadow-xs'
-                      : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
+                      ? `${catCfg.activeTab}`
+                      : 'bg-white hover:bg-slate-50 text-slate-700 border border-slate-200/90 hover:border-slate-300 shadow-2xs'
                   }`}
                 >
+                  <IconComponent className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-slate-500'}`} />
                   <span>{cat}</span>
                   <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
-                    isSelected ? 'bg-emerald-900 text-white' : 'bg-slate-100 text-slate-600'
+                    isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
                   }`}>
                     {count}
                   </span>
@@ -556,12 +649,13 @@ export default function TouchscreenPOSView({
 
         </div>
 
-        {/* Product Grid: Clean Retail Cards */}
-        <div className="grid grid-cols-2 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-3.5 flex-1 overflow-y-auto pr-1 pb-8 content-start">
+        {/* Product Grid: 21st.dev Upgraded Cards with Category Aesthetics */}
+        <div className="grid grid-cols-2 ipad:grid-cols-2 ipad-pro:grid-cols-3 xl:grid-cols-3 gap-3 flex-1 overflow-y-auto pr-1 pb-10 content-start">
           {filteredProducts.map(product => {
             const currentStock = product.stock[activeWarehouse] || 0;
             const primaryUnit = product.units[0];
             const secondaryUnits = product.units.slice(1);
+            const catCfg = CATEGORY_CONFIG[product.category] || CATEGORY_CONFIG['Semua'];
 
             // Get active price based on priceTier
             const getPrice = (unitObj) => {
@@ -579,25 +673,28 @@ export default function TouchscreenPOSView({
             return (
               <div
                 key={product.id}
-                className="bg-white rounded-2xl border border-slate-200 hover:border-emerald-600 p-3 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all duration-200 group overflow-hidden min-h-[385px] max-h-[410px] relative"
+                className={`bg-white rounded-2xl border border-slate-200/90 ${catCfg.accentBorder} p-3 flex flex-col justify-between shadow-2xs hover:shadow-xl transition-all duration-300 group overflow-hidden min-h-[365px] max-h-[390px] relative glow-card-hover`}
               >
-                
-                {/* Header Card: Category & Brand */}
-                <div className="flex items-center justify-between gap-1.5 mb-2">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 truncate">
-                    {product.category}
+                {/* Subtle Ambient Color Glow at Top-Right of Card */}
+                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${catCfg.glow} pointer-events-none rounded-bl-full transition-opacity group-hover:opacity-100 opacity-60`} />
+
+                {/* Header Card: Category with dot & Brand */}
+                <div className="flex items-center justify-between gap-1.5 mb-1.5 relative z-10">
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg border flex items-center gap-1.5 ${catCfg.badge} truncate shadow-2xs`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${catCfg.dot}`} />
+                    <span className="truncate">{product.category}</span>
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 truncate">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 group-hover:text-slate-600 transition-colors truncate">
                     {product.brand}
                   </span>
                 </div>
 
-                {/* Packaging Image Frame with Hover Quick Action & Edit Button */}
-                <div className="relative h-40 shrink-0 rounded-xl bg-slate-50 border border-slate-100 p-2 flex items-center justify-center overflow-hidden mb-2 group/img">
+                {/* Packaging Image Frame with Smooth Scale, Quick-Add Overlay & Edit Button */}
+                <div className="relative h-36 shrink-0 rounded-xl bg-gradient-to-b from-slate-50/80 via-white to-slate-50/60 border border-slate-100 p-2 flex items-center justify-center overflow-hidden mb-2 group/img z-10">
                   <img 
                     src={imageSrc} 
                     alt={product.name}
-                    className="w-full h-full object-contain group-hover/img:scale-105 transition-transform duration-200"
+                    className="w-full h-full object-contain group-hover/img:scale-108 transition-transform duration-300 ease-out"
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = DEFAULT_PRODUCT_IMAGES[product.id] || '/products/indomie.jpg';
@@ -608,12 +705,12 @@ export default function TouchscreenPOSView({
                   <button
                     type="button"
                     onClick={() => addItemToCart(product, primaryUnit.unit, 1)}
-                    className="absolute inset-0 bg-slate-900/10 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                    className="absolute inset-0 bg-slate-900/25 backdrop-blur-[2px] opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
                     title={`Klik untuk tambah 1 ${primaryUnit.unit}`}
                   >
-                    <span className="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-sm flex items-center gap-1 active:scale-95 transition-all">
+                    <span className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-extrabold text-xs shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 active:scale-95 transition-all">
                       <Plus className="w-3.5 h-3.5" />
-                      <span>+ {primaryUnit.unit}</span>
+                      <span>+ 1 {primaryUnit.unit}</span>
                     </span>
                   </button>
 
@@ -624,48 +721,59 @@ export default function TouchscreenPOSView({
                       e.stopPropagation();
                       setEditingImageProduct(product);
                     }}
-                    className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-white/90 hover:bg-white text-slate-600 hover:text-slate-900 border border-slate-200 flex items-center justify-center shadow-2xs transition active:scale-90"
+                    className="absolute top-2 right-2 w-7 h-7 rounded-lg bg-white/80 hover:bg-white text-slate-500 hover:text-slate-900 border border-slate-200/70 backdrop-blur-md flex items-center justify-center shadow-xs transition-all active:scale-90 cursor-pointer"
                     title="Upload / Ganti Gambar Produk"
                   >
                     <Camera className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                {/* Product Name & Live Stock Indicator */}
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-bold text-slate-900 text-xs sm:text-[13px] leading-snug line-clamp-2 min-h-[34px] group-hover:text-emerald-800 transition-colors">
+                {/* Product Name & Live Pulsing Stock Indicator */}
+                <div className="flex-1 min-w-0 z-10">
+                  <h4 className="font-extrabold text-slate-900 text-xs sm:text-[13px] leading-snug line-clamp-2 min-h-[32px] group-hover:text-emerald-700 transition-colors">
                     {product.name}
                   </h4>
                   
-                  {/* Stock Status Bar */}
+                  {/* Stock Status Bar with Pulsing Radar Dot */}
                   <div className="flex items-center justify-between mt-1 text-[11px] text-slate-500">
                     <span className="flex items-center gap-1.5 font-medium">
-                      <span className={`w-2 h-2 rounded-full ${
-                        isStockSafe ? 'bg-emerald-600' : isStockLow ? 'bg-amber-500' : 'bg-rose-500'
-                      }`} />
-                      <span>{isStockEmpty ? 'Habis' : 'Stok Toko:'}</span>
+                      <span className="relative flex h-2 w-2">
+                        {isStockSafe && (
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                        )}
+                        <span className={`relative inline-flex rounded-full h-2 w-2 ${
+                          isStockSafe 
+                            ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]' 
+                            : isStockLow 
+                            ? 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]' 
+                            : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]'
+                        }`} />
+                      </span>
+                      <span className="font-medium text-slate-500 text-[10.5px]">
+                        {isStockEmpty ? 'Stok Habis' : 'Stok Toko:'}
+                      </span>
                     </span>
-                    <strong className="text-slate-700 bg-slate-100 px-1.5 py-0.2 rounded font-mono font-bold text-[10.5px]">
+                    <strong className="text-slate-700 bg-slate-100/90 border border-slate-200/70 px-1.5 py-0.2 rounded-md font-mono font-bold text-[10px]">
                       {currentStock} {product.baseUnit}
                     </strong>
                   </div>
                 </div>
 
-                {/* Tactile Unit Buttons (Clean Solid Retail Look) */}
-                <div className="pt-2.5 mt-2 border-t border-slate-100 space-y-1.5">
+                {/* Tactile Unit Buttons (21st.dev High-Energy Gradient CTA) */}
+                <div className="pt-2 mt-2 border-t border-slate-100 space-y-1.5 z-10">
                   
-                  {/* Primary Retail Unit Button (Solid Emerald) */}
+                  {/* Primary Retail Unit Button (Gradient Pill with Monospace Price) */}
                   <button
                     type="button"
                     onClick={() => addItemToCart(product, primaryUnit.unit, 1)}
-                    className="w-full py-2 px-2.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold flex items-center justify-between transition cursor-pointer active:scale-[0.98] shadow-2xs"
+                    className="w-full py-2 px-2.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white rounded-xl text-xs font-bold flex items-center justify-between transition-all cursor-pointer active:scale-[0.98] shadow-sm hover:shadow-md hover:shadow-emerald-600/20 group/btn"
                   >
-                    <span className="text-[11px]">
-                      {primaryUnit.unit}:
+                    <span className="text-[10.5px] bg-emerald-950/30 text-emerald-100 font-extrabold px-2 py-0.5 rounded-lg border border-white/20 flex items-center gap-1">
+                      {primaryUnit.unit}
                     </span>
-                    <div className="flex items-center gap-1 font-mono font-bold">
+                    <div className="flex items-center gap-1.5 font-mono font-black text-[12px] tracking-tight">
                       <span>Rp {getPrice(primaryUnit).toLocaleString('id-ID')}</span>
-                      <Plus className="w-3.5 h-3.5" />
+                      <Plus className="w-3.5 h-3.5 group-hover/btn:rotate-90 transition-transform duration-200" />
                     </div>
                   </button>
 
@@ -681,11 +789,11 @@ export default function TouchscreenPOSView({
                             key={u.unit}
                             type="button"
                             onClick={() => addItemToCart(product, u.unit, 1)}
-                            className="flex-1 py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-xl text-[10.5px] font-bold flex items-center justify-between transition cursor-pointer active:scale-[0.98]"
+                            className="flex-1 py-1 px-2 bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] font-bold flex items-center justify-between transition-all cursor-pointer active:scale-[0.98] shadow-2xs group/sec"
                             title={`Tambah 1 ${u.unit} (${u.multiplier}x)`}
                           >
                             <span className="truncate">{cleanUnit}:</span>
-                            <span className="font-mono font-bold ml-1 whitespace-nowrap text-[10px]">
+                            <span className="font-mono font-extrabold ml-1 whitespace-nowrap text-[10px] text-emerald-700">
                               Rp {getPrice(u).toLocaleString('id-ID')}
                             </span>
                           </button>
@@ -698,19 +806,21 @@ export default function TouchscreenPOSView({
                       <button
                         type="button"
                         onClick={() => addItemToCart(product, primaryUnit.unit, 5)}
-                        className="flex-1 py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1 transition active:scale-[0.98] cursor-pointer"
+                        className="flex-1 py-1 px-2 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-[0.98] cursor-pointer shadow-2xs"
                         title="Tambah 5 unit sekaligus"
                       >
-                        <span>+ 5 {primaryUnit.unit}</span>
+                        <Plus className="w-3 h-3 text-slate-400" />
+                        <span>5 {primaryUnit.unit}</span>
                       </button>
 
                       <button
                         type="button"
                         onClick={() => addItemToCart(product, primaryUnit.unit, 10)}
-                        className="flex-1 py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1 transition active:scale-[0.98] cursor-pointer"
+                        className="flex-1 py-1 px-2 bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-800 border border-slate-200/90 hover:border-emerald-300 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1 transition-all active:scale-[0.98] cursor-pointer shadow-2xs"
                         title="Tambah 10 unit sekaligus"
                       >
-                        <span>+ 10 {primaryUnit.unit}</span>
+                        <Plus className="w-3 h-3 text-slate-400" />
+                        <span>10 {primaryUnit.unit}</span>
                       </button>
                     </div>
                   )}

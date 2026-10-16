@@ -470,35 +470,37 @@ export default function POSTerminal({
         </div>
       )}
 
-      {/* POS LAYOUT MODE SWITCHER (CLEAN CORPORATE RETAIL BAR) */}
-      <div className="bg-white border border-slate-200 px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xs">
+      {/* POS LAYOUT MODE SWITCHER (21ST.DEV SEGMENTED CONTROL) */}
+      <div className="bg-white/90 backdrop-blur-md border border-slate-200/90 px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-slate-700 font-bold text-xs">
-            <Store className="w-4 h-4 text-emerald-700" />
+          <div className="flex items-center gap-2 text-slate-800 font-extrabold text-xs">
+            <div className="w-6 h-6 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center">
+              <Store className="w-3.5 h-3.5" />
+            </div>
             <span>Mode Tampilan:</span>
           </div>
 
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+          <div className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/80">
             <button
               type="button"
               onClick={() => setPosViewMode('retail')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
                 posViewMode === 'retail'
-                  ? 'bg-white text-emerald-800 shadow-xs border border-slate-200'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
-              <Keyboard className="w-3.5 h-3.5 text-slate-600" />
+              <Keyboard className="w-3.5 h-3.5 text-slate-500" />
               <span>Retail (Barcode & Keyboard)</span>
             </button>
 
             <button
               type="button"
               onClick={() => setPosViewMode('touchscreen')}
-              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all cursor-pointer ${
                 posViewMode === 'touchscreen'
-                  ? 'bg-emerald-700 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-gradient-to-r from-emerald-600 via-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-600/25'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
               }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
@@ -512,10 +514,10 @@ export default function POSTerminal({
             type="button"
             onClick={() => setIsSplitBillOpen(true)}
             disabled={cart.length === 0}
-            className="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs"
+            className="px-3.5 py-1.5 bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer shadow-2xs"
             title="Pisahkan tagihan rombongan (Split Bill)"
           >
-            <Split className="w-3.5 h-3.5 text-slate-600" />
+            <Split className="w-3.5 h-3.5 text-slate-500" />
             <span>Split Bill (Pisah Tagihan)</span>
           </button>
         </div>

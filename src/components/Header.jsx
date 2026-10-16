@@ -105,7 +105,7 @@ export default function Header({
                 }}
                 className={`relative flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 outline-none whitespace-nowrap shrink-0 ${
                   isActive
-                    ? 'text-white bg-emerald-600 shadow-sm'
+                    ? 'text-white bg-gradient-to-r from-emerald-600 via-emerald-600 to-teal-600 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
                 }`}
               >

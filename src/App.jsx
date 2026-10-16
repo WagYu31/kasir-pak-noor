@@ -279,7 +279,7 @@ export default function App() {
       />
 
       {/* Main Tab Content */}
-      <main className="flex-1 pb-24">
+      <main className="flex-1 pb-12">
         {activeTab === 'pos' && (
           <POSTerminal
             products={products}
