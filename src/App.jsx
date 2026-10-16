@@ -340,12 +340,49 @@ export default function App() {
     </>
   );
 
+  const renderFooterContent = () => (
+    <>
+      <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 whitespace-nowrap">
+        <span className="flex items-center gap-1.5 font-medium">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span className="hidden sm:inline">Database ACID:</span>{' '}
+          <button
+            onClick={() => setIsTerminalManagerOpen(true)}
+            className="text-slate-800 font-bold hover:underline cursor-pointer"
+            title="Buka Manajemen Mesin Kasir & Hardware"
+          >
+            {terminals.filter(t => t.status === 'ONLINE').length} Kasir Aktif
+          </button>
+        </span>
+        <span className="text-slate-300">|</span>
+        <span>Gudang: <strong className="text-emerald-700 font-bold">{activeWarehouse === 'WH-01' ? 'Toko (Depan)' : 'Pusat (DC)'}</strong></span>
+        <span className="text-slate-300">|</span>
+        <span>Tier: <strong className="text-emerald-700 uppercase font-bold">{priceTier}</strong></span>
+        <span className="hidden md:inline text-slate-300">|</span>
+        <span className="hidden md:inline">Peran: <button onClick={() => setIsUserRoleModalOpen(true)} className="text-slate-900 font-bold hover:underline cursor-pointer">{USER_ROLES[currentUserRole]?.name}</button></span>
+      </div>
+
+      <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 whitespace-nowrap pl-2">
+        <button
+          onClick={() => setIsCustomerDisplayOpen(true)}
+          className="text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1 cursor-pointer"
+        >
+          <span>Customer Display [F8]</span>
+        </button>
+        <span className="hidden lg:inline text-slate-300">•</span>
+        <span className="hidden lg:inline text-slate-400">Pintasan: <span className="kbd-badge text-[10px]">F1-F12</span></span>
+        <span className="hidden xl:inline text-slate-300">•</span>
+        <span className="hidden xl:inline text-slate-500 font-semibold">POS Pak Noor v2.0</span>
+      </div>
+    </>
+  );
+
   return (
-    <div className={`min-h-screen ${themeId === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} flex flex-col selection:bg-emerald-500/20 selection:text-emerald-800`}>
+    <div className={`${(navLayout === 'sidebar' || navLayout === 'rail') ? 'h-screen max-h-screen overflow-hidden' : 'min-h-screen'} ${themeId === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'} flex flex-col selection:bg-emerald-500/20 selection:text-emerald-800`}>
       
       {navLayout === 'sidebar' || navLayout === 'rail' ? (
         /* SIDEBAR / RAIL ENTERPRISE LAYOUT */
-        <div className="flex-1 flex overflow-hidden min-h-screen">
+        <div className="flex-1 flex overflow-hidden min-h-0 h-full">
           <SidebarNav
             activeTab={activeTab}
             setActiveTab={setActiveTab}
@@ -366,9 +403,9 @@ export default function App() {
             onCloseMobile={() => setIsMobileSidebarOpen(false)}
           />
 
-          <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+          <div className="flex-1 flex flex-col min-w-0 min-h-0 h-full overflow-hidden">
             {/* Slim Header Bar for Sidebar/Rail Mode */}
-            <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-4 py-2.5 flex items-center justify-between shadow-xs">
+            <header className="shrink-0 sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 px-3 sm:px-4 py-2 flex items-center justify-between shadow-xs">
               <div className="flex items-center gap-2.5 min-w-0">
                 {/* Mobile/Tablet Hamburger Toggle */}
                 <button
@@ -404,10 +441,15 @@ export default function App() {
               </div>
             </header>
 
-            {/* Main Content */}
-            <main className="flex-1 p-3 sm:p-4 pb-16">
+            {/* Main Content - Internal Scroll Container */}
+            <main className="flex-1 p-3 sm:p-4 overflow-y-auto min-h-0">
               {renderTabContent()}
             </main>
+
+            {/* Status Bar Footer inside right column */}
+            <footer className="shrink-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1.5 px-3 sm:px-4 text-[11px] text-slate-500 flex items-center justify-between z-20 shadow-xs overflow-x-auto no-scrollbar">
+              {renderFooterContent()}
+            </footer>
           </div>
         </div>
       ) : navLayout === 'dock' ? (
@@ -495,41 +537,12 @@ export default function App() {
         </>
       )}
 
-      {/* Floating System Quick Info Bar (Responsive Light Theme) */}
-      <footer className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1.5 px-3 sm:px-4 text-[11px] text-slate-500 flex items-center justify-between z-30 shadow-xs overflow-x-auto no-scrollbar">
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 whitespace-nowrap">
-          <span className="flex items-center gap-1.5 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span className="hidden sm:inline">Database ACID:</span>{' '}
-            <button
-              onClick={() => setIsTerminalManagerOpen(true)}
-              className="text-slate-800 font-bold hover:underline cursor-pointer"
-              title="Buka Manajemen Mesin Kasir & Hardware"
-            >
-              {terminals.filter(t => t.status === 'ONLINE').length} Kasir Aktif
-            </button>
-          </span>
-          <span className="text-slate-300">|</span>
-          <span>Gudang: <strong className="text-emerald-700 font-bold">{activeWarehouse === 'WH-01' ? 'Toko (Depan)' : 'Pusat (DC)'}</strong></span>
-          <span className="text-slate-300">|</span>
-          <span>Tier: <strong className="text-emerald-700 uppercase font-bold">{priceTier}</strong></span>
-          <span className="hidden md:inline text-slate-300">|</span>
-          <span className="hidden md:inline">Peran: <button onClick={() => setIsUserRoleModalOpen(true)} className="text-slate-900 font-bold hover:underline cursor-pointer">{USER_ROLES[currentUserRole]?.name}</button></span>
-        </div>
-
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 whitespace-nowrap pl-2">
-          <button
-            onClick={() => setIsCustomerDisplayOpen(true)}
-            className="text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1 cursor-pointer"
-          >
-            <span>Customer Display [F8]</span>
-          </button>
-          <span className="hidden lg:inline text-slate-300">•</span>
-          <span className="hidden lg:inline text-slate-400">Pintasan: <span className="kbd-badge text-[10px]">F1-F12</span></span>
-          <span className="hidden xl:inline text-slate-300">•</span>
-          <span className="hidden xl:inline text-slate-500 font-semibold">POS Pak Noor v2.0</span>
-        </div>
-      </footer>
+      {/* Floating System Quick Info Bar (for non-sidebar layouts like dock and topbar) */}
+      {navLayout !== 'sidebar' && navLayout !== 'rail' && (
+        <footer className="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1.5 px-3 sm:px-4 text-[11px] text-slate-500 flex items-center justify-between z-30 shadow-xs overflow-x-auto no-scrollbar">
+          {renderFooterContent()}
+        </footer>
+      )}
 
       {/* MODALS */}
       <PaymentModal

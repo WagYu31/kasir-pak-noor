@@ -91,16 +91,16 @@ export default function SidebarNav({
 
       <aside 
         className={`bg-white border-r border-slate-200/90 flex flex-col justify-between transition-all duration-300 select-none shadow-2xl lg:shadow-xs z-50
-          fixed inset-y-0 left-0 lg:static lg:z-40
+          fixed inset-y-0 left-0 lg:static lg:z-40 h-full max-h-screen shrink-0 overflow-hidden
           ${isMobileOpen ? 'translate-x-0 w-72' : '-translate-x-full lg:translate-x-0'}
           ${isCollapsed ? 'lg:w-[72px]' : 'lg:w-64'}
         `}
       >
         {/* Top Section: Logo & Toggle Button */}
-        <div className={`border-b border-slate-100 flex items-center transition-all ${
+        <div className={`shrink-0 border-b border-slate-100 flex items-center transition-all ${
           isCollapsed && !isMobileOpen 
-            ? 'flex-col gap-2 py-3.5 px-2 justify-center' 
-            : 'p-3.5 justify-between'
+            ? 'flex-col gap-2 py-3 px-2 justify-center' 
+            : 'p-3 justify-between'
         }`}>
           <div className={`flex items-center gap-2.5 min-w-0 ${isCollapsed && !isMobileOpen ? 'justify-center' : ''}`}>
             <button 
@@ -155,7 +155,7 @@ export default function SidebarNav({
         </div>
 
       {/* Middle Section: Warehouse & Main Navigation Menu */}
-      <div className={`flex-1 overflow-y-auto space-y-3.5 ${isCollapsed && !isMobileOpen ? 'p-2' : 'p-2.5'}`}>
+      <div className={`flex-1 min-h-0 overflow-y-auto space-y-2.5 ${isCollapsed && !isMobileOpen ? 'p-2' : 'p-2.5'}`}>
         
         {/* Active Warehouse Tag */}
         {!isCollapsed || isMobileOpen ? (
@@ -180,7 +180,7 @@ export default function SidebarNav({
         )}
 
         {/* Navigation Items */}
-        <nav className="space-y-1.5 flex flex-col items-center">
+        <nav className="space-y-1 flex flex-col items-center">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -196,7 +196,7 @@ export default function SidebarNav({
                           ? `bg-gradient-to-tr ${activeTheme.gradient} text-white shadow-md active:scale-95`
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:scale-95'
                       }`
-                    : `w-full gap-3 p-2.5 rounded-xl font-bold text-xs ${
+                    : `w-full gap-3 py-2 px-2.5 rounded-xl font-bold text-xs ${
                         isActive
                           ? `bg-gradient-to-r ${activeTheme.gradient} text-white shadow-sm`
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -238,7 +238,7 @@ export default function SidebarNav({
         <hr className="border-slate-100 my-1" />
 
         {/* Special Management Shortcuts */}
-        <div className="space-y-1.5 flex flex-col items-center">
+        <div className="space-y-1 flex flex-col items-center">
           {/* Theme & Customizer Button */}
           <button
             type="button"
@@ -249,7 +249,7 @@ export default function SidebarNav({
             className={`flex items-center transition-all cursor-pointer relative group ${
               isCollapsed && !isMobileOpen
                 ? 'w-11 h-11 justify-center rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 active:scale-95'
-                : 'w-full gap-3 p-2.5 rounded-xl font-bold text-xs text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                : 'w-full gap-3 py-2 px-2.5 rounded-xl font-bold text-xs text-slate-700 hover:text-slate-900 hover:bg-slate-100'
             }`}
             title={isCollapsed && !isMobileOpen ? 'Ganti Tema / Layout' : undefined}
           >
@@ -323,10 +323,10 @@ export default function SidebarNav({
       </div>
 
       {/* Bottom Section: Active Cashier & Terminal Status */}
-      <div className={`border-t border-slate-100 bg-slate-50/70 transition-all ${
+      <div className={`shrink-0 border-t border-slate-100 bg-slate-50/70 transition-all ${
         isCollapsed && !isMobileOpen
           ? 'p-2 flex flex-col items-center gap-2'
-          : 'p-3 space-y-2'
+          : 'p-2.5 space-y-2'
       }`}>
         
         {/* Terminal Pill */}
